@@ -1,0 +1,18 @@
+import { AuthResponse } from '@/types/response/AuthResponse';
+import { api } from './index';
+
+export default class ApiAuthController {
+  static async signUp(email: string, password: string): Promise<AuthResponse> {
+    return api.post<AuthResponse>('/auth/local/signup', { email, password })
+      .then(res => res.data);
+  }
+
+  static async signIn(email: string, password: string): Promise<AuthResponse> {
+    return api.post<AuthResponse>('/auth/local/signin', { email, password })
+      .then(res => res.data);
+  }
+
+  static async logout(): Promise<any> {
+    return api.post('/auth/logout');
+  }
+}
