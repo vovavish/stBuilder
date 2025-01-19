@@ -23,7 +23,7 @@ export const SitesList = observer(() => {
     navigate(`/sites/edit/${siteId}`);
   };
 
-  if (!userSitesStore.userSites.length) {
+  if (userSitesStore.isLoading) {
     return <Preloader />;
   }
 

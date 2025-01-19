@@ -13,6 +13,9 @@ import { AppHeader } from '../app-header';
 import { AppFooter } from '../app-footer';
 import { SiteSettings } from '@/pages/site-settings';
 import { SiteEdit } from '@/pages/site-edit';
+import { ChooseLayout } from '@/pages/choose-layout';
+import { ChooseLayoutDetails } from '@/pages/choose-layout-details';
+import { AdminHome, AdminLayout, AdminLayoutDesignEdit } from '@/pages/admin';
 
 export function App() {
   const { authStore } = useStore();
@@ -26,16 +29,24 @@ export function App() {
       <Routes>
         <Route index element={<div>index page (/)</div>} />
 
-        <Route path="/" element={<ProtectedRoute onlyUnAuthorized />}>
+        <Route path="/" element={<ProtectedRoute onlyUnAuthorized/>}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
-        <Route path="/" element={<ProtectedRoute />}>
+        <Route path="/" element={<ProtectedRoute requiredRole='USER'/>}>
           <Route path="/sites" element={<SitesList />} />
+          <Route path="/sites/choose-layout" element={<ChooseLayout />} />
+          <Route path="/sites/choose-layout/:id" element={<ChooseLayoutDetails />} />
           <Route path="/sites/settings/:id" element={<SiteSettings />} />
           <Route path="/sites/edit/:id" element={<SiteEdit />} />
           <Route path="/sites/view/:id" element={<div>site view (/sites/view/:id)</div>} />
+        </Route>
+
+        <Route path='/admin' element={<ProtectedRoute requiredRole='ADMIN'/>}>
+          <Route index element={<AdminHome />} />
+          <Route path="/admin/layout/:id" element={<AdminLayout />} />
+          <Route path="/admin/layout/edit/:id" element={<AdminLayoutDesignEdit />} />
         </Route>
       </Routes>
       <AppFooter />

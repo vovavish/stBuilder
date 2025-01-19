@@ -12,11 +12,12 @@ export const SitesListUI: FC<SitesListUIProps> = ({ sitesList, onEditSiteClick})
   return (
     <div className="flex flex-col items-center py-8">
       <h1 className="text-3xl font-bold mb-8">Ваши сайты</h1>
-      <button
+      <Link
+        to='/sites/choose-layout'
         className="mb-6 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
       >
         Создать новый сайт
-      </button>
+      </Link>
       {sitesList.length === 0 ? (
         <p className="text-gray-600">У вас пока нет созданных сайтов.</p>
       ) : (

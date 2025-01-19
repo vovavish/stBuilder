@@ -10,9 +10,10 @@ import { Preloader } from "../ui/preloader";
 
 type ProtectedRouteProps = {
   onlyUnAuthorized?: boolean;
+  requiredRole?: "USER" | "ADMIN";
 }
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = observer(({onlyUnAuthorized}) => {
+export const ProtectedRoute: FC<ProtectedRouteProps> = observer(({onlyUnAuthorized, requiredRole}) => {
   const { authStore } = useStore();
 
   const location = useLocation();
@@ -28,6 +29,10 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = observer(({onlyUnAuthoriz
   if (onlyUnAuthorized && authStore.user) {
     const from = location.state?.from || {pathname: '/'};
     return <Navigate replace to={from} />;
+  }
+
+  if (requiredRole && !authStore.user?.roles.includes(requiredRole)) {
+    return <Navigate replace to="/" />;
   }
 
   return <Outlet />;

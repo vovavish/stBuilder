@@ -21,7 +21,7 @@ export class AuthService {
       }
     });
 
-    const tokens = await this.getTokens(newUser.id, newUser.email);
+    const tokens = await this.getTokens(newUser.id, newUser.email, newUser.roles);
 
     await this.updateRtHash(newUser.id, tokens.refresh_token);
 
@@ -55,7 +55,7 @@ export class AuthService {
       throw new ForbiddenException('Access Denied');
     }
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.roles);
 
     await this.updateRtHash(user.id, tokens.refresh_token);
 
@@ -106,7 +106,7 @@ export class AuthService {
       throw new ForbiddenException('Access Denied');
     }
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.roles);
 
     await this.updateRtHash(user.id, tokens.refresh_token);
     
@@ -126,11 +126,12 @@ export class AuthService {
     return bcrypt.hash(data, 10);
   }
 
-  private async getTokens(userId: number, email: string): Promise<Tokens> {
+  private async getTokens(userId: number, email: string, roles: string[]): Promise<Tokens> {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync({
         sub: userId,
         email,
+        roles,
       }, {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN,
@@ -138,6 +139,7 @@ export class AuthService {
       this.jwtService.signAsync({
         sub: userId,
         email,
+        roles,
       }, {
         secret: process.env.JWT_REFRESH_SECRET,
         expiresIn: process.env.JWT_REFRESH_EXPIRES_IN,

@@ -56,7 +56,7 @@ export class UserSitesStore {
     }
   }
 
-  async createSite(site_name: string, site_data: string, site_address: string) {
+  async createSite(site_name: string, site_data: string, site_address?: string) {
     try {
       this._isLoading = true;
       await ApiUserSitesController.createSite(site_name, site_data, site_address);

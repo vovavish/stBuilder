@@ -6,5 +6,4 @@ import { UserSitesService } from "./userSites.service";
   controllers: [UserSitesController],
   providers: [UserSitesService],
 })
-
 export class UserSitesModule {}

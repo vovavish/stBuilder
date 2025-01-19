@@ -14,7 +14,7 @@ export default class ApiUserSitesController {
   static async createSite(
     site_name: string,
     site_data: string,
-    site_address: string,
+    site_address?: string,
   ): Promise<UserSiteByIdResponse> {
     return api
       .post<UserSiteByIdResponse>('/user-sites/create', { site_name, site_data, site_address })

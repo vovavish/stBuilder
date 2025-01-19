@@ -34,21 +34,29 @@ model User {
 }
 
 model Layouts {
-  id          Int    @id @default(autoincrement())
-  name        String
-  layout_data String
+  id            Int    @id @default(autoincrement())
+  name          String
+  description   String @default("default description")
+  path_to_image String @default("1737230908287-767188248.png")
+  layout_data   String
 }
 
 model UsersSites {
-  id        Int  @id @default(autoincrement())
-  user      User @relation(fields: [user_id], references: [id])
-  user_id   Int
-  site_data String
+  id           Int     @id @default(autoincrement())
+  user         User    @relation(fields: [user_id], references: [id])
+  user_id      Int
+  site_data    String
   site_address String?
-  site_name String
+  site_name    String
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  path      String
+  createdAt DateTime @default(now())
 }

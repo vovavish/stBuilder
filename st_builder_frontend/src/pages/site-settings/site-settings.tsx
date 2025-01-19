@@ -36,8 +36,8 @@ export const SiteSettings = observer(() => {
   };
 
   const isFormChanged =
-    siteName !== userSitesStore.userSiteById?.site_name ||
-    siteAddress !== userSitesStore.userSiteById?.site_address;
+    siteName !== (userSitesStore.userSiteById?.site_name || '') ||
+    siteAddress !== (userSitesStore.userSiteById?.site_address || '');
 
   if (userSitesStore.isLoading) {
     return <Preloader />;

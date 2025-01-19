@@ -9,11 +9,7 @@ export const Toolbox = () => {
   const { connectors } = useEditor();
 
   return (
-    <div className="p-2">
-      <div className="p-2">
-        <h2>Drag to add</h2>
-      </div>
-
+    <div className="p-2 flex flex-col items-center">
       <div className="flex gap-4">
         <div>
           <ShadCNButton
@@ -22,7 +18,7 @@ export const Toolbox = () => {
             }}
             variant="default"
           >
-            Button
+            Кнопка
           </ShadCNButton>
         </div>
         <div>
@@ -56,7 +52,7 @@ export const Toolbox = () => {
             }}
             variant="default"
           >
-            Container
+            Контейнер
           </ShadCNButton>
         </div>
         <div>
@@ -66,7 +62,7 @@ export const Toolbox = () => {
             }}
             variant="default"
           >
-            Card
+            Карточка
           </ShadCNButton>
         </div>
       </div>
