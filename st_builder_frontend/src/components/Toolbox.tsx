@@ -1,4 +1,4 @@
-import { Element, useEditor } from '@craftjs/core';
+import { Element, ROOT_NODE, useEditor } from '@craftjs/core';
 import { Button as ShadCNButton } from './ui/button';
 import { Button } from '@/components/user/Button';
 import { Text } from '@/components/user/Text';
@@ -6,7 +6,19 @@ import { Card } from '@/components/user/Card';
 import { Container } from '@/components/user/Container';
 
 export const Toolbox = () => {
-  const { connectors } = useEditor();
+  const { connectors, actions, query } = useEditor();
+
+  const handleClick = () => {
+    const nodeTree = query.parseReactElement(<Text
+      text={`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`}
+      fontSize={20}
+      paggingY={100}
+      textAlign="center"
+      maxWidth={500}
+    />).toNodeTree();
+    console.log(nodeTree)
+    actions.addNodeTree(nodeTree, ROOT_NODE);
+  }
 
   return (
     <div className="p-2 flex flex-col items-center">
@@ -23,6 +35,7 @@ export const Toolbox = () => {
         </div>
         <div>
           <ShadCNButton
+            onClick={handleClick}
             ref={(ref) => {
               if (ref)
                 connectors.create(

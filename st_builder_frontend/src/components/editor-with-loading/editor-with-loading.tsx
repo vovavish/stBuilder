@@ -18,6 +18,7 @@ export const EditorForLoading: FC<{ jsonData: string }> = ({ jsonData }) => {
 
   useEffect(() => {
     const json = lz.decompress(lz.decodeBase64(jsonData));
+    console.log(JSON.parse(json).ROOT.nodes.length)
     deserialize(json);
   }, []);
 

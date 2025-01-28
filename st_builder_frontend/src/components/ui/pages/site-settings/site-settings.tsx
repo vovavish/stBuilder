@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction, SyntheticEvent } from 'react';
 import type { FC } from 'react';
 
+import styles from './site-settings.module.scss';
+
 type SiteSettingsUIProps = {
   site_name: string;
   setSiteName: Dispatch<SetStateAction<string>>;
@@ -24,11 +26,11 @@ export const SiteSettingsUI: FC<SiteSettingsUIProps> = ({
   isFormChanged,
 }) => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Настройки сайта</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Настройки сайта</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="siteName" className="block text-lg font-medium mb-2">
+        <div className={styles.formGroup}>
+          <label htmlFor="siteName" className={styles.label}>
             Имя сайта
           </label>
           <input
@@ -36,13 +38,13 @@ export const SiteSettingsUI: FC<SiteSettingsUIProps> = ({
             type="text"
             value={site_name}
             onChange={(e) => setSiteName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
+            className={styles.input}
             placeholder="Enter site name"
           />
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="siteAddress" className="block text-lg font-medium mb-2">
+        <div className={styles.formGroup}>
+          <label htmlFor="siteAddress" className={styles.label}>
             Название сайта на поддомене
           </label>
           <input
@@ -50,20 +52,20 @@ export const SiteSettingsUI: FC<SiteSettingsUIProps> = ({
             type="text"
             value={site_address}
             onChange={(e) => setSiteAddress(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
+            className={styles.input}
             placeholder="Enter site address"
           />
         </div>
 
         {isFormChanged && (
-          <div className='flex gap-4'>
-            <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded-md">
+          <div className={styles.buttonGroup}>
+            <button type="submit" className={styles.button}>
               Сохранить изменения
             </button>
             <button
               onClick={handleCancel}
               type='button'
-              className="bg-blue-500 text-white px-6 py-2 rounded-md"
+              className={styles.button}
             >
               Отмена
             </button>

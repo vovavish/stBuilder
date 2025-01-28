@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction, SyntheticEvent } from "react";
-
 import { Link } from "react-router-dom";
+
+import styles from './register.module.scss';
 
 type RegisterUIProps = {
   email: string;
@@ -8,7 +9,7 @@ type RegisterUIProps = {
 
   password: string;
   setPassword: Dispatch<SetStateAction<string>>;
-  
+
   handleSubmit: (e: SyntheticEvent) => void;
 };
 
@@ -20,12 +21,12 @@ export const RegisterUI: FC<RegisterUIProps> = ({
   handleSubmit,
 }) => {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Регистрация</h2>
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h2 className={styles.title}>Регистрация</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <div className={styles.formField}>
+            <label htmlFor="email" className={styles.label}>
               Почта
             </label>
             <input
@@ -33,14 +34,14 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className={styles.input}
               placeholder="Введите почту"
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <div className={styles.formField}>
+            <label htmlFor="password" className={styles.label}>
               Пароль
             </label>
             <input
@@ -48,22 +49,22 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className={styles.input}
               placeholder="Введите пароль"
               required
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
+          <button type="submit" className={styles.button}>
             Зарегестрироваться
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
-          Вы уже зарегестрированы? <Link to="/login" className="text-blue-500 hover:underline">Войти</Link>
+        <p className={styles.footerText}>
+          Вы уже зарегестрированы?{" "}
+          <Link to="/login" className={styles.link}>
+            Войти
+          </Link>
         </p>
       </div>
     </div>

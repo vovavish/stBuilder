@@ -16,6 +16,7 @@ import { useStore } from '@/hooks/useStore';
 import { Preloader } from '@/components/ui/preloader';
 import { observer } from 'mobx-react-lite';
 import { EditorForLoading } from '@/components/editor-with-loading/editor-with-loading';
+import { RenderNode } from '@/components/render-node';
 
 export const SiteEdit = observer(() => {
   const { userSitesStore } = useStore();
@@ -35,17 +36,20 @@ export const SiteEdit = observer(() => {
   }
 
   return (
-    <Editor
-      resolver={{ Card, Button, Text, Container, CardTop, CardBottom }}
-      onNodesChange={debounce((query) => {
-        const json = query.serialize();
-        const compressed = lz.encodeBase64(lz.compress(json));
-        if (compressed !== userSitesStore.userSiteById?.site_data) {
-          userSitesStore.updateSiteDataById(id!, compressed);
-        }
-      }, 1000)}
-    >
-      <EditorForLoading jsonData={userSitesStore.userSiteById.site_data}/>
-    </Editor>
+    <div className='craftjs-renderer flex-1 h-full w-full transition pb-8 overflow-auto'>
+      <Editor
+        resolver={{ Card, Button, Text, Container, CardTop, CardBottom }}
+        onNodesChange={debounce((query) => {
+          const json = query.serialize();
+          const compressed = lz.encodeBase64(lz.compress(json));
+          if (compressed !== userSitesStore.userSiteById?.site_data) {
+            userSitesStore.updateSiteDataById(id!, compressed);
+          }
+        }, 1000)}
+        onRender={RenderNode}
+      >
+        <EditorForLoading jsonData={userSitesStore.userSiteById.site_data}/>
+      </Editor>
+    </div>
   );
 });

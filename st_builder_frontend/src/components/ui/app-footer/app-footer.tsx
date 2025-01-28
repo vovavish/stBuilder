@@ -1,27 +1,20 @@
 import { FC } from "react";
 
+import styles from "./app-footer.module.scss";
+
 export const AppFooterUI: FC = () => {
   return (
-    <footer className="bg-gray-800 text-white py-4 px-6 mt-auto">
-      <div className="flex justify-between items-center">
-        <p className="text-sm">&copy; Вишняков Владимир, ИДБ-21-12, Дипломная работа</p>
-        <nav className="space-x-4">
-          <a
-            href="/privacy"
-            className="hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-          >
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <p className={styles.text}>&copy; Вишняков Владимир, ИДБ-21-12, Дипломная работа</p>
+        <nav className={styles.nav}>
+          <a href="/privacy" className={styles.link}>
             Политика конфиденциальности
           </a>
-          <a
-            href="/terms"
-            className="hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-          >
+          <a href="/terms" className={styles.link}>
             Условия использования
           </a>
-          <a
-            href="/contact"
-            className="hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-          >
+          <a href="/contact" className={styles.link}>
             Контакты
           </a>
         </nav>
