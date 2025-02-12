@@ -1,0 +1,47 @@
+.container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.input {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editButton, .saveButton {
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1e40af;
+  }
+}

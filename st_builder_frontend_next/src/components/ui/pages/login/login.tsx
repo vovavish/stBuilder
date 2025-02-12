@@ -1,0 +1,74 @@
+import { Dispatch, FC, FormEventHandler, SetStateAction, SyntheticEvent } from "react";
+import Link from "next/link";
+
+import styles from './login.module.scss';
+
+type LoginUIProps = {
+  // email: string;
+  // setEmail: Dispatch<SetStateAction<string>>;
+
+  // password: string;
+  // setPassword: Dispatch<SetStateAction<string>>;
+
+  handleSubmit: FormEventHandler<HTMLFormElement>;
+};
+
+export const LoginUI: FC<LoginUIProps> = ({
+  // email,
+  // setEmail,
+  // password,
+  // setPassword,
+  handleSubmit,
+}) => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h2 className={styles.title}>Вход</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className={styles.formField}>
+            <label htmlFor="email" className={styles.label}>
+              Почта
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              // value={email}
+              // onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
+              placeholder="Введите почту"
+              required
+            />
+          </div>
+
+          <div className={styles.formField}>
+            <label htmlFor="password" className={styles.label}>
+              Пароль
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              // value={password}
+              // onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              placeholder="Введите пароль"
+              required
+            />
+          </div>
+
+          <button type="submit" className={styles.button}>
+            Войти
+          </button>
+        </form>
+
+        <p className={styles.footerText}>
+          Вы здесь впервые?{" "}
+          <Link href="/register" className={styles.link}>
+            Зарегестрироваться
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
