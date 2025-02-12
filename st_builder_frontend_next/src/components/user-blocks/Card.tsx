@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { useNode, Element, Node } from "@craftjs/core";
 
 import { Text } from "./Text";
-import { Button } from "./Button";
 import { Container, ContainerDefaultProps, ContainerSettings } from "./Container";
 
 interface CardTopProps {
@@ -47,7 +46,7 @@ export const CardBottom: FC<CardBottomProps> & { craft?: { rules?: CraftRules } 
 CardBottom.craft = {
   rules: {
     canMoveIn: (incomingNodes: Node[]) =>
-      incomingNodes.every((incomingNode) => incomingNode.data.type === Button),
+      incomingNodes.every((incomingNode) => incomingNode.data.type === Text),
   },
 };
 
@@ -62,11 +61,6 @@ export const Card: FC<CardProps> & { craft: { props: typeof ContainerDefaultProp
       <Element id="text" is={CardTop} canvas>
         <Text text="Title" fontSize={20} textAlign="center"/>
         <Text text="Subtitle" fontSize={15} textAlign="left"/>
-      </Element>
-      <Element id="buttons" is={CardBottom} canvas>
-        <Button size="sm" variant="default" color="primary">
-          Learn more
-        </Button>
       </Element>
     </Container>
   );
