@@ -7,3 +7,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: st_builder_db
+#    volumes:
+#      - ./postgres-data:/var/lib/postgresql/data
