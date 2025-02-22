@@ -1,20 +1,23 @@
+"use client";
+
 import { AdminLayoutUI } from '@/components/ui/pages/admin';
 import { Preloader } from '@/components/ui/preloader';
 import { useStore } from '@/hooks/useStore';
 import { UserLayoutResponse } from '@/types/response/UserLayoutResponse';
 import { observer } from 'mobx-react-lite';
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
-export const AdminLayout: FC = observer(() => {
+const AdminLayout: FC = observer(() => {
   const { userLayoutsStore } = useStore();
   const [layoutFormData, setLayoutFormData] = useState<UserLayoutResponse | undefined>(undefined);
 
-  const { id } = useParams();
-
+  const router = useRouter();
+  const { id } = router.query;
+  
   useEffect(() => {
     if (id) {
-      userLayoutsStore.getUserLayoutById(id);
+      userLayoutsStore.getUserLayoutById(id as string);
     }
   }, [id]);
 
@@ -49,3 +52,5 @@ export const AdminLayout: FC = observer(() => {
     />
   );
 });
+
+export default AdminLayout;

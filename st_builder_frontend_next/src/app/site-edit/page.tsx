@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 import { Editor } from '@craftjs/core';
 
@@ -10,7 +12,6 @@ import debounce from 'debounce';
 
 import { Container } from '@/components/user-blocks/Container';
 import { Card, CardBottom, CardTop } from '@/components/user-blocks/Card';
-import { Button } from '@/components/user-blocks/Button';
 import { Text } from '@/components/user-blocks/Text';
 import { useStore } from '@/hooks/useStore';
 import { Preloader } from '@/components/ui/preloader';
@@ -18,13 +19,15 @@ import { observer } from 'mobx-react-lite';
 import { EditorForLoading } from '@/components/editor-with-loading/editor-with-loading';
 import { RenderNode } from '@/components/render-node';
 
-export const SiteEdit = observer(() => {
+const SiteEdit = observer(() => {
   const { userSitesStore } = useStore();
 
-  const { id } = useParams();
+  const router = useRouter();
+
+  const { id } = router.query;
 
   useEffect(() => {
-    userSitesStore.getUserSiteById(id!);
+    userSitesStore.getUserSiteById(id as string);
   }, [])
 
   if (userSitesStore.isLoading) {
@@ -38,12 +41,12 @@ export const SiteEdit = observer(() => {
   return (
     <div className='craftjs-renderer flex-1 h-full w-full transition overflow-auto'>
       <Editor
-        resolver={{ Card, Button, Text, Container, CardTop, CardBottom }}
+        resolver={{ Card, Text, Container, CardTop, CardBottom }}
         onNodesChange={debounce((query) => {
           const json = query.serialize();
           const compressed = lz.encodeBase64(lz.compress(json));
           if (compressed !== userSitesStore.userSiteById?.site_data) {
-            userSitesStore.updateSiteDataById(id!, compressed);
+            userSitesStore.updateSiteDataById(id as string, compressed);
           }
         }, 1000)}
         onRender={RenderNode}
@@ -53,3 +56,6 @@ export const SiteEdit = observer(() => {
     </div>
   );
 });
+
+
+export default SiteEdit;

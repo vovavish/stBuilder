@@ -33,8 +33,6 @@ export const LoginUI: FC<LoginUIProps> = ({
               id="email"
               type="email"
               name="email"
-              // value={email}
-              // onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
               placeholder="Введите почту"
               required
@@ -49,8 +47,6 @@ export const LoginUI: FC<LoginUIProps> = ({
               id="password"
               type="password"
               name="password"
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
               placeholder="Введите пароль"
               required

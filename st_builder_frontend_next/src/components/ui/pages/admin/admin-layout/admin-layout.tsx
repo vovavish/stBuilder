@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { UserLayoutByIdResponse, UserLayoutResponse } from '@/types/response/UserLayoutResponse';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import styles from './admin-layout.module.scss';
 
@@ -51,7 +51,7 @@ export const AdminLayoutUI: FC<AdminLayoutUIProps> = ({
       </div>
 
       <div className={styles.buttonGroup}>
-        <Link to={`/admin/layout/edit/${layout.id}`} className={styles.editButton}>Редактировать дизайн</Link>
+        <Link href={`/admin/layout/edit/${layout.id}`} className={styles.editButton}>Редактировать дизайн</Link>
         <button
           onClick={() => onLayoutSave(layoutFormData)}
           className={styles.saveButton}

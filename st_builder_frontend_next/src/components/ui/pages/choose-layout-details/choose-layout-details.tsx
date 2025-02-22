@@ -3,7 +3,6 @@ import { Editor } from '@craftjs/core';
 import { FC } from 'react';
 import { Container } from '@/components/user-blocks/Container';
 import { Card, CardBottom, CardTop } from '@/components/user-blocks/Card';
-import { Button } from '@/components/user-blocks/Button';
 import { Text } from '@/components/user-blocks/Text';
 import { EditorPreviewer } from '@/components/editor-previewer';
 
@@ -21,7 +20,7 @@ export const ChooseLayoutDetailsUI: FC<ChooseLayoutDetailsUIProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.editorWrapper}>
-        <Editor resolver={{ Card, Button, Text, Container, CardTop, CardBottom }}>
+        <Editor resolver={{ Card, Text, Container, CardTop, CardBottom }}>
           <EditorPreviewer jsonData={layout.layout_data} />
         </Editor>
       </div>

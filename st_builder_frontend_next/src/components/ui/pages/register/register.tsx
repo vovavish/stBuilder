@@ -1,23 +1,13 @@
-import { Dispatch, FC, SetStateAction, SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
+import { FC, FormEventHandler } from "react";
+import Link from "next/link";
 
 import styles from './register.module.scss';
 
 type RegisterUIProps = {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
-
-  handleSubmit: (e: SyntheticEvent) => void;
+  handleSubmit: FormEventHandler<HTMLFormElement>;
 };
 
 export const RegisterUI: FC<RegisterUIProps> = ({
-  email,
-  setEmail,
-  password,
-  setPassword,
   handleSubmit,
 }) => {
   return (
@@ -32,8 +22,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
             <input
               id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
               className={styles.input}
               placeholder="Введите почту"
               required
@@ -47,8 +36,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
             <input
               id="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               className={styles.input}
               placeholder="Введите пароль"
               required
@@ -62,7 +50,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
 
         <p className={styles.footerText}>
           Вы уже зарегестрированы?{" "}
-          <Link to="/login" className={styles.link}>
+          <Link href="/login" className={styles.link}>
             Войти
           </Link>
         </p>

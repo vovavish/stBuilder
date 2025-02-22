@@ -1,0 +1,15 @@
+.settingsItems {
+  position: absolute;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+}
+
+.itemPressed {
+  cursor: pointer;
+}
+
+.itemMoveble {
+  cursor: move;
+}

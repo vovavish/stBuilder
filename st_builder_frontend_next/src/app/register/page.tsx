@@ -1,28 +1,49 @@
-import { FC, SyntheticEvent, useState } from "react";
+"use client";
+
+import { FC, FormEventHandler } from "react";
 
 import { useStore } from "@/hooks/useStore";
 
 import { RegisterUI } from "@/components/ui/pages/register";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
-export const Register: FC = () => {
+const Register: FC = () => {
   const { authStore } = useStore();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
 
-    authStore.signUp(email, password);
-  }
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    await authStore.signUp(email, password);
+
+    const res = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+      callbackUrlL: callbackUrl ?? "/",
+    });
+
+    if (res) {
+      router.push(callbackUrl);
+    } else {
+      console.error('error', res);
+    }
+  };
 
   return (
     <RegisterUI
-      email={email}
-      setEmail={setEmail}
-      password={password}
-      setPassword={setPassword}
       handleSubmit={handleSubmit}
     />
   )
 }
+
+export default Register;

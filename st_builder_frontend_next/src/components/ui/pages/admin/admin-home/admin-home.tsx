@@ -1,7 +1,7 @@
-import { API_URL } from "@/api";
+import { API_URL } from "@/lib/api";
 import { UserLayoutResponse } from "@/types/response/UserLayoutResponse";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import styles from "./admin-home.module.scss";
 
@@ -23,7 +23,7 @@ export const AdminHomeUI: FC<AdminHomeUIProps> = ({ layouts }) => {
         <ul className={styles.list}>
           {layouts.map((layout) => (
             <li key={layout.id} className={styles.listItem}>
-              <Link className={styles.listLink} to={`/admin/layout/${layout.id}`}>
+              <Link className={styles.listLink} href={`/admin/layout/${layout.id}`}>
                 {layout.path_to_image && (
                   <img
                     src={`${API_URL}${layout.path_to_image}`}

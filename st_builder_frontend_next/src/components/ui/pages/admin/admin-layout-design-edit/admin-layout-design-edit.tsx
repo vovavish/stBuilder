@@ -5,7 +5,6 @@ import debounce from "debounce";
 import { FC } from "react";
 import { Container } from '@/components/user-blocks/Container';
 import { Card, CardBottom, CardTop } from '@/components/user-blocks/Card';
-import { Button } from '@/components/user-blocks/Button';
 import { Text } from '@/components/user-blocks/Text';
 
 type AdminLayoutDesignEditUIProps = {
@@ -16,7 +15,7 @@ type AdminLayoutDesignEditUIProps = {
 export const AdminLayoutDesignEditUI: FC<AdminLayoutDesignEditUIProps> = ({layout, onUpdateLayoutData}) => {
   return (
     <Editor
-      resolver={{ Card, Button, Text, Container, CardTop, CardBottom }}
+      resolver={{ Card, Text, Container, CardTop, CardBottom }}
       onNodesChange={debounce((query) => {
         const json = query.serialize();
         onUpdateLayoutData(json);

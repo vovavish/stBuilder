@@ -18,7 +18,11 @@ export const Container: FC<ContainerProps> & {
 
   return (
     <div
-      ref={(ref) => ref && connect(drag(ref))}
+      ref={(ref) => {
+        if (ref) {
+         connect(drag(ref)); 
+        }
+      }}
       style={{ margin: '0', background, padding: `${paddingY}px ${paddingX}px` }}
     >
       {children}

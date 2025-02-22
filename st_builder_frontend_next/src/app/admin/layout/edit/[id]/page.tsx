@@ -1,24 +1,29 @@
+"use client";
+
 import { AdminLayoutDesignEditUI } from "@/components/ui/pages/admin";
 import { Preloader } from "@/components/ui/preloader";
 import { useStore } from "@/hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
+
 import lz from 'lzutf8';
 
-export const AdminLayoutDesignEdit: FC = observer(() => {
+const AdminLayoutDesignEdit: FC = observer(() => {
   const { userLayoutsStore } = useStore();
   
-  const { id } = useParams();
+  const router = useRouter();
+
+  const { id } = router.query;
 
   useEffect(() => {
-    userLayoutsStore.getUserLayoutById(id!);
+    userLayoutsStore.getUserLayoutById(id as string);
   }, [])
 
   const onUpdateLayoutData = (layoutData: string) => {
     const compressed = lz.encodeBase64(lz.compress(layoutData));
     if (compressed !== userLayoutsStore.userLayoutById?.layout_data) {
-      userLayoutsStore.updateUserLayoutDataById(id!, compressed);
+      userLayoutsStore.updateUserLayoutDataById(id as string, compressed);
     }
   }
 
@@ -32,3 +37,5 @@ export const AdminLayoutDesignEdit: FC = observer(() => {
 
   return <AdminLayoutDesignEditUI layout={userLayoutsStore.userLayoutById} onUpdateLayoutData={onUpdateLayoutData}/>;
 });
+
+export default AdminLayoutDesignEdit;

@@ -24,7 +24,7 @@ const SitesList = observer(() => {
     router.push(`/sites/edit/${siteId}`);
   };
 
-  if (userSitesStore.isLoading || !userSitesStore.userSites.length) {
+  if (userSitesStore.isLoading && !userSitesStore.userSites.length) {
     return <Preloader />;
   }
 

@@ -1,3 +1,3 @@
 export * from './admin-home';
-export * from './admin-layout';
-export * from './admin-layout-design-edit';
+export * from './layout/[id]';
+export * from './layout/edit/[id]';

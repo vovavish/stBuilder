@@ -1,10 +1,8 @@
-import { AuthOptions, Session } from "next-auth";
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { api } from "@/lib/api";
 import axios from "axios";
 import { AuthResponse } from "@/types/response/AuthResponse";
 import { jwtDecode } from "jwt-decode";
-import { signOut } from "next-auth/react";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -17,7 +15,7 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials) => {
         try {
           console.log(credentials);
-          const response = await axios.post("http://localhost:3000/auth/local/signin", {
+          const response = await axios.post<AuthResponse>("http://localhost:3000/auth/local/signin", {
             email: credentials?.email,
             password: credentials?.password,
           });
@@ -28,12 +26,13 @@ export const authOptions: AuthOptions = {
           
           if (userDto && access_token && refresh_token) {
             return {
-              id: userDto.id,
+              id: userDto.userId.toString(),
               email: userDto.email,
               name: userDto.username,
               accessToken: access_token,
               refreshToken: refresh_token,
               accessTokenExpires: decoded.exp,
+              roles: userDto.roles
             };
           }
           return null;
@@ -53,6 +52,7 @@ export const authOptions: AuthOptions = {
         token.email = user.email!;
         token.name = user.name!;
         token.accessTokenExpires = user.accessTokenExpires; // Время жизни accessToken (замените на значение с бэка)
+        token.roles = user.roles;
       }
 
       console.log('JWT METHOD');
@@ -98,6 +98,7 @@ export const authOptions: AuthOptions = {
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.email = token.email;
+      session.user.roles = token.roles;
 
       //console.log('SESSION METHOD', new Date(session.expires).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }));
 

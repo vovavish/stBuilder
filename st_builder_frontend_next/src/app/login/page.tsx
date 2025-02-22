@@ -1,8 +1,6 @@
 'use client';
 
-import { FC, FormEventHandler, SyntheticEvent, useState } from 'react';
-
-//import { useStore } from '@/hooks/useStore';
+import { FC, FormEventHandler } from 'react';
 
 import { LoginUI } from '@/components/ui/pages/login';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -14,11 +12,6 @@ const Login: FC = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-  //const { authStore } = useStore();
-
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -27,7 +20,7 @@ const Login: FC = () => {
       email: formData.get('email'),
       password: formData.get('password'),
       redirect: false,
-      callbackUrlL: callbackUrl ?? "/",
+      callbackUrl: callbackUrl ?? "/",
     });
 
     if (res) {
@@ -35,16 +28,10 @@ const Login: FC = () => {
     } else {
       console.error('error', res);
     }
-
-    //authStore.signIn(email, password);
   };
 
   return (
     <LoginUI
-      // email={email}
-      // setEmail={setEmail}
-      // password={password}
-      // setPassword={setPassword}
       handleSubmit={handleSubmit}
     />
   );

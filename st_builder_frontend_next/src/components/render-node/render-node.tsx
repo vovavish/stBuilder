@@ -6,6 +6,8 @@ import { Move, Trash, Settings } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@/hooks/useStore';
 
+import styles from './render-node.module.scss';
+
 type RenderNodeProps = {
   render: React.ReactElement;
 };
@@ -55,7 +57,7 @@ export const RenderNode: FC<RenderNodeProps> = observer(({ render }) => {
 
   useEffect(() => {
     if (dom) {
-      if (isActive || isHover) dom.classList.add('component-selected');
+      if (isActive) dom.classList.add('component-selected');
       else dom.classList.remove('component-selected');
     }
   }, [dom, isActive, isHover]);
@@ -68,11 +70,11 @@ export const RenderNode: FC<RenderNodeProps> = observer(({ render }) => {
 
   return (
     <>
-      {isHover && pos
+      {isActive && pos
         ? ReactDOM.createPortal(
             <div
               ref={currentRef}
-              className="px-2 py-2 text-white bg-primary absolute flex items-center gap-2"
+              className={styles.settingsItems}
               style={{
                 left: pos.left,
                 top: pos.top,
@@ -80,15 +82,24 @@ export const RenderNode: FC<RenderNodeProps> = observer(({ render }) => {
               }}
             >
               <h2 className="flex-1">{name}</h2>
-              <button onClick={() => (selectedNodeStore.selectedNode = selected)}><Settings /></button>
+              <button className={styles.itemPressed} onClick={() => (selectedNodeStore.selectedNode = selected)}>
+                <Settings />
+              </button>
               {moveable ? (
-                <button className="cursor-move" ref={(el) => drag(el as HTMLButtonElement)}>
+                <button
+                  className={styles.itemMoveble}
+                  ref={(el) => {
+                    if (el) {
+                      drag(el as HTMLButtonElement);
+                    }
+                  }}
+                >
                   <Move />
                 </button>
               ) : null}
               {deletable ? (
                 <button
-                  className="cursor-pointer"
+                  className={styles.itemPressed}
                   onMouseDown={(e: React.MouseEvent) => {
                     e.stopPropagation();
                     actions.delete(id);

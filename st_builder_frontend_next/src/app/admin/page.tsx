@@ -1,10 +1,12 @@
+"use client";
+
 import { AdminHomeUI } from '@/components/ui/pages/admin';
 import { Preloader } from '@/components/ui/preloader';
 import { useStore } from '@/hooks/useStore';
 import { FC, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
-export const AdminHome: FC = observer(() => {
+const AdminHome: FC = observer(() => {
   const { userLayoutsStore } = useStore();
 
   useEffect(() => {
@@ -17,3 +19,5 @@ export const AdminHome: FC = observer(() => {
 
   return <AdminHomeUI layouts={userLayoutsStore.userLayouts}/>;
 });
+
+export default AdminHome;
