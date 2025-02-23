@@ -4,7 +4,7 @@ import ContentEditable from 'react-contenteditable';
 
 import { useNode } from '@craftjs/core';
 
-interface TextProps {
+export interface TextProps {
   text: string;
   fontSize: number;
   textAlign: string;
