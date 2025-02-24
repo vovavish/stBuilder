@@ -1,6 +1,5 @@
 import { useNode } from '@craftjs/core';
 import { FC } from 'react';
-import ReactColorPicker from 'react-input-color';
 
 interface ContainerProps {
   background?: string;
@@ -41,9 +40,9 @@ export const ContainerSettings = () => {
     <div>
       <div className="mb-4">
         <label className="block text-sm font-semibold mb-2">Background</label>
-        <ReactColorPicker
-          initialValue={background || '#000'}
-          onChange={(color) => setProp((props: ContainerProps) => (props.background = color.hex))}
+        <input
+          type="color"
+          onChange={(color) => setProp((props: ContainerProps) => (props.background = color.target.value))}
         />
       </div>
        {/* Padding Settings */}

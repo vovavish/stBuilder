@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
         token.email = user.email!;
         token.name = user.name!;
-        token.accessTokenExpires = user.accessTokenExpires; // Время жизни accessToken (замените на значение с бэка)
+        token.accessTokenExpires = user.accessTokenExpires;
         token.roles = user.roles;
       }
 
@@ -78,7 +78,7 @@ export const authOptions: AuthOptions = {
             ...token,
             accessToken: access_token,
             refreshToken: refresh_token,
-            accessTokenExpires: decoded.exp, // Обновляем время жизни
+            accessTokenExpires: decoded.exp,
           };
         } catch (error) {
           console.error("Error refreshing access token:", error);

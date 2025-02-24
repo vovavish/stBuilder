@@ -1,8 +1,9 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.04);
+  z-index: 9999;
 }
 
 .settingsPanel {
@@ -75,7 +76,6 @@
   }
 }
 
-// Стили для общих элементов настроек
 .settingsItem {
   margin-bottom: 1.5rem;
 

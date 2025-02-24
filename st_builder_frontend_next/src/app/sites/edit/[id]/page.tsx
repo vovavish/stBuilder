@@ -10,8 +10,6 @@ import lz from 'lzutf8';
 
 import debounce from 'debounce';
 
-import { Container } from '@/components/user-blocks/Container';
-import { Card, CardBottom, CardTop } from '@/components/user-blocks/Card';
 import { Text } from '@/components/user-blocks/Text';
 import { useStore } from '@/hooks/useStore';
 import { Preloader } from '@/components/ui/preloader';
@@ -19,6 +17,10 @@ import { observer } from 'mobx-react-lite';
 import { EditorForLoading } from '@/components/editor-with-loading/editor-with-loading';
 import { RenderNode } from '@/components/render-node';
 import { Header_001 } from '@/components/user-blocks/Headers/header-001/header-001';
+import { Title_001 } from '@/components/user-blocks/Titels/title-001/title-001';
+import { Advantages_001 } from '@/components/user-blocks/Advantages/advantages-001/advantages-001';
+import { Container } from '@/components/user-blocks/Container';
+import { Model_3D_001 } from '@/components/user-blocks/3D-Models/3d-model-001/3d-model-001';
 
 const SiteEdit = observer(() => {
   const { userSitesStore } = useStore();
@@ -40,7 +42,7 @@ const SiteEdit = observer(() => {
   return (
     <div className='craftjs-renderer flex-1 h-full w-full transition overflow-auto'>
       <Editor
-        resolver={{ Card, Text, Header_001, Container, CardTop, CardBottom }}
+        resolver={{ Text, Header_001, Title_001, Advantages_001, Model_3D_001, Container }}
         onNodesChange={debounce((query) => {
           const json = query.serialize();
           const compressed = lz.encodeBase64(lz.compress(json));
