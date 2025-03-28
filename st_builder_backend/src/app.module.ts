@@ -7,9 +7,10 @@ import { UserSitesModule } from './userSites/userSites.module';
 import { UserLayoutsModule } from './userLayouts/userLayouts.module';
 import { RolesGuard } from './roles/roles.guard';
 import { UploadFileModule } from './upload-file/upload-file.module';
+import { PublishedSitesModule } from './publicSItes/published-site.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserSitesModule, UserLayoutsModule, UploadFileModule],
+  imports: [AuthModule, PrismaModule, UserSitesModule, UserLayoutsModule, UploadFileModule, PublishedSitesModule],
   controllers: [],
   providers: [
     {

@@ -1,3 +1,4 @@
+
 import { useState, useEffect, FC } from 'react';
 
 import ContentEditable from 'react-contenteditable';
@@ -42,7 +43,9 @@ export const Text: FC<TextProps> & { craft?: { props: typeof TextDefaultProps, r
   return (
     <div
       {...props}
-      ref={(ref) => ref && connect(drag(ref))}
+      ref={(ref) => {if (ref) {
+         connect(drag(ref))
+      }}}
       onClick={() => selected && setEditable(true)}
     >
       <ContentEditable

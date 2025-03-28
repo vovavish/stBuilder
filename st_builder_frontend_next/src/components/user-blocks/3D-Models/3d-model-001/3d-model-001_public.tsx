@@ -98,12 +98,7 @@ const ModelRenderer: FC<{
 };
 
 // Основной компонент блока
-export const Model_3D_001: FC<Model_3D_001Props> & {
-  craft?: {
-    props: typeof Product3DBlockDefaultProps;
-    related: { settings: typeof Product3DBlockSettings };
-  };
-} = ({
+export const Model_3D_001_public: FC<Model_3D_001Props> = ({
   modelUrl,
   mtlUrl,
   textureUrl,
@@ -114,22 +109,10 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
   directionalLightIntensity,
   ...props
 }) => {
-  const {
-    connectors: { connect, drag },
-    selected,
-  } = useNode((state) => ({
-    selected: state.events.selected,
-  }));
-
   console.log('Passing modelUrl to ModelRenderer:', modelUrl);
 
   return (
     <div
-      ref={(ref) => {
-        if (ref) {
-          connect(drag(ref));
-        }
-      }}
       style={{
         width: '100%',
         height,
@@ -149,119 +132,4 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
       </Canvas>
     </div>
   );
-};
-
-// Панель настроек
-const Product3DBlockSettings = () => {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
-
-  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      console.log('Generated URL:', url); // Должен быть один blob: URL
-      setProp((props: Model_3D_001Props) => {
-        props.modelUrl = url;
-        props.modelType = file.name.endsWith('.stl') ? 'stl' : 'obj';
-      });
-    }
-  };
-
-  const handleMtlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setProp((props: Model_3D_001Props) => (props.mtlUrl = url));
-    }
-  };
-
-  const handleTextureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setProp((props: Model_3D_001Props) => (props.textureUrl = url));
-    }
-  };
-
-  return (
-    <div className="product-3d-settings">
-      <label className="block text-sm font-semibold mb-2">Model File (.stl/.obj)</label>
-      <input type="file" accept=".stl,.obj" onChange={handleModelChange} />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">MTL File (.mtl)</label>
-      <input type="file" accept=".mtl" onChange={handleMtlChange} />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">Texture File (.jpg/.png)</label>
-      <input type="file" accept=".jpg,.png" onChange={handleTextureChange} />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">Height</label>
-      <input
-        type="text"
-        value={props.height}
-        onChange={(e) => setProp((props: Model_3D_001Props) => (props.height = e.target.value))}
-      />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">Background Color</label>
-      <input
-        type="color"
-        value={props.backgroundColor}
-        onChange={(e) =>
-          setProp((props: Model_3D_001Props) => (props.backgroundColor = e.target.value))
-        }
-      />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">Ambient Light</label>
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        value={props.ambientLightIntensity}
-        onChange={(e) =>
-          setProp(
-            (props: Model_3D_001Props) =>
-              (props.ambientLightIntensity = parseFloat(e.target.value)),
-          )
-        }
-      />
-
-      <label className="block text-sm font-semibold mt-4 mb-2">Directional Light</label>
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        value={props.directionalLightIntensity}
-        onChange={(e) =>
-          setProp(
-            (props: Model_3D_001Props) =>
-              (props.directionalLightIntensity = parseFloat(e.target.value)),
-          )
-        }
-      />
-    </div>
-  );
-};
-
-export const Product3DBlockDefaultProps = {
-  modelUrl: '',
-  mtlUrl: '',
-  textureUrl: '',
-  modelType: 'stl',
-  height: '500px',
-  backgroundColor: '#f0f0f0',
-  ambientLightIntensity: 0.5,
-  directionalLightIntensity: 1.0,
-};
-
-Model_3D_001.craft = {
-  props: Product3DBlockDefaultProps,
-  related: {
-    settings: Product3DBlockSettings,
-  },
 };

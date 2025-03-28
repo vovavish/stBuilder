@@ -48,6 +48,7 @@ model UsersSites {
   site_data    String
   site_address String?
   site_name    String
+  publishedSites PublishedSites? // Связь с опубликованными версиями
 }
 
 enum Role {
@@ -59,4 +60,13 @@ model File {
   id        Int      @id @default(autoincrement())
   path      String
   createdAt DateTime @default(now())
+}
+
+model PublishedSites {
+  id           Int        @id @default(autoincrement())
+  userSite     UsersSites @relation(fields: [user_site_id], references: [id])
+  user_site_id Int        @unique
+  publishedAt  DateTime   @default(now()) // Дата публикации
+  site_data    String     // Данные опубликованной версии сайта
+  site_address String     @unique // Уникальный адрес опубликованного сайта (например, поддомен)
 }
