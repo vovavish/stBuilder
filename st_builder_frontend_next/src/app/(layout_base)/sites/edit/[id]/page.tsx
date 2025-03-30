@@ -10,7 +10,7 @@ import lz from 'lzutf8';
 
 import debounce from 'debounce';
 
-import { Text } from '@/components/user-blocks/Text';
+import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
 import { useStore } from '@/hooks/useStore';
 import { Preloader } from '@/components/ui/preloader';
 import { observer } from 'mobx-react-lite';
@@ -21,6 +21,7 @@ import { Title_001 } from '@/components/user-blocks/Titels/title-001/title-001';
 import { Advantages_001 } from '@/components/user-blocks/Advantages/advantages-001/advantages-001';
 import { Container } from '@/components/user-blocks/Container';
 import { Model_3D_001 } from '@/components/user-blocks/3D-Models/3d-model-001/3d-model-001';
+import { DXF_001 } from '@/components/user-blocks/CAD/DXF/dxf-001/dxf-001';
 
 const SiteEdit = observer(() => {
   const { userSitesStore } = useStore();
@@ -42,7 +43,7 @@ const SiteEdit = observer(() => {
   return (
     <div className='craftjs-renderer flex-1 h-full w-full transition overflow-auto'>
       <Editor
-        resolver={{ Text, Header_001, Title_001, Advantages_001, Model_3D_001, Container }}
+        resolver={{ Text_001, Header_001, Title_001, Advantages_001, Model_3D_001, Container, DXF_001 }}
         onNodesChange={debounce((query) => {
           const json = query.serialize();
           const compressed = lz.encodeBase64(lz.compress(json));

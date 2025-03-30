@@ -12,8 +12,11 @@
     "@craftjs/core": "^0.2.12",
     "@react-three/drei": "^10.0.2",
     "@react-three/fiber": "^9.0.4",
+    "@types/three": "^0.175.0",
     "axios": "^1.7.9",
     "debounce": "^2.2.0",
+    "dxf-parser": "^1.1.2",
+    "dxf-viewer": "^1.0.42",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "lzutf8": "^0.6.3",
@@ -24,7 +27,9 @@
     "react": "^19.0.0",
     "react-contenteditable": "^3.3.7",
     "react-dom": "^19.0.0",
-    "three": "^0.173.0"
+    "three": "^0.175.0",
+    "three-dxf": "github:vovavish/three-dxf#master",
+    "three-dxf-viewer": "^1.0.36"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -33,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^15.1.7",
+    "patch-package": "^8.0.0",
     "sass": "^1.84.0",
     "typescript": "^5"
   }

@@ -1,7 +1,7 @@
 import { useNode } from '@craftjs/core';
 import { FC } from 'react';
 
-interface ContainerProps {
+export interface ContainerProps {
   background?: string;
   paddingX?: number;
   paddingY?: number;

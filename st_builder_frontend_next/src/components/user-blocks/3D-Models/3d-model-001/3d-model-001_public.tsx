@@ -2,9 +2,6 @@
 import React, { useState, useRef, useEffect, FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { useNode } from '@craftjs/core';
-// import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';

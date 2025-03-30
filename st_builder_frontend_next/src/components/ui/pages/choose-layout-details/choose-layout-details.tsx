@@ -3,7 +3,7 @@ import { Editor } from '@craftjs/core';
 import { FC } from 'react';
 import { Container } from '@/components/user-blocks/Container';
 import { Card, CardBottom, CardTop } from '@/components/user-blocks/Card';
-import { Text } from '@/components/user-blocks/Text';
+import { Text } from '@/components/user-blocks/Text/text-001/text-001';
 import { EditorPreviewer } from '@/components/editor-previewer';
 
 import styles from './choose-layout-details.module.scss';

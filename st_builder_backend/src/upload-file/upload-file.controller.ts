@@ -11,8 +11,8 @@ export class UploadFileController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const filePath = `/uploads/${file.filename}`;
-    // Сохранить информацию в базе данных через Prisma
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const filePath = `${baseUrl}/uploads/${file.filename}`;
     await this.uploadService.saveFilePath(filePath);
     return { filePath };
   }

@@ -3,12 +3,10 @@ import React, { useState, useRef, useEffect, FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useNode } from '@craftjs/core';
-// import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';
-
+import { api } from '@/lib/api';
 import * as THREE from 'three';
 
 export interface Model_3D_001Props {
@@ -50,7 +48,6 @@ const ModelRenderer: FC<{
 
         if (mtlUrl) {
           const mtlLoader = new MTLLoader();
-          // Устанавливаем путь для текстур, если он предоставлен
           if (textureUrl) {
             mtlLoader.setPath(textureUrl.substring(0, textureUrl.lastIndexOf('/') + 1));
           }
@@ -62,7 +59,6 @@ const ModelRenderer: FC<{
             });
           });
         } else if (textureUrl) {
-          // Если MTL нет, но есть текстура
           const textureLoader = new THREE.TextureLoader();
           textureLoader.load(textureUrl, (texture) => {
             const material = new THREE.MeshStandardMaterial({ map: texture });
@@ -76,7 +72,6 @@ const ModelRenderer: FC<{
             });
           });
         } else {
-          // Без MTL и текстур
           objLoader.load(url, (obj) => {
             setModel(obj);
           });
@@ -97,7 +92,6 @@ const ModelRenderer: FC<{
   return <primitive ref={meshRef} object={model} scale={[0.1, 0.1, 0.1]} />;
 };
 
-// Основной компонент блока
 export const Model_3D_001: FC<Model_3D_001Props> & {
   craft?: {
     props: typeof Product3DBlockDefaultProps;
@@ -151,7 +145,6 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
   );
 };
 
-// Панель настроек
 const Product3DBlockSettings = () => {
   const {
     actions: { setProp },
@@ -160,31 +153,74 @@ const Product3DBlockSettings = () => {
     props: node.data.props,
   }));
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleModelChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      console.log('Generated URL:', url); // Должен быть один blob: URL
-      setProp((props: Model_3D_001Props) => {
-        props.modelUrl = url;
-        props.modelType = file.name.endsWith('.stl') ? 'stl' : 'obj';
-      });
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const uploadedFileUrl = response.data.filePath; // Используем filePath, как в вашем контроллере
+
+        setProp((props: Model_3D_001Props) => {
+          props.modelUrl = uploadedFileUrl;
+          props.modelType = file.name.endsWith('.stl') ? 'stl' : 'obj';
+        });
+        
+        console.log('File uploaded successfully, URL:', uploadedFileUrl);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     }
   };
 
-  const handleMtlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMtlChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setProp((props: Model_3D_001Props) => (props.mtlUrl = url));
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const uploadedFileUrl = response.data.filePath;
+
+        setProp((props: Model_3D_001Props) => (props.mtlUrl = uploadedFileUrl));
+      } catch (error) {
+        console.error('Error uploading MTL file:', error);
+      }
     }
   };
 
-  const handleTextureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTextureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setProp((props: Model_3D_001Props) => (props.textureUrl = url));
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const uploadedFileUrl = response.data.filePath;
+
+        setProp((props: Model_3D_001Props) => (props.textureUrl = uploadedFileUrl));
+      } catch (error) {
+        console.error('Error uploading texture file:', error);
+      }
     }
   };
 
@@ -192,18 +228,40 @@ const Product3DBlockSettings = () => {
     <div className="product-3d-settings">
       <label className="block text-sm font-semibold mb-2">Model File (.stl/.obj)</label>
       <input type="file" accept=".stl,.obj" onChange={handleModelChange} />
+      <label className="block text-sm font-semibold mt-2 mb-1">Model URL</label>
+      <input
+        type="text"
+        value={props.modelUrl}
+        onChange={(e) => setProp((props: Model_3D_001Props) => (props.modelUrl = e.target.value))}
+        className="w-full p-1 border rounded"
+      />
 
       <label className="block text-sm font-semibold mt-4 mb-2">MTL File (.mtl)</label>
       <input type="file" accept=".mtl" onChange={handleMtlChange} />
+      <label className="block text-sm font-semibold mt-2 mb-1">MTL URL</label>
+      <input
+        type="text"
+        value={props.mtlUrl}
+        onChange={(e) => setProp((props: Model_3D_001Props) => (props.mtlUrl = e.target.value))}
+        className="w-full p-1 border rounded"
+      />
 
       <label className="block text-sm font-semibold mt-4 mb-2">Texture File (.jpg/.png)</label>
       <input type="file" accept=".jpg,.png" onChange={handleTextureChange} />
+      <label className="block text-sm font-semibold mt-2 mb-1">Texture URL</label>
+      <input
+        type="text"
+        value={props.textureUrl}
+        onChange={(e) => setProp((props: Model_3D_001Props) => (props.textureUrl = e.target.value))}
+        className="w-full p-1 border rounded"
+      />
 
       <label className="block text-sm font-semibold mt-4 mb-2">Height</label>
       <input
         type="text"
         value={props.height}
         onChange={(e) => setProp((props: Model_3D_001Props) => (props.height = e.target.value))}
+        className="w-full p-1 border rounded"
       />
 
       <label className="block text-sm font-semibold mt-4 mb-2">Background Color</label>
@@ -252,7 +310,7 @@ export const Product3DBlockDefaultProps = {
   modelUrl: '',
   mtlUrl: '',
   textureUrl: '',
-  modelType: 'stl',
+  modelType: 'stl' as const,
   height: '500px',
   backgroundColor: '#f0f0f0',
   ambientLightIntensity: 0.5,

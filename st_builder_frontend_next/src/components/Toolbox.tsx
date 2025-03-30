@@ -1,9 +1,10 @@
 import { ROOT_NODE, useEditor } from '@craftjs/core';
-import { Text } from '@/components/user-blocks/Text';
+import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
 import { Header_001 } from './user-blocks/Headers/header-001/header-001';
 import { Title_001 } from './user-blocks/Titels/title-001/title-001';
 import { Advantages_001 } from './user-blocks/Advantages/advantages-001/advantages-001';
 import { Model_3D_001 } from './user-blocks/3D-Models/3d-model-001/3d-model-001';
+import { DXF_001 } from './user-blocks/CAD/DXF/dxf-001/dxf-001';
 
 type ComponentProps<T> = T extends React.ComponentType<infer P> ? P : never;
 
@@ -25,7 +26,7 @@ export const Toolbox = () => {
         <div>
           <button
             onClick={() =>
-              handleClick(Text, {
+              handleClick(Text_001, {
                 text: `lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
                 fontSize: 20,
                 paggingY: 100,
@@ -37,7 +38,7 @@ export const Toolbox = () => {
               if (ref)
                 connectors.create(
                   ref,
-                  <Text
+                  <Text_001
                     text={`lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`}
                     fontSize={20}
                     paggingY={100}
@@ -47,7 +48,7 @@ export const Toolbox = () => {
                 );
             }}
           >
-            Текст
+            Text_001
           </button>
         </div>
         <div>
@@ -210,6 +211,31 @@ export const Toolbox = () => {
             }}
           >
             Model_3D_001
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={() =>
+              handleClick(DXF_001, {
+                dxfUrl: '',
+                backgroundColor: '#ffffff',
+                width: '800px',
+                height: '600px',
+            })}
+            ref={(ref) => {
+              if (ref)
+                connectors.create(
+                  ref,
+                  <DXF_001
+                    dxfUrl={''}
+                    height={'500px'}
+                    backgroundColor={'#f0f0f0'}
+                    width={'800px'}
+                  />,
+                );
+            }}
+          >
+            DXF_001
           </button>
         </div>
       </div>
