@@ -9,7 +9,7 @@ export class PublishedSitesController {
   constructor(private readonly publishedSitesService: PublishedSitesService) {}
 
   @Post('publish')
-  @UseGuards(AtGuard) // Защищаем эндпоинт авторизацией
+  @UseGuards(AtGuard)
   async publishSite(
     @Body('userSiteId') userSiteId: number,
     @Body('siteAddress') siteAddress: string,

@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const cors = {
-    origin: ['http://localhost:5173', 'http://localhost:3001', 'http://stbuilder.ru:3001', 'http://vovavish.ehstbuilder.ru:3001'],
+    origin: ['http://localhost:5173', 'http://localhost:3001', 'http://stbuilder.ru:3001', 'http://vovavish2.stbuilder.ru:3001'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   };

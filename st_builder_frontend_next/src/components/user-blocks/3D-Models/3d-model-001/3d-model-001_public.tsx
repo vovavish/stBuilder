@@ -6,18 +6,9 @@ import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';
 
-import * as THREE from 'three';
+import { Model_3D_001Props } from './3d-model-001';
 
-export interface Model_3D_001Props {
-  modelUrl: string;
-  mtlUrl: string;
-  textureUrl: string;
-  modelType: 'stl' | 'obj';
-  height: string;
-  backgroundColor: string;
-  ambientLightIntensity: number;
-  directionalLightIntensity: number;
-}
+import * as THREE from 'three';
 
 const ModelRenderer: FC<{
   url: string;
@@ -40,6 +31,7 @@ const ModelRenderer: FC<{
             roughness: 0.5,
           });
           const mesh = new THREE.Mesh(geometry, material);
+          mesh.rotation.x = -Math.PI / 2;
           setModel(mesh);
         });
       } else if (type === 'obj') {
@@ -47,7 +39,6 @@ const ModelRenderer: FC<{
 
         if (mtlUrl) {
           const mtlLoader = new MTLLoader();
-          // Устанавливаем путь для текстур, если он предоставлен
           if (textureUrl) {
             mtlLoader.setPath(textureUrl.substring(0, textureUrl.lastIndexOf('/') + 1));
           }
@@ -55,6 +46,7 @@ const ModelRenderer: FC<{
             materials.preload();
             objLoader.setMaterials(materials);
             objLoader.load(url, (obj) => {
+              obj.rotation.x = -Math.PI / 2;
               setModel(obj);
             });
           });
@@ -69,12 +61,14 @@ const ModelRenderer: FC<{
                   child.material = material;
                 }
               });
+              obj.rotation.x = -Math.PI / 2;
               setModel(obj);
             });
           });
         } else {
           // Без MTL и текстур
           objLoader.load(url, (obj) => {
+            obj.rotation.x = -Math.PI / 2;
             setModel(obj);
           });
         }
@@ -82,12 +76,6 @@ const ModelRenderer: FC<{
     };
     loadModel();
   }, [url, mtlUrl, textureUrl, type]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005;
-    }
-  });
 
   if (!model) return null;
 
@@ -104,6 +92,9 @@ export const Model_3D_001_public: FC<Model_3D_001Props> = ({
   backgroundColor,
   ambientLightIntensity,
   directionalLightIntensity,
+  cameraX,
+  cameraY,
+  cameraZ,
   ...props
 }) => {
   console.log('Passing modelUrl to ModelRenderer:', modelUrl);
@@ -119,7 +110,7 @@ export const Model_3D_001_public: FC<Model_3D_001Props> = ({
       }}
     >
       <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 5], fov: 50 }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+        <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
         <ambientLight intensity={ambientLightIntensity} />
         <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
         <React.Suspense fallback={null}>

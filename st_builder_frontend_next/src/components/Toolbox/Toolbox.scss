@@ -1,0 +1,114 @@
+.toolbox {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+
+  &--open {
+    transform: translateX(0);
+  }
+
+  &--closed {
+    transform: translateX(-100%);
+  }
+
+  &__title {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: grab;
+    text-align: left;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+
+    &:hover {
+      background-color: #f0f0f0;
+      border-color: #ccc;
+    }
+
+    &:active {
+      cursor: grabbing;
+      background-color: #e0e0e0;
+    }
+  }
+
+  &__section {
+    margin-bottom: 15px;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 15px;
+    background: #e9e9e9;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+
+    &:hover {
+      background: #ddd;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 10px;
+  }
+}
+
+.toolbox-toggle {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 1001;
+  padding: 8px 15px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}

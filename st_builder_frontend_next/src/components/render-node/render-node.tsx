@@ -78,7 +78,7 @@ export const RenderNode: FC<RenderNodeProps> = observer(({ render }) => {
               style={{
                 left: pos.left,
                 top: pos.top,
-                zIndex: 9999,
+                zIndex: 999,
               }}
             >
               <h2 className="flex-1">{name}</h2>

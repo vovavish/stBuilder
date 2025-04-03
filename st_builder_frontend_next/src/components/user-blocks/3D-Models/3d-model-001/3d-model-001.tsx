@@ -18,6 +18,9 @@ export interface Model_3D_001Props {
   backgroundColor: string;
   ambientLightIntensity: number;
   directionalLightIntensity: number;
+  cameraX: number;
+  cameraY: number;
+  cameraZ: number;
 }
 
 const ModelRenderer: FC<{
@@ -41,6 +44,7 @@ const ModelRenderer: FC<{
             roughness: 0.5,
           });
           const mesh = new THREE.Mesh(geometry, material);
+          mesh.rotation.x = -Math.PI / 2;
           setModel(mesh);
         });
       } else if (type === 'obj') {
@@ -55,6 +59,7 @@ const ModelRenderer: FC<{
             materials.preload();
             objLoader.setMaterials(materials);
             objLoader.load(url, (obj) => {
+              obj.rotation.x = -Math.PI / 2;
               setModel(obj);
             });
           });
@@ -68,11 +73,13 @@ const ModelRenderer: FC<{
                   child.material = material;
                 }
               });
+              obj.rotation.x = -Math.PI / 2;
               setModel(obj);
             });
           });
         } else {
           objLoader.load(url, (obj) => {
+            obj.rotation.x = -Math.PI / 2;
             setModel(obj);
           });
         }
@@ -80,12 +87,6 @@ const ModelRenderer: FC<{
     };
     loadModel();
   }, [url, mtlUrl, textureUrl, type]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005;
-    }
-  });
 
   if (!model) return null;
 
@@ -106,6 +107,9 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
   backgroundColor,
   ambientLightIntensity,
   directionalLightIntensity,
+  cameraX,
+  cameraY,
+  cameraZ,
   ...props
 }) => {
   const {
@@ -132,8 +136,11 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
         overflow: 'hidden',
       }}
     >
-      <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 5], fov: 50 }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+      <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}>
+        <PerspectiveCamera 
+          makeDefault 
+          position={[cameraX, cameraY, cameraZ]} 
+        />
         <ambientLight intensity={ambientLightIntensity} />
         <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
         <React.Suspense fallback={null}>
@@ -302,6 +309,54 @@ const Product3DBlockSettings = () => {
           )
         }
       />
+      <label className="block text-sm font-semibold mt-4 mb-2">Camera Position</label>
+      
+      <div className="grid grid-cols-3 gap-2">
+        <div>
+          <label className="block text-sm">X</label>
+          <input
+            type="number"
+            step="0.1"
+            value={props.cameraX}
+            onChange={(e) => 
+              setProp((props: Model_3D_001Props) => 
+                (props.cameraX = parseFloat(e.target.value))
+              )
+            }
+            className="w-full p-1 border rounded"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm">Y</label>
+          <input
+            type="number"
+            step="0.1"
+            value={props.cameraY}
+            onChange={(e) => 
+              setProp((props: Model_3D_001Props) => 
+                (props.cameraY = parseFloat(e.target.value))
+              )
+            }
+            className="w-full p-1 border rounded"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm">Z</label>
+          <input
+            type="number"
+            step="0.1"
+            value={props.cameraZ}
+            onChange={(e) => 
+              setProp((props: Model_3D_001Props) => 
+                (props.cameraZ = parseFloat(e.target.value))
+              )
+            }
+            className="w-full p-1 border rounded"
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -315,6 +370,9 @@ export const Product3DBlockDefaultProps = {
   backgroundColor: '#f0f0f0',
   ambientLightIntensity: 0.5,
   directionalLightIntensity: 1.0,
+  cameraX: 0,
+  cameraY: 0,
+  cameraZ: 5,
 };
 
 Model_3D_001.craft = {

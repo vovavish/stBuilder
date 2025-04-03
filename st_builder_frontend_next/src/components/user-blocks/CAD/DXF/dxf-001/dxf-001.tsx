@@ -5,6 +5,8 @@ import { DxfViewer, DxfViewerOptions } from 'dxf-viewer';
 import { Color } from 'three';
 import { api } from '@/lib/api';
 
+import styles from '../../../settings-common/settings-common.module.scss';
+
 export interface DXF_001Props {
   dxfUrl: string;
   backgroundColor: string;
@@ -12,7 +14,7 @@ export interface DXF_001Props {
   height: string;
 }
 
-const DXFRenderer: FC<{ url: string; width: string; height: string }> = ({ url, width, height }) => {
+export const DXFRenderer: FC<{ url: string; width: string; height: string }> = ({ url, width, height }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<DxfViewer | null>(null);
 
@@ -42,12 +44,12 @@ const DXFRenderer: FC<{ url: string; width: string; height: string }> = ({ url, 
         viewerRef.current = new DxfViewer(containerRef.current!, options);
         viewerRef.current.GetCamera().isOrthographicCamera = false;
         viewerRef.current.GetCamera().enableZoom = false;
-
+        console.log('Loading DXF from:', url); // Логируем URL
         await viewerRef.current.Load({
           url,
-          fonts: ['/fonts/T-FLEX Type A.TTF'],
+          fonts: ['http://localhost:3000/uploads/T-FLEX Type A.TTF'],
           progressCbk: () => {},
-          workerFactory: () => new Worker(new URL('./DxfViewerWorker', import.meta.url)),
+          workerFactory: () => new Worker(new URL('../DxfViewerWorker', import.meta.url)),
         });
       } catch (err) {
         console.error('Error loading DXF:', err);
@@ -135,28 +137,28 @@ const DXFBlockSettings = () => {
     <div className="dxf-settings">
       <label className="block text-sm font-semibold mb-2">DXF File (.dxf)</label>
       <input type="file" accept=".dxf" onChange={handleDxfChange} />
-      <label className="block text-sm font-semibold mt-2 mb-1">DXF URL</label>
+      <label className={styles.settings_label}>DXF URL</label>
       <input
         type="text"
         value={props.dxfUrl}
         onChange={(e) => setProp((props: DXF_001Props) => (props.dxfUrl = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mt-4 mb-2">Width</label>
+      <label className={styles.settings_label}>Width</label>
       <input
         type="text"
         value={props.width}
         onChange={(e) => setProp((props: DXF_001Props) => (props.width = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mt-4 mb-2">Height</label>
+      <label className={styles.settings_label}>Height</label>
       <input
         type="text"
         value={props.height}
         onChange={(e) => setProp((props: DXF_001Props) => (props.height = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mt-4 mb-2">Background Color</label>
+      <label className={styles.settings_label}>Background Color</label>
       <input
         type="color"
         value={props.backgroundColor}

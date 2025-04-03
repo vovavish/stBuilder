@@ -8,7 +8,12 @@ import { Text_001_public } from '@/components/user-blocks/Text/text-001/text-001
 import { Header_001_public } from '@/components/user-blocks/Headers/header-001/header-001_public';
 import { Advantages_001_public } from '@/components/user-blocks/Advantages/advantages-001/advantages-001_public';
 
+import ApiPublishedUserSitesController from '@/lib/ApiPublishUserSitesController';
+
 import './global.css';
+import { DXF_001_public } from '@/components/user-blocks/CAD/DXF/dxf-001/dxf-001_public';
+import { DXF_002_public } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002_public';
+import { DXF_003_public } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003_public';
 
 interface CraftNode {
   type: { resolvedName: string };
@@ -27,10 +32,13 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   Title_001: Title_001_public,
   Header_001: Header_001_public,
   Model_3D_001: Model_3D_001_public,
+  DXF_001: DXF_001_public,
+  DXF_002: DXF_002_public,
+  DXF_003: DXF_003_public,
 };
 
 async function getSiteData(siteId: string): Promise<SiteData | null> {
-  const site_data = await fetch('http://localhost:3000/published-sites/' + siteId).then((res) => res.json());
+  const site_data = await ApiPublishedUserSitesController.getPublishedSiteByAddress(siteId);
   console.log(site_data);
   return site_data;
 }

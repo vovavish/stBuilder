@@ -6,7 +6,7 @@ import { Frame } from '@craftjs/core';
 
 import lz from 'lzutf8';
 
-import { Toolbox } from '@/components/Toolbox';
+import { Toolbox } from '../Toolbox/Toolbox';
 import { SettingsPanel } from '@/components/settings-panel/settings-panel';
 import { Container } from '../user-blocks/Container';
 // import { Topbar } from '@/components/Topbar';
