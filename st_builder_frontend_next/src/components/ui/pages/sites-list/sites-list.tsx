@@ -14,7 +14,7 @@ export const SitesListUI: FC<SitesListUIProps> = ({ sitesList, onEditSiteClick }
     <div className={styles.container}>
       <h1 className={styles.title}>Ваши сайты</h1>
       <Link
-        href='/sites/choose-layout'
+        href='/sites/create-site'
         className={styles.createButton}
       >
         Создать новый сайт

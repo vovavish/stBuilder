@@ -10,12 +10,12 @@ import lz from 'lzutf8';
 
 import debounce from 'debounce';
 
-import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
 import { useStore } from '@/hooks/useStore';
 import { Preloader } from '@/components/ui/preloader';
 import { observer } from 'mobx-react-lite';
 import { EditorForLoading } from '@/components/editor-with-loading/editor-with-loading';
 import { RenderNode } from '@/components/render-node';
+import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
 import { Header_001 } from '@/components/user-blocks/Headers/header-001/header-001';
 import { Title_001 } from '@/components/user-blocks/Titels/title-001/title-001';
 import { Advantages_001 } from '@/components/user-blocks/Advantages/advantages-001/advantages-001';
@@ -26,20 +26,22 @@ import { DXF_002 } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003';
 
 const SiteEdit = observer(() => {
-  const { userSitesStore } = useStore();
+  const { userSitesStore, userPagesStore } = useStore();
 
   const params = useParams();
-  
+
+  const pageId = params.pageId;
+
   useEffect(() => {
-    userSitesStore.getUserSiteById(params.id! as string);
+    userPagesStore.getPageById(Number(pageId!));
   }, [])
 
-  if (userSitesStore.isLoading) {
+  if (userPagesStore.isLoading) {
     return <Preloader />;
   }
 
-  if (!userSitesStore.userSiteById) {
-    return <div className="mx-10">Такого сайта нет</div>;
+  if (!userPagesStore.userPageById) {
+    return <div className="mx-10">Такой страницы нет</div>;
   }
 
   return (
@@ -50,12 +52,12 @@ const SiteEdit = observer(() => {
           const json = query.serialize();
           const compressed = lz.encodeBase64(lz.compress(json));
           if (compressed !== userSitesStore.userSiteById?.site_data) {
-            userSitesStore.updateSiteDataById(params.id! as string, compressed);
+            userPagesStore.updatePage(Number(pageId!), undefined, undefined, compressed);
           }
         }, 1000)}
         onRender={RenderNode}
       >
-        <EditorForLoading jsonData={userSitesStore.userSiteById.site_data}/>
+        <EditorForLoading jsonData={userPagesStore.userPageById.page_data}/>
       </Editor>
     </div>
   );

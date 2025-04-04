@@ -5,26 +5,28 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./app-header.module.scss";
 import { signOut, useSession } from "next-auth/react";
-import ApiPublishedUserSitesController from "@/lib/ApiPublishUserSitesController";
+import ApiPublishedUserSitesController from "@/lib/ApiPublishUserPagesController";
+import { useStore } from "@/hooks/useStore";
 
 export const AppHeaderUI: FC = () => {
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const { userPagesStore } = useStore();
   
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
-  const [siteAddress, setSiteAddress] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
   const [error, setError] = useState("");
+  const [publishedUrl, setPublishedUrl] = useState("");
 
   // Проверяем, находимся ли на странице редактирования сайта
   const isEditSitePage = pathname?.startsWith("/sites/edit/");
-  // Извлекаем ID сайта из URL
-  const siteId = isEditSitePage ? pathname.split("/").pop() : null;
+  // Извлекаем ID страницы из URL
+  const pageId = isEditSitePage ? pathname.split("/").pop() : null;
 
   const handlePublish = async () => {
-    if (!siteId || !siteAddress) {
-      setError("Пожалуйста, укажите имя сайта");
+    if (!pageId) {
+      setError("Не удалось определить страницу для публикации");
       return;
     }
 
@@ -33,17 +35,32 @@ export const AppHeaderUI: FC = () => {
       setError("");
       
       // Вызываем API для публикации
-      await ApiPublishedUserSitesController.publishSite(Number(siteId), siteAddress);
+      const publishedPage = await ApiPublishedUserSitesController.publishPage(Number(pageId));
       
-      // Закрываем модальное окно и перенаправляем пользователя
-      setIsPublishModalOpen(false);
-      router.push("/sites"); // или куда вам нужно после публикации
+      // Обновляем данные в хранилище
+      await userPagesStore.getPageById(Number(pageId));
+      
+      // Получаем данные о сайте для формирования URL
+      if (!publishedPage || !publishedPage.page.userSite.site_address) {
+        throw new Error("Не удалось получить данные сайта");
+      }
+      
+      // Формируем URL опубликованной страницы
+      const url = `${publishedPage.page.userSite.site_address}.stbuilder.ru/${publishedPage.page.page_slug}`;
+      setPublishedUrl(url);
+      
     } catch (err) {
-      setError("Ошибка при публикации сайта");
+      setError("Ошибка при публикации страницы");
       console.error("Publish error:", err);
     } finally {
       setIsPublishing(false);
     }
+  };
+
+  const closeModal = () => {
+    setIsPublishModalOpen(false);
+    setPublishedUrl("");
+    setError("");
   };
 
   return (
@@ -82,30 +99,49 @@ export const AppHeaderUI: FC = () => {
       {isPublishModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h3>Опубликовать сайт</h3>
-            <input
-              type="text"
-              value={siteAddress}
-              onChange={(e) => setSiteAddress(e.target.value)}
-              placeholder="Имя сайта"
-              className={styles.input}
-            />
-            {error && <p className={styles.error}>{error}</p>}
-            <div className={styles.modalActions}>
-              <button
-                onClick={() => setIsPublishModalOpen(false)}
-                className={styles.cancelButton}
-              >
-                Отмена
-              </button>
-              <button
-                onClick={handlePublish}
-                disabled={isPublishing}
-                className={styles.publishButton}
-              >
-                {isPublishing ? "Публикация..." : "Опубликовать"}
-              </button>
-            </div>
+            {publishedUrl ? (
+              <>
+                <h3>Страница опубликована!</h3>
+                <div className={styles.publishedUrlContainer}>
+                  <p>Адрес опубликованной страницы:</p>
+                  <a 
+                    href={`https://${publishedUrl}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={styles.publishedUrl}
+                  >
+                    {publishedUrl}
+                  </a>
+                </div>
+                <button
+                  onClick={closeModal}
+                  className={styles.closeButton}
+                >
+                  Закрыть
+                </button>
+              </>
+            ) : (
+              <>
+                <h3>Опубликовать страницу</h3>
+                <p>Вы уверены, что хотите опубликовать эту страницу?</p>
+                {error && <p className={styles.error}>{error}</p>}
+                <div className={styles.modalActions}>
+                  <button
+                    onClick={closeModal}
+                    className={styles.cancelButton}
+                  >
+                    Отмена
+                  </button>
+                  <button
+                    onClick={handlePublish}
+                    disabled={isPublishing}
+                    className={styles.publishButton}
+                  >
+                    {isPublishing ? "Публикация..." : "Опубликовать"}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

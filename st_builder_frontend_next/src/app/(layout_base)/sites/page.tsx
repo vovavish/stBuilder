@@ -21,7 +21,7 @@ const SitesList = observer(() => {
   const onEditSiteClick = (e: SyntheticEvent, siteId: string) => {
     e.preventDefault();
 
-    router.push(`/sites/edit/${siteId}`);
+    router.push(`/sites/settings/${siteId}`);
   };
 
   if (userSitesStore.isLoading && !userSitesStore.userSites.length) {

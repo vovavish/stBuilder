@@ -13,24 +13,21 @@ export default class ApiUserSitesController {
 
   static async createSite(
     site_name: string,
-    site_data: string,
     site_address?: string,
   ): Promise<UserSiteByIdResponse> {
     return api
-      .post<UserSiteByIdResponse>('/user-sites/create', { site_name, site_data, site_address })
+      .post<UserSiteByIdResponse>('/user-sites/create', { site_name, site_address })
       .then((res) => res.data);
   }
 
   static async updateSiteById(
     id: string,
     site_name?: string,
-    site_data?: string,
     site_address?: string,
   ): Promise<UserSiteByIdResponse> {
     return api
       .patch<UserSiteByIdResponse>(`/user-sites/updateSiteById/${id}`, {
         site_name,
-        site_data,
         site_address,
       })
       .then((res) => res.data);

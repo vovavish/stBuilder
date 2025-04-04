@@ -48,10 +48,12 @@
 
 .modal {
   background: white;
-  padding: 20px;
+  padding: 2rem;
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
+  color: #333; // Добавлено для текста в модалке
+  text-align: center; // Добавлено для центрирования контента
 }
 
 .input {
@@ -64,7 +66,7 @@
 
 .modalActions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center; // Изменено с flex-end на center
   gap: 10px;
   margin-top: 20px;
 }
@@ -105,4 +107,49 @@
   font-family: inherit;
   font-size: 16px;
   padding: 0;
+}
+
+/* Новые стили для отображения опубликованного URL */
+.publishedUrlContainer {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.publishedUrl {
+  display: block;
+  margin-top: 0.5rem;
+  color: #2563eb;
+  word-break: break-all;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.closeButton {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #1e4da9;
+  }
+}
+
+/* Стили для текста в модальном окне */
+.modal h3 {
+  color: #2563eb;
+  margin-bottom: 1rem;
+}
+
+.modal p {
+  margin-bottom: 1rem;
 }
