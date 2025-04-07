@@ -18,10 +18,9 @@ export const AppHeaderUI: FC = () => {
   const [isPublishing, setIsPublishing] = useState(false);
   const [error, setError] = useState("");
   const [publishedUrl, setPublishedUrl] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Проверяем, находимся ли на странице редактирования сайта
   const isEditSitePage = pathname?.startsWith("/sites/edit/");
-  // Извлекаем ID страницы из URL
   const pageId = isEditSitePage ? pathname.split("/").pop() : null;
 
   const handlePublish = async () => {
@@ -34,18 +33,13 @@ export const AppHeaderUI: FC = () => {
       setIsPublishing(true);
       setError("");
       
-      // Вызываем API для публикации
       const publishedPage = await ApiPublishedUserSitesController.publishPage(Number(pageId));
-      
-      // Обновляем данные в хранилище
       await userPagesStore.getPageById(Number(pageId));
       
-      // Получаем данные о сайте для формирования URL
       if (!publishedPage || !publishedPage.page.userSite.site_address) {
         throw new Error("Не удалось получить данные сайта");
       }
       
-      // Формируем URL опубликованной страницы
       const url = `${publishedPage.page.userSite.site_address}.stbuilder.ru/${publishedPage.page.page_slug}`;
       setPublishedUrl(url);
       
@@ -63,37 +57,92 @@ export const AppHeaderUI: FC = () => {
     setError("");
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>St Builder</div>
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.link}>
-          Главная
-        </Link>
-        <Link href="/sites" className={styles.link}>
-          Мои сайты
-        </Link>
-        <Link href="/profile" className={styles.link}>
-          Профиль
-        </Link>
-        {isEditSitePage && (
-          <button
-            onClick={() => setIsPublishModalOpen(true)}
-            className={styles.button}
-          >
-            Опубликовать
-          </button>
-        )}
-        {session.status === "authenticated" && (
-          <Link
-            href="#"
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className={styles.link}
-          >
-            Выйти
+      <div className={styles.headerContainer}>
+        <div className={styles.logo}>St Builder</div>
+        
+        {/* Основное меню для десктопа */}
+        <nav className={styles.desktopNav}>
+          <Link href="/" className={styles.link}>
+            Главная
           </Link>
+          <Link href="/sites" className={styles.link}>
+            Мои сайты
+          </Link>
+          <Link href="/profile" className={styles.link}>
+            Профиль
+          </Link>
+          {isEditSitePage && (
+            <button
+              onClick={() => setIsPublishModalOpen(true)}
+              className={styles.button}
+            >
+              Опубликовать
+            </button>
+          )}
+          {session.status === "authenticated" && (
+            <Link
+              href="#"
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className={styles.link}
+            >
+              Выйти
+            </Link>
+          )}
+        </nav>
+        
+        {/* Кнопка бургер-меню для мобильных */}
+        <button 
+          className={styles.mobileMenuButton}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <span className={styles.menuIcon}></span>
+        </button>
+        
+        {/* Мобильное меню (выпадающее) */}
+        {isMobileMenuOpen && (
+          <nav className={styles.mobileNav}>
+            <Link href="/" className={styles.link} onClick={toggleMobileMenu}>
+              Главная
+            </Link>
+            <Link href="/sites" className={styles.link} onClick={toggleMobileMenu}>
+              Мои сайты
+            </Link>
+            <Link href="/profile" className={styles.link} onClick={toggleMobileMenu}>
+              Профиль
+            </Link>
+            {isEditSitePage && (
+              <button
+                onClick={() => {
+                  setIsPublishModalOpen(true);
+                  toggleMobileMenu();
+                }}
+                className={styles.button}
+              >
+                Опубликовать
+              </button>
+            )}
+            {session.status === "authenticated" && (
+              <Link
+                href="#"
+                onClick={() => {
+                  signOut({ callbackUrl: "/" });
+                  toggleMobileMenu();
+                }}
+                className={styles.link}
+              >
+                Выйти
+              </Link>
+            )}
+          </nav>
         )}
-      </nav>
+      </div>
 
       {/* Модальное окно публикации */}
       {isPublishModalOpen && (

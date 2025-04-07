@@ -1,7 +1,7 @@
-"use client";
+'use client';
 import React, { useState, useRef, useEffect, FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';
@@ -79,7 +79,11 @@ const ModelRenderer: FC<{
 
   if (!model) return null;
 
-  return <primitive ref={meshRef} object={model} scale={[0.1, 0.1, 0.1]} />;
+  return (
+    <Center>
+      <primitive ref={meshRef} object={model} scale={[0.1, 0.1, 0.1]} />
+    </Center>
+  );
 };
 
 // Основной компонент блока

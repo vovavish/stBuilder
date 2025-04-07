@@ -24,6 +24,7 @@ import { Model_3D_001 } from '@/components/user-blocks/3D-Models/3d-model-001/3d
 import { DXF_001 } from '@/components/user-blocks/CAD/DXF/dxf-001/dxf-001';
 import { DXF_002 } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003';
+import { Gallery_001 } from '@/components/user-blocks/Gallery/gallery-001/gallery-001';
 
 const SiteEdit = observer(() => {
   const { userSitesStore, userPagesStore } = useStore();
@@ -47,7 +48,7 @@ const SiteEdit = observer(() => {
   return (
     <div className='craftjs-renderer flex-1 h-full w-full transition overflow-auto'>
       <Editor
-        resolver={{ Text_001, Header_001, Title_001, Advantages_001, Model_3D_001, Container, DXF_001, DXF_002, DXF_003 }}
+        resolver={{ Text_001, Header_001, Title_001, Advantages_001, Model_3D_001, Container, DXF_001, DXF_002, DXF_003, Gallery_001 }}
         onNodesChange={debounce((query) => {
           const json = query.serialize();
           const compressed = lz.encodeBase64(lz.compress(json));

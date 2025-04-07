@@ -10,14 +10,14 @@ const AdminHome: FC = observer(() => {
   const { userLayoutsStore } = useStore();
 
   useEffect(() => {
-    userLayoutsStore.getUserLayouts();
+    userLayoutsStore.getAllUserLayoutsAdmin();
   }, []);
 
   if (userLayoutsStore.isLoading) {
     return <Preloader />;
   }
 
-  return <AdminHomeUI layouts={userLayoutsStore.userLayouts}/>;
+  return <AdminHomeUI layouts={userLayoutsStore.userLayoutsAdmin}/>;
 });
 
 export default AdminHome;

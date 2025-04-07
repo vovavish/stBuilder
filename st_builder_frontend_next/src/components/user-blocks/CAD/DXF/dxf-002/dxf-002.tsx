@@ -5,6 +5,8 @@ import { DXFRenderer, DXF_001Props } from '../dxf-001/dxf-001';
 import ContentEditable from 'react-contenteditable';
 import { api } from '@/lib/api';
 
+import styles from '../../../settings-common/settings-common.module.scss';
+
 export interface DXF_002Props extends DXF_001Props {
   text: string;
   fontSize: number;
@@ -102,7 +104,7 @@ const DXF_002Settings = () => {
 
   return (
     <div className="dxf-002-settings">
-      <label className="block text-sm font-semibold mb-2">Font Size</label>
+      <label className={styles.settings_label}>Font Size</label>
       <input
         type="range"
         min="7"
@@ -113,7 +115,7 @@ const DXF_002Settings = () => {
         }
         className="w-full"
       />
-      <label className="block text-sm font-semibold mb-2">Text Align</label>
+      <label className={styles.settings_label}>Text Align</label>
       <select
         value={props.textAlign}
         onChange={(e) =>
@@ -125,7 +127,7 @@ const DXF_002Settings = () => {
         <option value="center">Center</option>
         <option value="right">Right</option>
       </select>
-      <label className="block text-sm font-semibold mb-2">Max Width (px)</label>
+      <label className={styles.settings_label}>Max Width (px)</label>
       <input
         type="number"
         value={props.maxWidth}
@@ -134,30 +136,30 @@ const DXF_002Settings = () => {
         }
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mb-2">DXF File (.dxf)</label>
+      <label className={styles.settings_label}>DXF File (.dxf)</label>
       <input type="file" accept=".dxf" onChange={handleDxfChange} />
-      <label className="block text-sm font-semibold mb-2">DXF URL</label>
+      <label className={styles.settings_label}>DXF URL</label>
       <input
         type="text"
         value={props.dxfUrl}
         onChange={(e) => setProp((props: DXF_002Props) => (props.dxfUrl = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mb-2">Width</label>
+      <label className={styles.settings_label}>Width</label>
       <input
         type="text"
         value={props.width}
         onChange={(e) => setProp((props: DXF_002Props) => (props.width = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mb-2">Height</label>
+      <label className={styles.settings_label}>Height</label>
       <input
         type="text"
         value={props.width}
         onChange={(e) => setProp((props: DXF_002Props) => (props.height = e.target.value))}
         className="w-full p-1 border rounded"
       />
-      <label className="block text-sm font-semibold mb-2">Background Color</label>
+      <label className={styles.settings_label}>Background Color</label>
       <input
         type="color"
         value={props.backgroundColor}

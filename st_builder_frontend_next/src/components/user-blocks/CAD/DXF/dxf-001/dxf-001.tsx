@@ -135,7 +135,7 @@ const DXFBlockSettings = () => {
 
   return (
     <div className="dxf-settings">
-      <label className="block text-sm font-semibold mb-2">DXF File (.dxf)</label>
+      <label className={styles.settings_label}>DXF File (.dxf)</label>
       <input type="file" accept=".dxf" onChange={handleDxfChange} />
       <label className={styles.settings_label}>DXF URL</label>
       <input

@@ -1,13 +1,15 @@
-"use client";
+'use client';
 import React, { useState, useRef, useEffect, FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useNode } from '@craftjs/core';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';
-import { api } from '@/lib/api';
+import { api, API_URL } from '@/lib/api';
 import * as THREE from 'three';
+
+import styles from '../../settings-common/settings-common.module.scss'
 
 export interface Model_3D_001Props {
   modelUrl: string;
@@ -90,7 +92,11 @@ const ModelRenderer: FC<{
 
   if (!model) return null;
 
-  return <primitive ref={meshRef} object={model} scale={[0.1, 0.1, 0.1]} />;
+  return (
+    <Center>
+      <primitive ref={meshRef} object={model} scale={[0.1, 0.1, 0.1]} />
+    </Center>
+  );
 };
 
 export const Model_3D_001: FC<Model_3D_001Props> & {
@@ -136,11 +142,11 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
         overflow: 'hidden',
       }}
     >
-      <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}>
-        <PerspectiveCamera 
-          makeDefault 
-          position={[cameraX, cameraY, cameraZ]} 
-        />
+      <Canvas
+        style={{ width: '100%', height: '100%' }}
+        camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}
+      >
+        <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
         <ambientLight intensity={ambientLightIntensity} />
         <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
         <React.Suspense fallback={null}>
@@ -173,13 +179,13 @@ const Product3DBlockSettings = () => {
           },
         });
 
-        const uploadedFileUrl = response.data.filePath; // Используем filePath, как в вашем контроллере
+        const uploadedFileUrl = `${API_URL}/${response.data.filePath}`;
 
         setProp((props: Model_3D_001Props) => {
           props.modelUrl = uploadedFileUrl;
           props.modelType = file.name.endsWith('.stl') ? 'stl' : 'obj';
         });
-        
+
         console.log('File uploaded successfully, URL:', uploadedFileUrl);
       } catch (error) {
         console.error('Error uploading file:', error);
@@ -233,9 +239,9 @@ const Product3DBlockSettings = () => {
 
   return (
     <div className="product-3d-settings">
-      <label className="block text-sm font-semibold mb-2">Model File (.stl/.obj)</label>
+      <label className={styles.settings_label}>Model File (.stl/.obj)</label>
       <input type="file" accept=".stl,.obj" onChange={handleModelChange} />
-      <label className="block text-sm font-semibold mt-2 mb-1">Model URL</label>
+      <label className={styles.settings_label}>Model URL</label>
       <input
         type="text"
         value={props.modelUrl}
@@ -243,7 +249,7 @@ const Product3DBlockSettings = () => {
         className="w-full p-1 border rounded"
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">MTL File (.mtl)</label>
+      <label className={styles.settings_label}>MTL File (.mtl)</label>
       <input type="file" accept=".mtl" onChange={handleMtlChange} />
       <label className="block text-sm font-semibold mt-2 mb-1">MTL URL</label>
       <input
@@ -253,7 +259,7 @@ const Product3DBlockSettings = () => {
         className="w-full p-1 border rounded"
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">Texture File (.jpg/.png)</label>
+      <label className={styles.settings_label}>Texture File (.jpg/.png)</label>
       <input type="file" accept=".jpg,.png" onChange={handleTextureChange} />
       <label className="block text-sm font-semibold mt-2 mb-1">Texture URL</label>
       <input
@@ -263,7 +269,7 @@ const Product3DBlockSettings = () => {
         className="w-full p-1 border rounded"
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">Height</label>
+      <label className={styles.settings_label}>Height</label>
       <input
         type="text"
         value={props.height}
@@ -271,7 +277,7 @@ const Product3DBlockSettings = () => {
         className="w-full p-1 border rounded"
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">Background Color</label>
+      <label className={styles.settings_label}>Background Color</label>
       <input
         type="color"
         value={props.backgroundColor}
@@ -280,7 +286,7 @@ const Product3DBlockSettings = () => {
         }
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">Ambient Light</label>
+      <label className={styles.settings_label}>Ambient Light</label>
       <input
         type="range"
         min="0"
@@ -295,7 +301,7 @@ const Product3DBlockSettings = () => {
         }
       />
 
-      <label className="block text-sm font-semibold mt-4 mb-2">Directional Light</label>
+      <label className={styles.settings_label}>Directional Light</label>
       <input
         type="range"
         min="0"
@@ -309,8 +315,8 @@ const Product3DBlockSettings = () => {
           )
         }
       />
-      <label className="block text-sm font-semibold mt-4 mb-2">Camera Position</label>
-      
+      <label className={styles.settings_label}>Camera Position</label>
+
       <div className="grid grid-cols-3 gap-2">
         <div>
           <label className="block text-sm">X</label>
@@ -318,40 +324,34 @@ const Product3DBlockSettings = () => {
             type="number"
             step="0.1"
             value={props.cameraX}
-            onChange={(e) => 
-              setProp((props: Model_3D_001Props) => 
-                (props.cameraX = parseFloat(e.target.value))
-              )
+            onChange={(e) =>
+              setProp((props: Model_3D_001Props) => (props.cameraX = parseFloat(e.target.value)))
             }
             className="w-full p-1 border rounded"
           />
         </div>
-        
+
         <div>
           <label className="block text-sm">Y</label>
           <input
             type="number"
             step="0.1"
             value={props.cameraY}
-            onChange={(e) => 
-              setProp((props: Model_3D_001Props) => 
-                (props.cameraY = parseFloat(e.target.value))
-              )
+            onChange={(e) =>
+              setProp((props: Model_3D_001Props) => (props.cameraY = parseFloat(e.target.value)))
             }
             className="w-full p-1 border rounded"
           />
         </div>
-        
+
         <div>
           <label className="block text-sm">Z</label>
           <input
             type="number"
             step="0.1"
             value={props.cameraZ}
-            onChange={(e) => 
-              setProp((props: Model_3D_001Props) => 
-                (props.cameraZ = parseFloat(e.target.value))
-              )
+            onChange={(e) =>
+              setProp((props: Model_3D_001Props) => (props.cameraZ = parseFloat(e.target.value)))
             }
             className="w-full p-1 border rounded"
           />

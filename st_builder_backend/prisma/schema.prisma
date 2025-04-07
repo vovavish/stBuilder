@@ -39,6 +39,7 @@ model Layouts {
   description   String @default("default description")
   path_to_image String @default("1737230908287-767188248.png")
   layout_data   String
+  isPublished   Boolean @default(false)
 }
 
 model UsersSites {

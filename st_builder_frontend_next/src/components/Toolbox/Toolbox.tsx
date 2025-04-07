@@ -8,6 +8,7 @@ import { Model_3D_001 } from '../user-blocks/3D-Models/3d-model-001/3d-model-001
 import { DXF_001 } from '../user-blocks/CAD/DXF/dxf-001/dxf-001';
 import { DXF_002 } from '../user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '../user-blocks/CAD/DXF/dxf-003/dxf-003';
+import { Gallery_001 } from '../user-blocks/Gallery/gallery-001/gallery-001';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import './toolbox.scss';
 
@@ -27,7 +28,7 @@ export const Toolbox = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     'Текстовые блоки': true,
-    'Шапки': true,
+    Шапки: true,
     '3D Модели': false,
     'CAD Модели': false,
   });
@@ -45,7 +46,7 @@ export const Toolbox = () => {
   };
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
       [section]: !prev[section],
     }));
@@ -59,11 +60,28 @@ export const Toolbox = () => {
           name: 'Тектовый блок (text_001)',
           component: Text_001,
           props: {
-            text: `lorem ipsum dolor sit amet...`,
-            fontSize: 20,
-            paggingY: 100,
-            textAlign: 'center',
-            maxWidth: 500,
+            text: 'Добавьте текст в этот блок',
+            fontSize: 16,
+            textAlign: 'center' as const,
+            paddingTop: '0',
+            paddingBottom: '0',
+            paddingLeft: '0',
+            paddingRight: '0',
+            marginTop: '0',
+            marginBottom: '0',
+            marginLeft: '0',
+            marginRight: '0',
+            maxWidth: '100%',
+            color: '#000000',
+            fontWeight: 400,
+            lineHeight: 1.5,
+            textDecoration: 'none' as const,
+            fontStyle: 'normal' as const,
+            backgroundColor: 'transparent',
+            borderRadius: 0,
+            borderWidth: 0,
+            borderColor: '#000000',
+            borderStyle: 'none' as const,
           },
         },
         {
@@ -188,6 +206,22 @@ export const Toolbox = () => {
             fontSize: 20,
             textAlign: 'left',
             maxWidth: 400,
+          },
+        },
+      ],
+    },
+    {
+      title: 'Изображения',
+      components: [
+        {
+          name: 'Галлерея (Gallery_001)',
+          component: Gallery_001,
+          props: {
+            image: '',
+            imageRatio: '1:1',
+            borderRadius: 8,
+            showCaption: false,
+            caption: '',
           },
         },
       ],

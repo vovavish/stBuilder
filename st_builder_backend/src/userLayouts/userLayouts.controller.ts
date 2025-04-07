@@ -4,6 +4,7 @@ import { AtGuard } from 'src/common/guadrs';
 import { UserLayoutsService } from './userLayouts.service';
 import { Roles } from 'src/roles/roles.decorator';
 import { Role } from 'src/roles/role.enum';
+import { UpdateUserLayoutDto } from './dto/UpdateUserLayoutDto';
 
 @Controller('user-layouts')
 export class UserLayoutsController {
@@ -24,6 +25,21 @@ export class UserLayoutsController {
     return this.userLayoutsService.getUserLayouts();
   }
 
+  @Roles(Role.Admin)
+  @UseGuards(AtGuard)
+  @Get('/getAllAdmin')
+  async getAllUserLayoutsAdmin() {
+    return this.userLayoutsService.getAllUserLayoutsAdmin();
+  }
+
+  @UseGuards(AtGuard)
+  @Get('/admin/:layout_id')
+  async getUserLayoutByIdAdmin(
+    @Param('layout_id', ParseIntPipe) layout_id: number,
+  ) {
+    return this.userLayoutsService.getUserLayoutByIdAdmin(layout_id);
+  }
+
   @UseGuards(AtGuard)
   @Get('/:layout_id')
   async getUserLayoutById(
@@ -37,7 +53,7 @@ export class UserLayoutsController {
   @Patch('/:layout_id')
   async updateUserLayout(
     @Param('layout_id', ParseIntPipe) layout_id: number,
-    @Body() updateUserLayoutDto: CreateUserLayoutDto,
+    @Body() updateUserLayoutDto: UpdateUserLayoutDto,
   ) {
     console.log(updateUserLayoutDto);
     return this.userLayoutsService.updateUserLayoutById(layout_id, updateUserLayoutDto);

@@ -15,6 +15,8 @@ import { DXF_001_public } from '@/components/user-blocks/CAD/DXF/dxf-001/dxf-001
 import { DXF_002_public } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002_public';
 import { DXF_003_public } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003_public';
 
+import { Gallery_001_public } from '@/components/user-blocks/Gallery/gallery-001/gallery-001_public';
+
 interface CraftNode {
   type: { resolvedName: string };
   props: Record<string, any>;
@@ -35,6 +37,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   DXF_001: DXF_001_public,
   DXF_002: DXF_002_public,
   DXF_003: DXF_003_public,
+  Gallery_001: Gallery_001_public,
 };
 
 async function getSiteData(siteName: string, pageSlug: string): Promise<PublishedData | null> {

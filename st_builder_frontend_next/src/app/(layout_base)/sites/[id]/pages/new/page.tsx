@@ -12,7 +12,6 @@ import { UserLayoutByIdResponse, UserLayoutResponse } from '@/types/response/Use
 import { API_URL } from '@/lib/api';
 import { Preloader } from '@/components/ui/preloader';
 
-// Импортируем компоненты для редактора
 import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
 import { Header_001 } from '@/components/user-blocks/Headers/header-001/header-001';
 import { Title_001 } from '@/components/user-blocks/Titels/title-001/title-001';
@@ -22,6 +21,7 @@ import { Model_3D_001 } from '@/components/user-blocks/3D-Models/3d-model-001/3d
 import { DXF_001 } from '@/components/user-blocks/CAD/DXF/dxf-001/dxf-001';
 import { DXF_002 } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003';
+import { Gallery_001 } from '@/components/user-blocks/Gallery/gallery-001/gallery-001';
 import axios from 'axios';
 
 const CreatePage = observer(() => {
@@ -45,6 +45,12 @@ const CreatePage = observer(() => {
       try {
         await userSitesStore.getUserSiteById(siteId);
         await userLayoutsStore.getUserLayouts();
+        await userLayoutsStore.getUserLayoutById(userLayoutsStore.userLayouts[0].id);
+        setFormData(prev => ({
+          ...prev,
+          page_data: userLayoutsStore.userLayoutById?.layout_data || '{}'
+        }));
+        setSelectedLayout(userLayoutsStore.userLayoutById);
       } catch (err) {
         console.error('Error fetching data:', err);
       } finally {
@@ -66,6 +72,7 @@ const CreatePage = observer(() => {
   const handleSelectLayout = async (layout: UserLayoutResponse) => {
     await userLayoutsStore.getUserLayoutById(layout.id);
     setSelectedLayout(userLayoutsStore.userLayoutById);
+    console.log('userLayoutsStore', userLayoutsStore.userLayoutById);
     setFormData(prev => ({
       ...prev,
       page_data: userLayoutsStore.userLayoutById?.layout_data || '{}'
@@ -103,7 +110,7 @@ const CreatePage = observer(() => {
     }
   };
 
-  if (isLoading && !userSitesStore.userSiteById) {
+  if (isLoading || !userSitesStore.userSiteById || userLayoutsStore.isLoading) {
     return <Preloader />;
   }
 
@@ -128,7 +135,7 @@ const CreatePage = observer(() => {
             <div className={styles.editorWrapper}>
               <Editor resolver={{
                 Text_001, Header_001, Title_001, Advantages_001, 
-                Model_3D_001, Container, DXF_001, DXF_002, DXF_003
+                Model_3D_001, Container, DXF_001, DXF_002, DXF_003, Gallery_001
               }}>
                 <EditorPreviewer jsonData={selectedLayout.layout_data} />
               </Editor>

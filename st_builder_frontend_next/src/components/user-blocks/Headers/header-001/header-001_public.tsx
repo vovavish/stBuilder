@@ -15,6 +15,15 @@ export const Header_001_public: React.FC<Header_001Props> = ({
   overlayColor = '#000000',
   overlayOpacity = 0.3,
 }) => {
+  // Функция для очистки HTML и преобразования в строки с \n
+  const parseText = (html: string) => {
+    return html
+      .replace(/<\/div><div>/g, '\n')
+      .replace(/<div>/g, '')
+      .replace(/<\/div>/g, '')
+      .split('\n');
+  };
+
   return (
     <header
       style={{
@@ -50,31 +59,42 @@ export const Header_001_public: React.FC<Header_001Props> = ({
         }}
       />
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <h1
-          style={{
-            fontSize: `${textSize}px`,
-            fontWeight: 'bold',
-            marginBottom: `${topTextMarginBottom}px`,
-          }}
-        >
-          {text_company_name}
-        </h1>
-        <h2
-          style={{
-            fontSize: `${textSize * 0.75}px`,
-            fontWeight: 'bold',
-          }}
-        >
-          {text_company_slogan}
-        </h2>
-        <p
-          style={{
-            fontSize: `${textSize * 0.5}px`,
-            marginTop: `${bottomTextMarginTop}px`,
-          }}
-        >
-          {text_company_additional}
-        </p>
+        {parseText(text_company_name).map((line, i) => (
+          <h1
+            key={`name-${i}`}
+            style={{
+              fontSize: `${textSize}px`,
+              fontWeight: 'bold',
+              marginBottom: `${topTextMarginBottom}px`,
+            }}
+          >
+            {line}
+          </h1>
+        ))}
+
+        {parseText(text_company_slogan).map((line, i) => (
+          <h2
+            key={`slogan-${i}`}
+            style={{
+              fontSize: `${textSize * 0.75}px`,
+              fontWeight: 'bold',
+            }}
+          >
+            {line}
+          </h2>
+        ))}
+
+        {parseText(text_company_additional).map((line, i) => (
+          <p
+            key={`additional-${i}`}
+            style={{
+              fontSize: `${textSize * 0.5}px`,
+              marginTop: `${bottomTextMarginTop}px`,
+            }}
+          >
+            {line}
+          </p>
+        ))}
       </div>
     </header>
   );

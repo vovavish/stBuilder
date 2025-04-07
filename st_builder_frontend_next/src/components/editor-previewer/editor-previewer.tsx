@@ -15,7 +15,7 @@ export const EditorPreviewer: FC<{ jsonData: string }> = ({ jsonData }) => {
     setOptions((options) => (options.enabled = false));
     const json = lz.decompress(lz.decodeBase64(jsonData));
     deserialize(json);
-  }, []);
+  }, [jsonData]);
 
   return (
     <div className="flex flex-col">

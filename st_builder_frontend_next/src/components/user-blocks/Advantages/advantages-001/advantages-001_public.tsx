@@ -16,7 +16,13 @@ export const Advantages_001_public: React.FC<Advantages_001Props> = ({
   padding = 40,
   listStyle = 'disc',
 }) => {
-  console.log('Rendering Advantages_001 with:', { title, description, advantages });
+  const parseText = (html: string) => {
+    return html
+      .replace(/<\/div><div>/g, '\n')
+      .replace(/<div>/g, '')
+      .replace(/<\/div>/g, '')
+      .split('\n');
+  };
 
   return (
     <section
@@ -26,28 +32,39 @@ export const Advantages_001_public: React.FC<Advantages_001Props> = ({
       }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2
-          style={{
-            color: titleColor,
-            fontSize: `${titleSize}px`,
-            fontWeight: 'bold',
-            marginBottom: '20px',
-            textAlign: 'center',
-          }}
-        >
-          {title}
-        </h2>
-        <p
-          style={{
-            color: textColor,
-            fontSize: `${textSize}px`,
-            lineHeight: 1.6,
-            marginBottom: '30px',
-            textAlign: 'center',
-          }}
-        >
-          {description}
-        </p>
+        {/* Заголовок */}
+        {parseText(title).map((line, i) => (
+          <h2
+            key={`title-${i}`}
+            style={{
+              color: titleColor,
+              fontSize: `${titleSize}px`,
+              fontWeight: 'bold',
+              marginBottom: i === 0 ? '20px' : '0',
+              textAlign: 'center',
+            }}
+          >
+            {line}
+          </h2>
+        ))}
+
+        {/* Описание */}
+        {parseText(description).map((line, i) => (
+          <p
+            key={`desc-${i}`}
+            style={{
+              color: textColor,
+              fontSize: `${textSize}px`,
+              lineHeight: 1.6,
+              marginBottom: i === 0 ? '30px' : '0',
+              textAlign: 'center',
+            }}
+          >
+            {line}
+          </p>
+        ))}
+
+        {/* Список преимуществ */}
         <div
           style={{
             display: 'flex',
@@ -67,9 +84,11 @@ export const Advantages_001_public: React.FC<Advantages_001Props> = ({
               gap: '20px',
             }}
           >
-            {advantages.map((advantage, index) => (
-              <li key={index}>{advantage}</li>
-            ))}
+            {advantages.map((item, index) =>
+              parseText(item).map((line, subIndex) => (
+                <li key={`adv-${index}-${subIndex}`}>{line}</li>
+              ))
+            )}
           </ul>
         </div>
       </div>

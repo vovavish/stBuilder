@@ -9,7 +9,6 @@ import lz from 'lzutf8';
 import { Toolbox } from '../Toolbox/Toolbox';
 import { SettingsPanel } from '@/components/settings-panel/settings-panel';
 import { Container } from '../user-blocks/Container';
-// import { Topbar } from '@/components/Topbar';
 
 export const EditorForLoading: FC<{ jsonData: string }> = ({ jsonData }) => {
   const {
@@ -17,6 +16,8 @@ export const EditorForLoading: FC<{ jsonData: string }> = ({ jsonData }) => {
   } = useEditor();
 
   useEffect(() => {
+    if (!jsonData) return;
+    
     const json = lz.decompress(lz.decodeBase64(jsonData));
     console.log(JSON.parse(json).ROOT.nodes.length)
     deserialize(json);

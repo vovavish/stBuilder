@@ -12,7 +12,13 @@ export const Title_001_public: FC<Title_001Props> = ({
   padding = 20,
   textAlign = 'center',
 }) => {
-  console.log('Rendering Title_001 with:', { titleText, contentText });
+  const parseText = (html: string) => {
+    return html
+      .replace(/<\/div><div>/g, '\n')
+      .replace(/<div>/g, '')
+      .replace(/<\/div>/g, '')
+      .split('\n');
+  };
 
   return (
     <section
@@ -22,25 +28,32 @@ export const Title_001_public: FC<Title_001Props> = ({
         textAlign: textAlign as any,
       }}
     >
-      <h2
-        style={{
-          color: titleColor,
-          fontSize: `${titleSize}px`,
-          fontWeight: 'bold',
-          marginBottom: '20px',
-        }}
-      >
-        {titleText}
-      </h2>
-      <p
-        style={{
-          color: textColor,
-          fontSize: `${textSize}px`,
-          lineHeight: 1.6,
-        }}
-      >
-        {contentText}
-      </p>
+      {parseText(titleText).map((line, index) => (
+        <h2
+          key={`title-${index}`}
+          style={{
+            color: titleColor,
+            fontSize: `${titleSize}px`,
+            fontWeight: 'bold',
+            marginBottom: index === 0 ? '20px' : '0',
+          }}
+        >
+          {line}
+        </h2>
+      ))}
+      {parseText(contentText).map((line, index) => (
+        <p
+          key={`content-${index}`}
+          style={{
+            color: textColor,
+            fontSize: `${textSize}px`,
+            lineHeight: 1.6,
+            marginBottom: '10px',
+          }}
+        >
+          {line}
+        </p>
+      ))}
     </section>
   );
 };

@@ -1,19 +1,29 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .container {
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 1440px;
 }
 
 .title {
   font-size: 1.25rem;
   font-weight: 600;
+  text-align: center;
 }
 
 .fieldContainer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .label {
@@ -26,6 +36,17 @@
   padding: 0.5rem;
   width: 100%;
   border-radius: 0.375rem;
+  box-sizing: border-box;
+}
+
+.textarea {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  min-height: 100px;
+  resize: vertical;
 }
 
 .buttonGroup {
@@ -40,8 +61,57 @@
   border-radius: 0.375rem;
   text-align: center;
   transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.875rem;
 
   &:hover {
     background-color: #1e40af;
   }
+}
+
+.imageUploadContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadButton {
+  padding: 8px 16px;
+  background-color: #0070f3;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s;
+  width: 200px;
+
+  &:hover {
+    background-color: #005bb5;
+  }
+}
+
+.imagePreview {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  span {
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+.previewImage {
+  max-width: 200px;
+  max-height: 200px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }

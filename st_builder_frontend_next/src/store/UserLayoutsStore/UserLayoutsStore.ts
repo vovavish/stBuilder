@@ -1,10 +1,12 @@
 import ApiUserLayoutsController from "@/lib/ApiUserLayoutsController";
 
-import { UserLayoutByIdResponse, UserLayoutResponse } from "@/types/response/UserLayoutResponse";
+import { UserLayoutByIdAdminResponse, UserLayoutByIdResponse, UserLayoutForAdminResponse, UserLayoutResponse } from "@/types/response/UserLayoutResponse";
 import { makeAutoObservable, runInAction } from "mobx";
 
 export class UserLayoutsStore {
   private _userLayouts: UserLayoutResponse[] = [];
+  private _userLayoutByIdAdmin: UserLayoutByIdAdminResponse | null = null;
+  private _userLayoutsAdmin: UserLayoutForAdminResponse[] = [];
   private _userLayoutById: UserLayoutByIdResponse | null = null;
 
   private _isLoading = false;
@@ -15,6 +17,14 @@ export class UserLayoutsStore {
 
   get userLayouts() {
     return this._userLayouts;
+  }
+
+  get userLayoutsAdmin() {
+    return this._userLayoutsAdmin;
+  }
+
+  get userLayoutByIdAdmin() {
+    return this._userLayoutByIdAdmin;
   }
 
   get userLayoutById() {
@@ -41,6 +51,22 @@ export class UserLayoutsStore {
     }
   }
 
+  async getAllUserLayoutsAdmin() {
+    this._isLoading = true;
+    try {
+      const userLayoutsAdmin = await ApiUserLayoutsController.getAllUserLayoutsAdmin();
+      runInAction(() => {
+        this._userLayoutsAdmin = userLayoutsAdmin;
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      runInAction(() => {
+        this._isLoading = false;
+      });
+    }
+  }
+
   async getUserLayoutById(layout_id: string) {
     this._isLoading = true;
     try {
@@ -57,11 +83,30 @@ export class UserLayoutsStore {
     }
   }
 
-  async createUserLayout(layout_name: string, layout_data: string, description: string, path_to_image: string) {
+  async getUserLayoutByIdAdmin(layout_id: string) {
     this._isLoading = true;
     try {
-      await ApiUserLayoutsController.createUserLayout(layout_name, layout_data, description, path_to_image);
+      const userLayout = await ApiUserLayoutsController.getUserLayoutByIdAdmin(layout_id);
+      runInAction(() => {
+        this._userLayoutByIdAdmin = userLayout;
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      runInAction(() => {
+        this._isLoading = false;
+      });
+    }
+  }
+
+  async createUserLayout(layout_name: string, description: string, path_to_image: string, layout_data?: string) {
+    this._isLoading = true;
+    try {
+      const createdLayout = await ApiUserLayoutsController.createUserLayout(layout_name, description, path_to_image, layout_data);
       await this.getUserLayouts(); // Обновляем список после создания
+      runInAction(() => {
+        this._userLayoutById = createdLayout;
+      })
     } catch (error) {
       console.error(error);
     } finally {
@@ -77,6 +122,7 @@ export class UserLayoutsStore {
     layout_data?: string,
     description?: string,
     path_to_image?: string,
+    isPublished?: boolean,
   ) {
     this._isLoading = true;
     try {
@@ -86,11 +132,12 @@ export class UserLayoutsStore {
         layout_data,
         description,
         path_to_image,
+        isPublished,
       );
       runInAction(() => {
         this._userLayoutById = updatedLayout;
       });
-      await this.getUserLayouts(); // Обновляем список после обновления
+      await this.getUserLayouts();
     } catch (error) {
       console.error(error);
     } finally {

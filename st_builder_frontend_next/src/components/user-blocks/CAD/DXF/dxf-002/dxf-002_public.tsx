@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { DXFRenderer, DXF_001Props } from '../dxf-001/dxf-001';
 
-
 export interface DXF_002Props extends DXF_001Props {
   text: string;
   fontSize: number;
@@ -9,7 +8,23 @@ export interface DXF_002Props extends DXF_001Props {
   maxWidth: number;
 }
 
-export const DXF_002_public: FC<DXF_002Props> = ({ dxfUrl, backgroundColor, width, height, text, fontSize, textAlign, maxWidth }) => {
+export const DXF_002_public: FC<DXF_002Props> = ({
+  dxfUrl,
+  backgroundColor,
+  width,
+  height,
+  text,
+  fontSize,
+  textAlign,
+  maxWidth,
+}) => {
+  const parseText = (html: string) => {
+    return html
+      .replace(/<\/div><div>/g, '\n')
+      .replace(/<div>/g, '')
+      .replace(/<\/div>/g, '')
+      .split('\n');
+  };
 
   return (
     <div
@@ -22,21 +37,26 @@ export const DXF_002_public: FC<DXF_002Props> = ({ dxfUrl, backgroundColor, widt
         width: '100%',
         minHeight: height,
         overflow: 'hidden',
-        gap: '20px', // Уменьшенное расстояние между элементами
+        gap: '20px',
       }}
     >
-      <div
-        style={{
-          padding: '10px', // Уменьшенный padding
-        }}
-      >
-        <p
-          style={{ fontSize: `${fontSize}px`, textAlign, margin: '0 auto' }}
-        >
-          {text || 'Default Text'}
-        </p>
+      <div style={{ padding: '10px', maxWidth }}>
+        {parseText(text || 'Default Text').map((line, index) => (
+          <p
+            key={`text-line-${index}`}
+            style={{
+              fontSize: `${fontSize}px`,
+              textAlign,
+              margin: 0,
+              marginBottom: '10px',
+              wordWrap: 'break-word',
+            }}
+          >
+            {line}
+          </p>
+        ))}
       </div>
-      <div style={{ flex: '0 1 auto' }}> {/* Центрирование по горизонтали */}
+      <div style={{ flex: '0 1 auto' }}>
         <DXFRenderer url={dxfUrl} width={width} height={height} />
       </div>
     </div>

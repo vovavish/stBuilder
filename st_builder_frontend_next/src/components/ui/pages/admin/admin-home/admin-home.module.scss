@@ -1,5 +1,7 @@
 .container {
-  padding: 1.5rem;
+  padding: 1.5rem 0;
+  width: 1440px;
+  margin: 0 auto;
 }
 
 .title {
@@ -39,6 +41,7 @@
 .listItem {
   padding: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
+  list-style: none;
 }
 
 .listLink {

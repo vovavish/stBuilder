@@ -3,9 +3,16 @@
   color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.headerContainer {
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -13,15 +20,42 @@
   font-weight: bold;
 }
 
-.nav {
+/* Стили для десктопного меню */
+.desktopNav {
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+/* Стили для мобильного меню */
+.mobileNav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #2563eb;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  z-index: 1000;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
 }
 
 .link {
   text-decoration: none;
   color: inherit;
   transition: text-decoration 0.3s;
+  padding: 0.5rem 1rem;
+  display: block;
 
   &:hover {
     text-decoration: underline;
@@ -30,6 +64,77 @@
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #2563eb;
+  }
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Стили для кнопки бургер-меню */
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.menuIcon {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: white;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+
+  &::before {
+    top: -8px;
+  }
+
+  &::after {
+    top: 8px;
+  }
+}
+
+/* Стили для открытого состояния кнопки */
+.mobileMenuButtonOpen .menuIcon {
+  background: transparent;
+
+  &::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+    top: 0;
   }
 }
 

@@ -5,24 +5,24 @@ import { Preloader } from "@/components/ui/preloader";
 import { useStore } from "@/hooks/useStore";
 import { observer } from "mobx-react-lite";
 import { FC, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 import lz from 'lzutf8';
 
 const AdminLayoutDesignEdit: FC = observer(() => {
   const { userLayoutsStore } = useStore();
   
-  const router = useRouter();
+  const params = useParams();
 
-  const { id } = router.query;
+  const { id } = params;
 
   useEffect(() => {
-    userLayoutsStore.getUserLayoutById(id as string);
+    userLayoutsStore.getUserLayoutByIdAdmin(id as string);
   }, [])
 
   const onUpdateLayoutData = (layoutData: string) => {
     const compressed = lz.encodeBase64(lz.compress(layoutData));
-    if (compressed !== userLayoutsStore.userLayoutById?.layout_data) {
+    if (compressed !== userLayoutsStore.userLayoutByIdAdmin?.layout_data) {
       userLayoutsStore.updateUserLayoutDataById(id as string, compressed);
     }
   }
@@ -31,11 +31,11 @@ const AdminLayoutDesignEdit: FC = observer(() => {
     <Preloader />;
   }
 
-  if (!userLayoutsStore.userLayoutById) {
+  if (!userLayoutsStore.userLayoutByIdAdmin) {
     return <div>Такого шаблона нет</div>;
   }
 
-  return <AdminLayoutDesignEditUI layout={userLayoutsStore.userLayoutById} onUpdateLayoutData={onUpdateLayoutData}/>;
+  return <AdminLayoutDesignEditUI layout={userLayoutsStore.userLayoutByIdAdmin!} onUpdateLayoutData={onUpdateLayoutData}/>;
 });
 
 export default AdminLayoutDesignEdit;
