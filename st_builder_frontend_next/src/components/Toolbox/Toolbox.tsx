@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ROOT_NODE, useEditor } from '@craftjs/core';
-import { Text_001 } from '@/components/user-blocks/Text/text-001/text-001';
+import { Text_001, Text_001DefaultProps } from '@/components/user-blocks/Text/text-001/text-001';
 import { Header_001 } from '../user-blocks/Headers/header-001/header-001';
-import { Title_001 } from '../user-blocks/Titels/title-001/title-001';
-import { Advantages_001 } from '../user-blocks/Advantages/advantages-001/advantages-001';
+import { Title_001, Title_001DefaultProps } from '../user-blocks/Titels/title-001/title-001';
+import { Advantages_001, Advantages_001DefaultProps } from '../user-blocks/Advantages/advantages-001/advantages-001';
 import { Model_3D_001 } from '../user-blocks/3D-Models/3d-model-001/3d-model-001';
 import { DXF_001 } from '../user-blocks/CAD/DXF/dxf-001/dxf-001';
 import { DXF_002 } from '../user-blocks/CAD/DXF/dxf-002/dxf-002';
@@ -59,65 +59,17 @@ export const Toolbox = () => {
         {
           name: 'Тектовый блок (text_001)',
           component: Text_001,
-          props: {
-            text: 'Добавьте текст в этот блок',
-            fontSize: 16,
-            textAlign: 'center' as const,
-            paddingTop: '0',
-            paddingBottom: '0',
-            paddingLeft: '0',
-            paddingRight: '0',
-            marginTop: '0',
-            marginBottom: '0',
-            marginLeft: '0',
-            marginRight: '0',
-            maxWidth: '100%',
-            color: '#000000',
-            fontWeight: 400,
-            lineHeight: 1.5,
-            textDecoration: 'none' as const,
-            fontStyle: 'normal' as const,
-            backgroundColor: 'transparent',
-            borderRadius: 0,
-            borderWidth: 0,
-            borderColor: '#000000',
-            borderStyle: 'none' as const,
-          },
+          props: Text_001DefaultProps,
         },
         {
           name: 'Блок заголовка (Title_001)',
           component: Title_001,
-          props: {
-            titleText: 'Your Title Here',
-            contentText: 'Your content text goes here. Add some description or information.',
-            titleColor: '#000000',
-            textColor: '#333333',
-            titleSize: 36,
-            textSize: 16,
-            backgroundColor: 'transparent',
-            padding: 20,
-            textAlign: 'center',
-          },
+          props: Title_001DefaultProps,
         },
         {
           name: 'Блок достижений (Advantages_001)',
           component: Advantages_001,
-          props: {
-            title: 'Преимущества',
-            description: 'Узнайте, почему стоит выбрать именно нас',
-            advantages: [
-              'Высокое качество услуг',
-              'Профессиональная команда',
-              'Индивидуальный подход',
-            ],
-            titleColor: '#000000',
-            textColor: '#333333',
-            titleSize: 36,
-            textSize: 16,
-            backgroundColor: '#f8f8f8',
-            padding: 40,
-            listStyle: 'disc',
-          },
+          props: Advantages_001DefaultProps,
         },
       ],
     },

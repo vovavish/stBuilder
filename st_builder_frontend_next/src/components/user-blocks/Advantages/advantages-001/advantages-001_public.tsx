@@ -1,97 +1,132 @@
-import { Advantages_001Props } from "./advantages-001";
+import { Advantages_001Props } from './advantages-001';
+import { renderSlateToReact } from '../../renderSlate';
+import { Descendant } from 'slate';
+import styles from './advantages-001_public.module.scss';
 
 export const Advantages_001_public: React.FC<Advantages_001Props> = ({
-  title = 'Преимущества',
-  description = 'Узнайте, почему стоит выбрать именно нас',
-  advantages = [
-    'Высокое качество услуг',
-    'Профессиональная команда',
-    'Индивидуальный подход',
-  ],
-  titleColor = '#000000',
-  textColor = '#333333',
-  titleSize = 36,
-  textSize = 16,
-  backgroundColor = '#f8f8f8',
-  padding = 40,
-  listStyle = 'disc',
+  title,
+  description,
+  advantages,
+  titleColor,
+  textColor,
+  titleSize,
+  textSize,
+  textAlign,
+  padding,
+  margin,
+  maxWidth,
+  titleFontWeight,
+  fontWeight,
+  lineHeight,
+  textDecoration,
+  fontStyle,
+  backgroundColor,
+  listStyle,
+  gap,
 }) => {
-  const parseText = (html: string) => {
-    return html
-      .replace(/<\/div><div>/g, '\n')
-      .replace(/<div>/g, '')
-      .replace(/<\/div>/g, '')
-      .split('\n');
+  let parsedTitle: Descendant[];
+  let parsedDescription: Descendant[];
+  let parsedAdvantages: Descendant[][];
+
+  try {
+    parsedTitle = typeof title === 'string' ? JSON.parse(title) : title;
+  } catch {
+    parsedTitle = [{ type: 'heading', children: [{ text: '' }] }];
+  }
+
+  try {
+    parsedDescription = typeof description === 'string' ? JSON.parse(description) : description;
+  } catch {
+    parsedDescription = [{ type: 'paragraph', children: [{ text: '' }] }];
+  }
+
+  try {
+    parsedAdvantages = advantages.map((advantage) =>
+      typeof advantage === 'string' ? JSON.parse(advantage) : advantage
+    );
+  } catch {
+    parsedAdvantages = advantages.map(() => [{ type: 'paragraph', children: [{ text: '' }] }]);
+  }
+
+  const containerStyles = {
+    backgroundColor,
+    maxWidth: '100%',
+    '--max-width': maxWidth,
+    '--padding-mobile': `${padding.mobile.top} ${padding.mobile.right} ${padding.mobile.bottom} ${padding.mobile.left}`,
+    '--padding-tablet': `${padding.tablet.top} ${padding.tablet.right} ${padding.tablet.bottom} ${padding.tablet.left}`,
+    '--padding-desktop': `${padding.desktop.top} ${padding.desktop.right} ${padding.desktop.bottom} ${padding.desktop.left}`,
+    '--margin-mobile': `${margin.mobile.top} ${margin.mobile.right} ${margin.mobile.bottom} ${margin.mobile.left}`,
+    '--margin-tablet': `${margin.tablet.top} ${margin.tablet.right} ${margin.tablet.bottom} ${margin.tablet.left}`,
+    '--margin-desktop': `${margin.desktop.top} ${margin.desktop.right} ${margin.desktop.bottom} ${margin.desktop.left}`,
+    '--title-font-size-mobile': titleSize.mobile,
+    '--title-font-size-tablet': titleSize.tablet,
+    '--title-font-size-desktop': titleSize.desktop,
+    '--text-font-size-mobile': textSize.mobile,
+    '--text-font-size-tablet': textSize.tablet,
+    '--text-font-size-desktop': textSize.desktop,
+    '--gap-mobile': gap.mobile,
+    '--gap-tablet': gap.tablet,
+    '--gap-desktop': gap.desktop,
+  } as React.CSSProperties;
+
+  const titleStyles = {
+    textAlign,
+    color: titleColor,
+    fontWeight: titleFontWeight,
+    lineHeight: `${lineHeight}`,
+    textDecoration,
+    fontStyle,
+    margin: '0 auto',
+    outline: 'none',
+  };
+
+  const textStyles = {
+    textAlign,
+    color: textColor,
+    fontWeight,
+    lineHeight: `${lineHeight}`,
+    textDecoration,
+    fontStyle,
+    margin: '0 auto',
+    outline: 'none',
+  };
+
+  const listStyles = {
+    color: textColor,
+    fontWeight,
+    lineHeight: `${lineHeight}`,
+    textDecoration,
+    fontStyle,
+    listStyleType: listStyle,
+    paddingLeft: listStyle === 'none' ? '0' : '20px',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: textAlign === 'center' || textAlign === 'justify' ? 'center' : textAlign === 'right' ? 'flex-end' : 'flex-start',
+    gap: '20px',
+    margin: '0 auto',
+    textAlign,
   };
 
   return (
-    <section
-      style={{
-        backgroundColor,
-        padding: `${padding}px`,
-      }}
-    >
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        {/* Заголовок */}
-        {parseText(title).map((line, i) => (
-          <h2
-            key={`title-${i}`}
-            style={{
-              color: titleColor,
-              fontSize: `${titleSize}px`,
-              fontWeight: 'bold',
-              marginBottom: i === 0 ? '20px' : '0',
-              textAlign: 'center',
-            }}
-          >
-            {line}
-          </h2>
+    <section className={styles.advantagesContainer} style={containerStyles}>
+      {renderSlateToReact({
+        value: parsedTitle,
+        style: titleStyles,
+      })}
+      {renderSlateToReact({
+        value: parsedDescription,
+        style: textStyles,
+      })}
+      <ul style={listStyles}>
+        {parsedAdvantages.map((advantage, index) => (
+          <li key={index}>
+            {renderSlateToReact({
+              value: advantage,
+              style: { outline: 'none' },
+            })}
+          </li>
         ))}
-
-        {/* Описание */}
-        {parseText(description).map((line, i) => (
-          <p
-            key={`desc-${i}`}
-            style={{
-              color: textColor,
-              fontSize: `${textSize}px`,
-              lineHeight: 1.6,
-              marginBottom: i === 0 ? '30px' : '0',
-              textAlign: 'center',
-            }}
-          >
-            {line}
-          </p>
-        ))}
-
-        {/* Список преимуществ */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <ul
-            style={{
-              color: textColor,
-              fontSize: `${textSize}px`,
-              listStyleType: listStyle,
-              paddingLeft: listStyle === 'none' ? '0' : '20px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'start',
-              justifyContent: 'start',
-              gap: '20px',
-            }}
-          >
-            {advantages.map((item, index) =>
-              parseText(item).map((line, subIndex) => (
-                <li key={`adv-${index}-${subIndex}`}>{line}</li>
-              ))
-            )}
-          </ul>
-        </div>
-      </div>
+      </ul>
     </section>
   );
 };

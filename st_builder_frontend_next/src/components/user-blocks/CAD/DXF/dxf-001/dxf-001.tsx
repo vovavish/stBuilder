@@ -3,7 +3,7 @@ import React, { useEffect, useRef, FC } from 'react';
 import { useNode } from '@craftjs/core';
 import { DxfViewer, DxfViewerOptions } from 'dxf-viewer';
 import { Color } from 'three';
-import { api } from '@/lib/api';
+import { api, API_URL } from '@/lib/api';
 
 import styles from '../../../settings-common/settings-common.module.scss';
 
@@ -44,7 +44,6 @@ export const DXFRenderer: FC<{ url: string; width: string; height: string }> = (
         viewerRef.current = new DxfViewer(containerRef.current!, options);
         viewerRef.current.GetCamera().isOrthographicCamera = false;
         viewerRef.current.GetCamera().enableZoom = false;
-        console.log('Loading DXF from:', url); // Логируем URL
         await viewerRef.current.Load({
           url,
           fonts: ['http://localhost:3000/uploads/T-FLEX Type A.TTF'],
@@ -123,7 +122,7 @@ const DXFBlockSettings = () => {
 
         const uploadedFileUrl = response.data.filePath;
         setProp((props: DXF_001Props) => {
-          props.dxfUrl = uploadedFileUrl;
+          props.dxfUrl = `${API_URL}/${uploadedFileUrl}`;
         });
 
         console.log('DXF file uploaded successfully, URL:', uploadedFileUrl);

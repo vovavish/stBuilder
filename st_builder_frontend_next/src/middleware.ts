@@ -44,5 +44,5 @@ export default function middleware(req: NextRequestWithAuth) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|static|favicon.ico).*)'],
+  matcher: ['/((?!api|_next|static|favicon.ico|register|login|$|assets).*)'],
 };

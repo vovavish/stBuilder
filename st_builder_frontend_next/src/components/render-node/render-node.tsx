@@ -76,7 +76,7 @@ export const RenderNode: FC<RenderNodeProps> = observer(({ render }) => {
               ref={currentRef}
               className={styles.settingsItems}
               style={{
-                left: pos.left,
+                left: 0,
                 top: pos.top,
                 zIndex: 999,
               }}

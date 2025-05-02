@@ -3,5 +3,23 @@
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.settings_buttons_wrapper {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.settings_text_delimertor {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.activeButton {
+  background-color: rgb(66, 153, 225);
+  color: white;
+  border-radius: 5px;
 }

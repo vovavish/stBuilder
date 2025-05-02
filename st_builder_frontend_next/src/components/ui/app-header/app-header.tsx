@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import styles from "./app-header.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import ApiPublishedUserSitesController from "@/lib/ApiPublishUserPagesController";
@@ -11,7 +11,6 @@ import { useStore } from "@/hooks/useStore";
 export const AppHeaderUI: FC = () => {
   const session = useSession();
   const pathname = usePathname();
-  const router = useRouter();
   const { userPagesStore } = useStore();
   
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
@@ -74,9 +73,6 @@ export const AppHeaderUI: FC = () => {
           <Link href="/sites" className={styles.link}>
             Мои сайты
           </Link>
-          <Link href="/profile" className={styles.link}>
-            Профиль
-          </Link>
           {isEditSitePage && (
             <button
               onClick={() => setIsPublishModalOpen(true)}
@@ -85,7 +81,7 @@ export const AppHeaderUI: FC = () => {
               Опубликовать
             </button>
           )}
-          {session.status === "authenticated" && (
+          {session.status === "authenticated" ? (
             <Link
               href="#"
               onClick={() => signOut({ callbackUrl: "/" })}
@@ -93,7 +89,7 @@ export const AppHeaderUI: FC = () => {
             >
               Выйти
             </Link>
-          )}
+          ) : <Link href="/login" className={styles.link}>Войти</Link>}
         </nav>
         
         {/* Кнопка бургер-меню для мобильных */}

@@ -1,15 +1,7 @@
 'use client';
-import React, { useEffect, useRef, FC } from 'react';
-import { DxfViewer, DxfViewerOptions } from 'dxf-viewer';
-import { Color } from 'three';
+import React, { FC } from 'react';
 import { DXFRenderer } from '../dxf-001/dxf-001';
-
-export interface DXF_001Props {
-  dxfUrl: string;
-  backgroundColor: string;
-  width: string;
-  height: string;
-}
+import { DXF_001Props } from '../dxf-001/dxf-001';
 
 export const DXF_001_public: FC<DXF_001Props> = ({ dxfUrl, backgroundColor, width, height }) => {
   return (
