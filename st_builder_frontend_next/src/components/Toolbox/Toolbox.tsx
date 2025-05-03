@@ -5,7 +5,7 @@ import { Header_001 } from '../user-blocks/Headers/header-001/header-001';
 import { Title_001, Title_001DefaultProps } from '../user-blocks/Titels/title-001/title-001';
 import { Advantages_001, Advantages_001DefaultProps } from '../user-blocks/Advantages/advantages-001/advantages-001';
 import { Model_3D_001 } from '../user-blocks/3D-Models/3d-model-001/3d-model-001';
-import { DXF_001 } from '../user-blocks/CAD/DXF/dxf-001/dxf-001';
+import { DXF_001, DXF_001DefaultProps } from '../user-blocks/CAD/DXF/dxf-001/dxf-001';
 import { DXF_002 } from '../user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '../user-blocks/CAD/DXF/dxf-003/dxf-003';
 import { Gallery_001 } from '../user-blocks/Gallery/gallery-001/gallery-001';
@@ -125,12 +125,7 @@ export const Toolbox = () => {
         {
           name: 'DXF чертеж (DXF_001)',
           component: DXF_001,
-          props: {
-            dxfUrl: '',
-            backgroundColor: '#ffffff',
-            width: '800px',
-            height: '600px',
-          },
+          props: DXF_001DefaultProps,
         },
         {
           name: 'DXF чертеж с текстом (DXF_002)',

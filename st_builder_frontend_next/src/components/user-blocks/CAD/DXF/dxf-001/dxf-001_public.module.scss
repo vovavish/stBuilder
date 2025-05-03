@@ -1,0 +1,29 @@
+.dxfContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  position: relative;
+
+
+  width: var(--width-desktop);
+  height: var(--height-desktop);
+  padding: var(--padding-desktop);
+  margin: var(--margin-desktop);
+
+  @media (max-width: 1024px) {
+    width: var(--width-tablet);
+    height: var(--height-tablet);
+    padding: var(--padding-tablet);
+    margin: var(--margin-tablet);
+  }
+
+  @media (max-width: 480px) {
+    width: var(--width-mobile);
+    height: var(--height-mobile);
+    padding: var(--padding-mobile);
+    margin: var(--margin-mobile);
+  }
+}
