@@ -15,7 +15,6 @@ export const Header_001_public: React.FC<Header_001Props> = ({
   overlayColor = '#000000',
   overlayOpacity = 0.3,
 }) => {
-  // Функция для очистки HTML и преобразования в строки с \n
   const parseText = (html: string) => {
     return html
       .replace(/<\/div><div>/g, '\n')

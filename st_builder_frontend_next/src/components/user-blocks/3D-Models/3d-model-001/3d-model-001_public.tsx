@@ -5,10 +5,9 @@ import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
 import { MTLLoader } from 'three/examples/jsm/Addons.js';
+import * as THREE from 'three';
 
 import { Model_3D_001Props } from './3d-model-001';
-
-import * as THREE from 'three';
 
 const ModelRenderer: FC<{
   url: string;
@@ -51,7 +50,6 @@ const ModelRenderer: FC<{
             });
           });
         } else if (textureUrl) {
-          // Если MTL нет, но есть текстура
           const textureLoader = new THREE.TextureLoader();
           textureLoader.load(textureUrl, (texture) => {
             const material = new THREE.MeshStandardMaterial({ map: texture });
@@ -66,7 +64,6 @@ const ModelRenderer: FC<{
             });
           });
         } else {
-          // Без MTL и текстур
           objLoader.load(url, (obj) => {
             obj.rotation.x = -Math.PI / 2;
             setModel(obj);
@@ -101,6 +98,19 @@ export const Model_3D_001_public: FC<Model_3D_001Props> = ({
   cameraZ,
   ...props
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInteractive, setIsInteractive] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsInteractive(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   console.log('Passing modelUrl to ModelRenderer:', modelUrl);
 
   return (
@@ -113,15 +123,57 @@ export const Model_3D_001_public: FC<Model_3D_001Props> = ({
         overflow: 'hidden',
       }}
     >
-      <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 5], fov: 50 }}>
-        <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
-        <ambientLight intensity={ambientLightIntensity} />
-        <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
-        <React.Suspense fallback={null}>
-          <ModelRenderer url={modelUrl} mtlUrl={mtlUrl} textureUrl={textureUrl} type={modelType} />
-        </React.Suspense>
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-      </Canvas>
+      <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <Canvas
+          style={{ width: '100%', height: '100%' }}
+          camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}
+        >
+          <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
+          <ambientLight intensity={ambientLightIntensity} />
+          <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
+          <React.Suspense fallback={null}>
+            <ModelRenderer url={modelUrl} mtlUrl={mtlUrl} textureUrl={textureUrl} type={modelType} />
+          </React.Suspense>
+          <OrbitControls
+            enablePan={isInteractive}
+            enableZoom={isInteractive}
+            enableRotate={isInteractive}
+          />
+        </Canvas>
+        {modelUrl && !isInteractive && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10,
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+            }}
+            onClick={() => setIsInteractive(true)}
+          />
+        )}
+        {!modelUrl && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              height: '100%',
+              color: '#333',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              border: '2px dashed #333',
+            }}
+          >
+            Добавьте 3D модель
+          </div>
+        )}
+      </div>
     </div>
   );
 };

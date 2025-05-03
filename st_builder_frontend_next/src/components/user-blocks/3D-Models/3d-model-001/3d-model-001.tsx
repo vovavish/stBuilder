@@ -11,6 +11,7 @@ import * as THREE from 'three';
 
 import styles from '../../settings-common/settings-common.module.scss'
 
+
 export interface Model_3D_001Props {
   modelUrl: string;
   mtlUrl: string;
@@ -125,6 +126,19 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
     selected: state.events.selected,
   }));
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInteractive, setIsInteractive] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsInteractive(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   console.log('Passing modelUrl to ModelRenderer:', modelUrl);
 
   return (
@@ -142,18 +156,57 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
         overflow: 'hidden',
       }}
     >
-      <Canvas
-        style={{ width: '100%', height: '100%' }}
-        camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}
-      >
-        <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
-        <ambientLight intensity={ambientLightIntensity} />
-        <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
-        <React.Suspense fallback={null}>
-          <ModelRenderer url={modelUrl} mtlUrl={mtlUrl} textureUrl={textureUrl} type={modelType} />
-        </React.Suspense>
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-      </Canvas>
+      <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <Canvas
+          style={{ width: '100%', height: '100%' }}
+          camera={{ position: [cameraX, cameraY, cameraZ], fov: 50 }}
+        >
+          <PerspectiveCamera makeDefault position={[cameraX, cameraY, cameraZ]} />
+          <ambientLight intensity={ambientLightIntensity} />
+          <directionalLight position={[5, 5, 5]} intensity={directionalLightIntensity} />
+          <React.Suspense fallback={null}>
+            <ModelRenderer url={modelUrl} mtlUrl={mtlUrl} textureUrl={textureUrl} type={modelType} />
+          </React.Suspense>
+          <OrbitControls
+            enablePan={isInteractive}
+            enableZoom={isInteractive}
+            enableRotate={isInteractive}
+          />
+        </Canvas>
+        {modelUrl && !isInteractive && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 10,
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+            }}
+            onClick={() => setIsInteractive(true)}
+          />
+        )}
+        {!modelUrl && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              height: '100%',
+              color: '#333',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              border: '2px dashed #333',
+            }}
+          >
+            Добавьте 3D модель
+          </div>
+        )}
+      </div>
     </div>
   );
 };

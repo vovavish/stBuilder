@@ -6,11 +6,14 @@ import { Title_001, Title_001DefaultProps } from '../user-blocks/Titels/title-00
 import { Advantages_001, Advantages_001DefaultProps } from '../user-blocks/Advantages/advantages-001/advantages-001';
 import { Model_3D_001 } from '../user-blocks/3D-Models/3d-model-001/3d-model-001';
 import { DXF_001, DXF_001DefaultProps } from '../user-blocks/CAD/DXF/dxf-001/dxf-001';
-import { DXF_002 } from '../user-blocks/CAD/DXF/dxf-002/dxf-002';
-import { DXF_003 } from '../user-blocks/CAD/DXF/dxf-003/dxf-003';
+import { DXF_002, DXF_002DefaultProps } from '../user-blocks/CAD/DXF/dxf-002/dxf-002';
+import { DXF_003, DXF_003DefaultProps } from '../user-blocks/CAD/DXF/dxf-003/dxf-003';
 import { Gallery_001 } from '../user-blocks/Gallery/gallery-001/gallery-001';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import './toolbox.scss';
+import { Link_001, Link_001DefaultProps } from '../user-blocks/Navigation/Link_001/link-001';
+import { Link_002, Link_002DefaultProps } from '../user-blocks/Navigation/Link_002/Link_002';
+import { Header_002, Header_002DefaultProps } from '../user-blocks/Headers/header-002/header-002';
 
 type ComponentProps<T> = T extends React.ComponentType<infer P> ? P : never;
 
@@ -74,6 +77,21 @@ export const Toolbox = () => {
       ],
     },
     {
+      title: 'Навигация',
+      components: [
+        {
+          name: 'Ссылка (Link_001)',
+          component: Link_001,
+          props: Link_001DefaultProps,
+        },
+        {
+          name: 'Ссылка (Link_002)',
+          component: Link_002,
+          props: Link_002DefaultProps,
+        },
+      ]
+    },
+    {
       title: 'Шапки',
       components: [
         {
@@ -94,6 +112,11 @@ export const Toolbox = () => {
             overlayColor: '#000000',
             overlayOpacity: 0.3,
           },
+        },
+        {
+          name: 'Шапка (Header_002)',
+          component: Header_002,
+          props: Header_002DefaultProps,
         },
       ],
     },
@@ -130,30 +153,12 @@ export const Toolbox = () => {
         {
           name: 'DXF чертеж с текстом (DXF_002)',
           component: DXF_002,
-          props: {
-            dxfUrl: '',
-            backgroundColor: '#ffffff',
-            width: '800px',
-            height: '600px',
-            text: 'Description here',
-            fontSize: 20,
-            textAlign: 'left',
-            maxWidth: 400,
-          },
+          props: DXF_002DefaultProps,
         },
         {
           name: 'DXF чертеж с текстом (DXF_003)',
           component: DXF_003,
-          props: {
-            dxfUrl: '',
-            backgroundColor: '#ffffff',
-            width: '800px',
-            height: '600px',
-            text: 'Description here',
-            fontSize: 20,
-            textAlign: 'left',
-            maxWidth: 400,
-          },
+          props: DXF_003DefaultProps,
         },
       ],
     },

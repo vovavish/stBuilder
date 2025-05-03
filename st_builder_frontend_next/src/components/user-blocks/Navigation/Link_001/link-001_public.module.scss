@@ -1,0 +1,19 @@
+.linkContainer {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--padding-desktop);
+  margin: var(--margin-desktop);
+  font-size: var(--font-size-desktop);
+
+  @media (max-width: 768px) {
+    padding: var(--padding-tablet);
+    margin: var(--margin-tablet);
+    font-size: var(--font-size-tablet);
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--padding-mobile);
+    margin: var(--margin-mobile);
+    font-size: var(--font-size-mobile);
+  }
+}

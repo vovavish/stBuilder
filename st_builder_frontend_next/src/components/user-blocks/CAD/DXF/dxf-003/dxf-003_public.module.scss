@@ -1,0 +1,70 @@
+.dxfContainer {
+  width: var(--width-desktop);
+  height: var(--height-desktop);
+  padding: var(--padding-desktop);
+  margin: var(--margin-desktop);
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  max-width: 100%;
+  align-items: stretch;
+
+  @media (max-width: 768px) {
+    width: var(--width-tablet);
+    height: var(--height-tablet);
+    padding: var(--padding-tablet);
+    margin: var(--margin-tablet);
+  }
+
+  @media (max-width: 480px) {
+    width: var(--width-mobile);
+    height: var(--height-mobile);
+    padding: var(--padding-mobile);
+    margin: var(--margin-mobile);
+    flex-direction: column;
+  }
+}
+
+.textWrapper {
+  flex: 1;
+  background-color: var(--text-background-color);
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+
+  @media (max-width: 480px) {
+    flex: 1 1 auto;
+    height: auto;
+    display: block;
+    width: 100%;
+    justify-content: initial;
+    align-items: initial;
+  }
+}
+
+.textContent {
+  font-size: var(--font-size-desktop);
+
+  @media (max-width: 768px) {
+    font-size: var(--font-size-tablet);
+  }
+
+  @media (max-width: 480px) {
+    font-size: var(--font-size-mobile);
+  }
+}
+
+.dxfWrapper {
+  flex: 2;
+  min-height: 0;
+  overflow: hidden;
+
+  @media (max-width: 480px) {
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 50vh;
+  }
+}

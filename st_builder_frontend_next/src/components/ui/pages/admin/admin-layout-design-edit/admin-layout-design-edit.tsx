@@ -14,6 +14,8 @@ import { DXF_002 } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003';
 import { Gallery_001 } from '@/components/user-blocks/Gallery/gallery-001/gallery-001';
 import { RenderNode } from '@/components/render-node';
+import { Link_001 } from '@/components/user-blocks/Navigation/Link_001/link-001';
+import { Header_002 } from '@/components/user-blocks/Headers/header-002/header-002';
 
 type AdminLayoutDesignEditUIProps = {
   layout: UserLayoutByIdAdminResponse;
@@ -30,6 +32,7 @@ export const AdminLayoutDesignEditUI: FC<AdminLayoutDesignEditUIProps> = ({
         resolver={{
           Text_001,
           Header_001,
+          Header_002,
           Title_001,
           Advantages_001,
           Model_3D_001,
@@ -38,6 +41,7 @@ export const AdminLayoutDesignEditUI: FC<AdminLayoutDesignEditUIProps> = ({
           DXF_002,
           DXF_003,
           Gallery_001,
+          Link_001,
         }}
         onNodesChange={debounce((query) => {
           const json = query.serialize();

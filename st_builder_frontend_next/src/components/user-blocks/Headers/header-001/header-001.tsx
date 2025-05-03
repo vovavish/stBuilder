@@ -4,6 +4,7 @@ import ContentEditable from 'react-contenteditable';
 import { useNode } from '@craftjs/core';
 
 import styles from '../../settings-common/settings-common.module.scss';
+import { api, API_URL } from '@/lib/api';
 
 export interface Header_001Props {
   text_company_name: string;
@@ -140,6 +141,27 @@ const HeaderSettings = () => {
     props: node.data.props,
   }));
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+    
+          const response = await api.post('/upload', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          });
+    
+          const uploadedFileUrl = response.data.filePath;
+          setProp((props: Header_001Props) => {
+            props.backgroundImage = `${API_URL}/${uploadedFileUrl}`;
+          });
+        } catch (err) {
+          console.error('Ошибка при загрузке фонового изображения:', err);
+        }
+      }
+    };
+
   return (
     <div className="header-settings">
       <label className={styles.settings_label}>Размер текста</label>
@@ -194,15 +216,8 @@ const HeaderSettings = () => {
         onChange={(e) => setProp((props: Header_001Props) => (props.textColor = e.target.value))}
       />
 
-      <label className={styles.settings_label}>Фоновое изображение (URL)</label>
-      <input
-        type="text"
-        value={props.backgroundImage}
-        onChange={(e) =>
-          setProp((props: Header_001Props) => (props.backgroundImage = e.target.value))
-        }
-        placeholder="Enter image URL"
-      />
+      <label className={styles.settings_label}>Фоновое изображение (.jpg, .png, .webp)</label>
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
 
       <label className={styles.settings_label}>Прозрачность фона</label>
       <input

@@ -16,6 +16,9 @@ import { DXF_002_public } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002
 import { DXF_003_public } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003_public';
 
 import { Gallery_001_public } from '@/components/user-blocks/Gallery/gallery-001/gallery-001_public';
+import { Link_001_public } from '@/components/user-blocks/Navigation/Link_001/link-001_public';
+import { Link_002_public } from '@/components/user-blocks/Navigation/Link_002/Link_002_public';
+import { Header_002_public } from '@/components/user-blocks/Headers/header-002/header-002_public';
 
 interface CraftNode {
   type: { resolvedName: string };
@@ -32,7 +35,10 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   Container: Container_public,
   Advantages_001: Advantages_001_public,
   Title_001: Title_001_public,
+  Link_001: Link_001_public,
+  Link_002: Link_002_public,
   Header_001: Header_001_public,
+  Header_002: Header_002_public,
   Model_3D_001: Model_3D_001_public,
   DXF_001: DXF_001_public,
   DXF_002: DXF_002_public,

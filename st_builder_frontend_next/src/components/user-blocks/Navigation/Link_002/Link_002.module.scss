@@ -1,0 +1,80 @@
+.nav {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 9999;
+
+  .logo {
+    max-height: 50px;
+    margin-right: 1rem;
+  }
+
+  .menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0 1rem;
+
+      a {
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .burgerMenu {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .menu {
+      display: none;
+    }
+
+    .burgerMenu {
+      display: block;
+      position: relative;
+
+      .burgerButton {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: inherit;
+      }
+
+      .mobileMenu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: inherit;
+        list-style: none;
+        padding: 1rem;
+        margin: 0;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+
+        li {
+          margin: 0.5rem 0;
+
+          a {
+            text-decoration: none;
+            font-size: 1rem;
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+}
