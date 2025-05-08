@@ -124,7 +124,7 @@ export const AppHeaderUI: FC = () => {
                 Опубликовать
               </button>
             )}
-            {session.status === "authenticated" && (
+            {session.status === "authenticated" ? (
               <Link
                 href="#"
                 onClick={() => {
@@ -136,7 +136,7 @@ export const AppHeaderUI: FC = () => {
               >
                 Выйти
               </Link>
-            )}
+            ) : <Link href="/login" className={styles.link}>Войти</Link>}
           </nav>
         )}
       </div>

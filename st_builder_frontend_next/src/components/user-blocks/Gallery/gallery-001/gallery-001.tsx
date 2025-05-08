@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useNode } from '@craftjs/core';
 import { api, API_URL } from '@/lib/api';
@@ -33,19 +33,19 @@ export const GalleryImage: React.FC<{
   paddingBottom: string;
   paddingLeft: string;
   paddingRight: string;
-}> = ({ 
-  src, 
-  alt = '', 
-  ratio, 
-  borderRadius, 
-  caption, 
+}> = ({
+  src,
+  alt = '',
+  ratio,
+  borderRadius,
+  caption,
   showCaption,
   width,
   height,
   paddingTop,
   paddingBottom,
   paddingLeft,
-  paddingRight
+  paddingRight,
 }) => {
   const [aspectRatio, setAspectRatio] = useState('1 / 1');
 
@@ -69,46 +69,54 @@ export const GalleryImage: React.FC<{
   }, [ratio]);
 
   return (
-    <div className="gallery-item" style={{ 
-      position: 'relative', 
-      borderRadius: `${borderRadius}px`, 
-      overflow: 'hidden',
-      width: width || '100%',
-      height: height || 'auto',
-      maxWidth: '100%',
-      margin: '0 auto',
-      paddingTop,
-      paddingBottom,
-      paddingLeft,
-      paddingRight
-    }}>
-      <div style={{ 
-        aspectRatio, 
-        position: 'relative', 
-        width: '100%',
-        height: '100%'
-      }}>
+    <div
+      className="gallery-item"
+      style={{
+        position: 'relative',
+        borderRadius: `${borderRadius}px`,
+        overflow: 'hidden',
+        width: width || '100%',
+        height: height || 'auto',
+        maxWidth: '100%',
+        margin: '0 auto',
+        paddingTop,
+        paddingBottom,
+        paddingLeft,
+        paddingRight,
+      }}
+    >
+      <div
+        style={{
+          aspectRatio,
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+        }}
+      >
         <Image
           src={`${API_URL}/${src}`}
           alt={alt}
           fill
-          style={{ 
+          style={{
             objectFit: 'cover',
-            display: 'block'
+            display: 'block',
           }}
         />
       </div>
       {showCaption && caption && (
-        <div className="image-caption" style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: 'rgba(0, 0, 0, 0.5)',
-          color: 'white',
-          padding: '8px',
-          textAlign: 'center'
-        }}>
+        <div
+          className="image-caption"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            padding: '8px',
+            textAlign: 'center',
+          }}
+        >
           {caption}
         </div>
       )}
@@ -121,11 +129,11 @@ export const Gallery_001: React.FC<Gallery_001Props> & {
     props: typeof GalleryBlockDefaultProps;
     related: { settings: typeof GalleryBlockSettings };
   };
-} = ({ 
-  image, 
-  imageRatio, 
-  borderRadius, 
-  showCaption, 
+} = ({
+  image,
+  imageRatio,
+  borderRadius,
+  showCaption,
   caption,
   width,
   height,
@@ -152,10 +160,10 @@ export const Gallery_001: React.FC<Gallery_001Props> & {
         padding: '20px 0',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
-      <div style={{ maxWidth: '800px', width: '100%' }}>
+      <div style={{ maxWidth: '800px', width: '100%', margin: '0 10px' }}>
         {image ? (
           <GalleryImage
             src={image}
@@ -171,12 +179,14 @@ export const Gallery_001: React.FC<Gallery_001Props> & {
             paddingRight={paddingRight}
           />
         ) : (
-          <div style={{
-            border: '2px dashed #ccc',
-            padding: '40px',
-            textAlign: 'center',
-            borderRadius: '8px'
-          }}>
+          <div
+            style={{
+              border: '2px dashed #ccc',
+              padding: '40px',
+              textAlign: 'center',
+              borderRadius: '8px',
+            }}
+          >
             <p>Загрузите изображение</p>
           </div>
         )}
@@ -227,17 +237,19 @@ const GalleryBlockSettings = () => {
       <label className={styles.settings_label}>Upload Image</label>
       {props.image ? (
         <div className="mb-4">
-          <div style={{ 
-        position: 'relative', 
-        width: '100%',
-        height: '100px'
-      }}>
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '100px',
+            }}
+          >
             <Image
               src={`${API_URL}/${props.image}`}
               alt="Preview"
               fill
-              style={{ 
-                objectFit: 'contain'
+              style={{
+                objectFit: 'contain',
               }}
             />
           </div>
@@ -249,12 +261,7 @@ const GalleryBlockSettings = () => {
           </button>
         </div>
       ) : (
-        <input 
-          type="file" 
-          accept="image/*" 
-          onChange={handleImageUpload} 
-          className="w-full"
-        />
+        <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full" />
       )}
 
       <div className="grid grid-cols-2 gap-4 mt-4">
@@ -298,7 +305,9 @@ const GalleryBlockSettings = () => {
         min="0"
         max="50"
         value={props.borderRadius}
-        onChange={(e) => setProp((props: Gallery_001Props) => (props.borderRadius = parseInt(e.target.value)))}
+        onChange={(e) =>
+          setProp((props: Gallery_001Props) => (props.borderRadius = parseInt(e.target.value)))
+        }
         className="w-full p-1 border rounded"
       />
 
@@ -308,7 +317,9 @@ const GalleryBlockSettings = () => {
           <input
             type="text"
             value={props.paddingTop}
-            onChange={(e) => setProp((props: Gallery_001Props) => (props.paddingTop = e.target.value))}
+            onChange={(e) =>
+              setProp((props: Gallery_001Props) => (props.paddingTop = e.target.value))
+            }
             className="w-full p-1 border rounded"
             placeholder="e.g. 10px or 1rem"
           />
@@ -318,7 +329,9 @@ const GalleryBlockSettings = () => {
           <input
             type="text"
             value={props.paddingBottom}
-            onChange={(e) => setProp((props: Gallery_001Props) => (props.paddingBottom = e.target.value))}
+            onChange={(e) =>
+              setProp((props: Gallery_001Props) => (props.paddingBottom = e.target.value))
+            }
             className="w-full p-1 border rounded"
             placeholder="e.g. 10px or 1rem"
           />
@@ -328,7 +341,9 @@ const GalleryBlockSettings = () => {
           <input
             type="text"
             value={props.paddingLeft}
-            onChange={(e) => setProp((props: Gallery_001Props) => (props.paddingLeft = e.target.value))}
+            onChange={(e) =>
+              setProp((props: Gallery_001Props) => (props.paddingLeft = e.target.value))
+            }
             className="w-full p-1 border rounded"
             placeholder="e.g. 10px or 1rem"
           />
@@ -338,7 +353,9 @@ const GalleryBlockSettings = () => {
           <input
             type="text"
             value={props.paddingRight}
-            onChange={(e) => setProp((props: Gallery_001Props) => (props.paddingRight = e.target.value))}
+            onChange={(e) =>
+              setProp((props: Gallery_001Props) => (props.paddingRight = e.target.value))
+            }
             className="w-full p-1 border rounded"
             placeholder="e.g. 10px or 1rem"
           />
@@ -349,7 +366,9 @@ const GalleryBlockSettings = () => {
         <input
           type="checkbox"
           checked={props.showCaption}
-          onChange={(e) => setProp((props: Gallery_001Props) => (props.showCaption = e.target.checked))}
+          onChange={(e) =>
+            setProp((props: Gallery_001Props) => (props.showCaption = e.target.checked))
+          }
           className="mr-2"
         />
         Show Caption

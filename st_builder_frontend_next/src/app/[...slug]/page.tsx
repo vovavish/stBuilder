@@ -19,7 +19,7 @@ import { Gallery_001_public } from '@/components/user-blocks/Gallery/gallery-001
 import { Link_001_public } from '@/components/user-blocks/Navigation/Link_001/link-001_public';
 import { Link_002_public } from '@/components/user-blocks/Navigation/Link_002/Link_002_public';
 import { Header_002_public } from '@/components/user-blocks/Headers/header-002/header-002_public';
-import { NextPage } from 'next';
+import { Metadata, NextPage } from 'next';
 
 interface CraftNode {
   type: { resolvedName: string };
@@ -104,6 +104,16 @@ const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
     console.error('Error loading page:', error);
     return <div>Ошибка загрузки страницы</div>;
   }
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const siteName = resolvedParams.slug[0];
+
+  return {
+    title: siteName,
+  };
 }
 
 export default SubdomainPage;

@@ -42,7 +42,7 @@
 .previewSection, .formSection {
   background: #fff;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   min-height: 400px; /* Ensure consistent minimum height */
 }
@@ -57,7 +57,6 @@
 .editorWrapper {
   border: 1px solid #e5e7eb;
   border-radius: 0.375rem;
-  padding: 1rem;
   min-height: 400px;
   background: #f9fafb;
   overflow: auto; /* Handle overflow content */

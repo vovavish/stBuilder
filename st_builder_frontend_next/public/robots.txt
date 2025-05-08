@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /admin
+
+# Host
+Host: https://stbuilder.ru
+
+# Sitemaps
+Sitemap: https://stbuilder.ru/sitemap.xml

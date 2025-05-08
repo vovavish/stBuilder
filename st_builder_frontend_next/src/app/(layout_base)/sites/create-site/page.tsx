@@ -32,7 +32,6 @@ const CreateSite = observer(() => {
       }, 1500);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // Типизируем data как объект с возможным полем message
         const errorData = err.response?.data as { message?: string };
         
         if (errorData?.message) {
