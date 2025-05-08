@@ -85,8 +85,13 @@ export const Title_001_public: React.FC<Title_001Props> = ({
 
   return (
     <section className={styles.textContainer} style={containerStyles}>
-      {renderSlateToReact({ value: parsedTitleText, style: titleStyles })}
-      {renderSlateToReact({ value: parsedContentText, style: textStyles })}
+      <div className={styles.titleBlock}>
+        {renderSlateToReact({ value: parsedTitleText, style: titleStyles })}
+      </div>
+      <div className={styles.textBlock}>
+        {renderSlateToReact({ value: parsedContentText, style: textStyles })}
+      </div>
     </section>
   );
+  
 };

@@ -17,6 +17,7 @@ async function bootstrap() {
         'http://stbuilder.ru:3001',
         'http://vovavish.stbuilder.ru:3001',
         'http://demo.stbuilder.ru:3001',
+        'http://demo.localhost:3001',
         process.env.FRONTEND_URL,
       ];
       if (!origin) return callback(null, true);
