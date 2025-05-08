@@ -15,6 +15,9 @@ import { extname } from 'path';
           callback(null, `${uniqueSuffix}${extname(file.originalname)}`);
         },
       }),
+      limits: {
+        fileSize: 1024 * 1024 * 20, // 20 MB
+      },
     }),
   ],
   controllers: [UploadFileController],
