@@ -63,8 +63,7 @@
   overflow: hidden;
 
   @media (max-width: 480px) {
-    flex: 0 0 auto;
+    flex: 2;
     width: 100%;
-    max-height: 50vh;
   }
 }
