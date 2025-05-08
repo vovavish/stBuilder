@@ -436,7 +436,7 @@ const TitleBlockSettings = () => {
       <select
         value={props.textAlign}
         onChange={(e) =>
-          setProp((props: Title_001Props) => (props.textAlign = e.target.value as any))
+          setProp((props: Title_001Props) => (props.textAlign = e.target.value as 'left' | 'center' | 'right' | 'justify' | 'inherit'))
         }
         className="w-full p-1 border rounded mb-3"
       >
@@ -477,7 +477,7 @@ const TitleBlockSettings = () => {
       <select
         value={props.titleTextDecoration}
         onChange={(e) =>
-          setProp((props: Title_001Props) => (props.titleTextDecoration = e.target.value as any))
+          setProp((props: Title_001Props) => (props.titleTextDecoration = e.target.value as 'none' | 'underline' | 'overline' | 'line-through'))
         }
         className="w-full p-1 border rounded mb-3"
       >
@@ -491,7 +491,7 @@ const TitleBlockSettings = () => {
       <select
         value={props.textTextDecoration}
         onChange={(e) =>
-          setProp((props: Title_001Props) => (props.textTextDecoration = e.target.value as any))
+          setProp((props: Title_001Props) => (props.textTextDecoration = e.target.value as 'none' | 'underline' | 'overline' | 'line-through'))
         }
         className="w-full p-1 border rounded mb-3"
       >

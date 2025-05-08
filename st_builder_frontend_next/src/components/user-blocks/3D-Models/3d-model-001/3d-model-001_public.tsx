@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect, FC } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/examples/jsm/Addons.js';
@@ -96,7 +96,6 @@ export const Model_3D_001_public: FC<Model_3D_001Props> = ({
   cameraX,
   cameraY,
   cameraZ,
-  ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInteractive, setIsInteractive] = useState(false);

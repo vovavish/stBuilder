@@ -18,7 +18,7 @@ const AdminLayoutDesignEdit: FC = observer(() => {
 
   useEffect(() => {
     userLayoutsStore.getUserLayoutByIdAdmin(id as string);
-  }, [])
+  }, [id, userLayoutsStore])
 
   const onUpdateLayoutData = (layoutData: string) => {
     const compressed = lz.encodeBase64(lz.compress(layoutData));

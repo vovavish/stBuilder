@@ -21,7 +21,7 @@ const AdminLayoutCreate: FC = observer(() => {
 
   const handleCreateLayout = async () => {
     try {
-      const createdLayout = await userLayoutsStore.createUserLayout(
+      await userLayoutsStore.createUserLayout(
         layoutFormData.name,
         layoutFormData.description,
         layoutFormData.path_to_image,

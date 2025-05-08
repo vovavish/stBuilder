@@ -327,7 +327,7 @@ const DXFBlockSettings = () => {
       <select
         value={props.textAlign}
         onChange={(e) =>
-          setProp((props: DXF_002Props) => (props.textAlign = e.target.value as any))
+          setProp((props: DXF_002Props) => (props.textAlign = e.target.value as 'left' | 'center' | 'right' | 'justify' | 'inherit'))
         }
         className="w-full p-1 border rounded"
       >
@@ -389,7 +389,7 @@ const DXFBlockSettings = () => {
       <select
         value={props.textDecoration}
         onChange={(e) =>
-          setProp((props: DXF_002Props) => (props.textDecoration = e.target.value as any))
+          setProp((props: DXF_002Props) => (props.textDecoration = e.target.value as 'none' | 'underline' | 'overline' | 'line-through'))
         }
         className="w-full p-1 border rounded"
       >

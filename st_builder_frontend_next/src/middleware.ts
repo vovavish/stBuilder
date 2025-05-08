@@ -22,7 +22,7 @@ export default function middleware(req: NextRequestWithAuth) {
   }
 
   const authMiddleware = withAuth(
-    function authMiddleware(req: NextRequestWithAuth, event: NextFetchEvent) {
+    function authMiddleware(req: NextRequestWithAuth) {
       if (req.nextUrl.pathname.startsWith('/admin')) {
         if (!req.nextauth.token?.roles?.includes('ADMIN')) {
           return NextResponse.redirect(new URL('/login', req.url));

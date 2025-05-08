@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import {
   UserLayoutByIdAdminResponse,
-  UserLayoutResponse,
 } from '@/types/response/UserLayoutResponse';
 import Link from 'next/link';
 import { api, API_URL } from '@/lib/api';
 import styles from './admin-layout.module.scss';
+import Image from 'next/image';
 
 type AdminLayoutUIProps = {
   layout: UserLayoutByIdAdminResponse;
@@ -87,9 +87,11 @@ export const AdminLayoutUI: FC<AdminLayoutUIProps> = ({
             {layoutFormData.path_to_image && (
               <div className={styles.imagePreview}>
                 <span>Текущее изображение:</span>
-                <img
+                <Image
                   src={`${API_URL}/${layoutFormData.path_to_image}`}
                   alt="Preview"
+                  width={200}
+                  height={200}
                   className={styles.previewImage}
                 />
               </div>

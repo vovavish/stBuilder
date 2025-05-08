@@ -15,7 +15,6 @@ export const Gallery_001_public: React.FC<Gallery_001Props> = ({
   paddingBottom,
   paddingLeft,
   paddingRight,
-  ...props 
 }) => {
   return (
     <div

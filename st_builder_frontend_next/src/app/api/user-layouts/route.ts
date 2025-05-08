@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { api } from "@/lib/api";
+import { AxiosError } from "axios";
+import { ApiErrorResponse } from "@/types/ApiErrorResponse";
 
 export async function GET() {
   try {
     const response = await api.get("/user-layouts/");
     return NextResponse.json(response.data);
-  } catch (error: any) {
-    return NextResponse.json(error.response?.data || { message: "Error" }, { status: error.response?.status || 500 });
+  } catch (error: unknown) {
+    const err = error as AxiosError<ApiErrorResponse>;
+    return NextResponse.json(err.response?.data || { message: "Error" }, { status: err.response?.status || 500 });
   }
 }
 
@@ -16,7 +19,8 @@ export async function POST(req: Request) {
   try {
     const response = await api.post("/user-layouts/", body);
     return NextResponse.json(response.data);
-  } catch (error: any) {
-    return NextResponse.json(error.response?.data || { message: "Error" }, { status: error.response?.status || 500 });
+  } catch (error: unknown) {
+    const err = error as AxiosError<ApiErrorResponse>;
+    return NextResponse.json(err.response?.data || { message: "Error" }, { status: err.response?.status || 500 });
   }
 }

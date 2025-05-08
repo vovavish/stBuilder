@@ -11,7 +11,7 @@ const AdminHome: FC = observer(() => {
 
   useEffect(() => {
     userLayoutsStore.getAllUserLayoutsAdmin();
-  }, []);
+  }, [userLayoutsStore]);
 
   if (userLayoutsStore.isLoading) {
     return <Preloader />;

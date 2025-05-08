@@ -26,6 +26,7 @@ import axios from 'axios';
 import { Header_002 } from '@/components/user-blocks/Headers/header-002/header-002';
 import { Link_001 } from '@/components/user-blocks/Navigation/Link_001/link-001';
 import { Link_002 } from '@/components/user-blocks/Navigation/Link_002/Link_002';
+import Image from 'next/image';
 
 const CreatePage = observer(() => {
   const params = useParams();
@@ -62,7 +63,7 @@ const CreatePage = observer(() => {
     }
 
     fetchData();
-  }, [siteId]);
+  }, [siteId, userSitesStore, userLayoutsStore]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -204,9 +205,11 @@ const CreatePage = observer(() => {
                   onClick={() => handleSelectLayout(layout)}
                 >
                   <h3 className={styles.templateName}>{layout.name}</h3>
-                  <img
+                  <Image
                     src={`${API_URL}/${layout.path_to_image}` || '/default-template.jpg'}
                     alt={layout.name}
+                    width={64}
+                    height={64}
                     className={styles.templateImage}
                   />
                 </div>

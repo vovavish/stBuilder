@@ -314,7 +314,7 @@ const HeaderSettings = () => {
         <label className={styles.settings_label}>Выравнивание ссылок</label>
         <select
           value={props.linkAlignment}
-          onChange={(e) => setProp((props: Header_002Props) => (props.linkAlignment = e.target.value as any))}
+          onChange={(e) => setProp((props: Header_002Props) => (props.linkAlignment = e.target.value as 'center' | 'left' | 'right' | 'space-between'))}
         >
           <option value="center">По центру</option>
           <option value="left">Слева</option>

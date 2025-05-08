@@ -4,6 +4,7 @@ import { FC } from "react";
 import Link from "next/link";
 
 import styles from "./admin-home.module.scss";
+import Image from "next/image";
 
 type AdminHomeUIProps = {
   layouts: UserLayoutForAdminResponse[];
@@ -15,7 +16,7 @@ export const AdminHomeUI: FC<AdminHomeUIProps> = ({ layouts }) => {
       <h1 className={styles.title}>Админ панель</h1>
 
       <div className={styles.buttonContainer}>
-        <a href="/admin/layout/create" className={styles.createButton}>Создать новый шаблон</a>
+        <Link href="/admin/layout/create" className={styles.createButton}>Создать новый шаблон</Link>
       </div>
 
       <div className={styles.layoutList}>
@@ -25,9 +26,11 @@ export const AdminHomeUI: FC<AdminHomeUIProps> = ({ layouts }) => {
             <li key={layout.id} className={styles.listItem}>
               <Link className={styles.listLink} href={`/admin/layout/${layout.id}`}>
                 {layout.path_to_image && (
-                  <img
+                  <Image
                     src={`${API_URL}/${layout.path_to_image}`}
                     alt={layout.name}
+                    width={64}
+                    height={64}
                     className={styles.layoutImage}
                   />
                 )}

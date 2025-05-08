@@ -36,7 +36,7 @@ const SiteSettings = observer(() => {
     };
 
     loadData();
-  }, [siteId]);
+  }, [siteId, userSitesStore, userPagesStore]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

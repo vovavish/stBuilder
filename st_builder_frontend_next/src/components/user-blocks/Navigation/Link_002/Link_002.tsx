@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import stylesSettings from '../../settings-common/settings-common.module.scss';
 import styles from './Link_002.module.scss';
 import { api, API_URL } from '@/lib/api';
+import Image from 'next/image';
 
 export interface Link_002Props {
   alignment: 'center' | 'left' | 'right' | 'space-beetwen';
@@ -33,7 +34,6 @@ export const Link_002: FC<Link_002Props> & {
 }) => {
   const {
     connectors: { connect, drag },
-    selected,
   } = useNode((state) => ({
     selected: state.events.selected,
   }));
@@ -56,7 +56,7 @@ export const Link_002: FC<Link_002Props> & {
         justifyContent: alignment === 'center' ? 'center' : alignment === 'left' ? 'flex-start' : alignment === 'space-beetwen' ? 'space-between' : 'flex-end',
       }}
     >
-      {logoUrl && <img src={logoUrl} alt="Logo" className={styles.logo} />}
+      {logoUrl && <Image src={logoUrl} alt="Logo" className={styles.logo} width={64} height={64}/>}
       {isMobile ? (
         <div className={styles.burgerMenu}>
           <button onClick={toggleMenu} className={styles.burgerButton}>
@@ -139,7 +139,7 @@ export const Link_002Settings = () => {
         <label className={stylesSettings.settings_label}>Выравнивание</label>
         <select
           value={props.alignment}
-          onChange={(e) => setProp((props: Link_002Props) => (props.alignment = e.target.value as any))}
+          onChange={(e) => setProp((props: Link_002Props) => (props.alignment = e.target.value as 'center' | 'left' | 'right' | 'space-beetwen'))}
         >
           <option value="center">По центру</option>
           <option value="left">Слева</option>
@@ -240,7 +240,7 @@ export const Link_002Settings = () => {
         <label className={stylesSettings.settings_label}>Стиль обводки</label>
         <select
           value={props.borderStyle}
-          onChange={(e) => setProp((props: Link_002Props) => (props.borderStyle = e.target.value as any))}
+          onChange={(e) => setProp((props: Link_002Props) => (props.borderStyle = e.target.value as 'solid' | 'dashed' | 'dotted' | 'none'))}
         >
           <option value="none">Нет</option>
           <option value="solid">Сплошной</option>

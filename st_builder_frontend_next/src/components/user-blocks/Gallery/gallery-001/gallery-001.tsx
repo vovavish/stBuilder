@@ -4,6 +4,7 @@ import { useNode } from '@craftjs/core';
 import { api, API_URL } from '@/lib/api';
 
 import styles from '../../settings-common/settings-common.module.scss';
+import Image from 'next/image';
 
 export interface Gallery_001Props {
   image: string;
@@ -87,13 +88,12 @@ export const GalleryImage: React.FC<{
         width: '100%',
         height: '100%'
       }}>
-        <img
+        <Image
           src={`${API_URL}/${src}`}
           alt={alt}
+          fill
           style={{ 
             objectFit: 'cover',
-            width: '100%',
-            height: '100%',
             display: 'block'
           }}
         />
@@ -133,11 +133,9 @@ export const Gallery_001: React.FC<Gallery_001Props> & {
   paddingBottom,
   paddingLeft,
   paddingRight,
-  ...props 
 }) => {
   const {
     connectors: { connect, drag },
-    selected,
   } = useNode((state) => ({
     selected: state.events.selected,
   }));
@@ -229,13 +227,16 @@ const GalleryBlockSettings = () => {
       <label className={styles.settings_label}>Upload Image</label>
       {props.image ? (
         <div className="mb-4">
-          <div className="w-full h-40 relative mb-2">
-            <img
+          <div style={{ 
+        position: 'relative', 
+        width: '100%',
+        height: '100px'
+      }}>
+            <Image
               src={`${API_URL}/${props.image}`}
               alt="Preview"
+              fill
               style={{ 
-                width: '100%',
-                height: '100%',
                 objectFit: 'contain'
               }}
             />
@@ -282,7 +283,7 @@ const GalleryBlockSettings = () => {
       <label className="block text-sm font-semibold mt-4 mb-2">Image Ratio</label>
       <select
         value={props.imageRatio}
-        onChange={(e) => setProp((props: Gallery_001Props) => (props.imageRatio = e.target.value as any))}
+        onChange={(e) => setProp((props: Gallery_001Props) => (props.imageRatio = e.target.value))}
         className="w-full p-1 border rounded"
       >
         <option value="1:1">1:1 (Square)</option>

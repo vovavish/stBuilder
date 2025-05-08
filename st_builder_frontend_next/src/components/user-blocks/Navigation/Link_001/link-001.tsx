@@ -49,7 +49,6 @@ export const Link_001: FC<Link_001Props> & {
 }) => {
   const {
     connectors: { connect, drag },
-    selected,
   } = useNode((state) => ({
     selected: state.events.selected,
   }));
@@ -268,7 +267,7 @@ const Link_001Settings = () => {
       <select
         value={props.textAlign}
         onChange={(e) =>
-          setProp((props: Link_001Props) => (props.textAlign = e.target.value as any))
+          setProp((props: Link_001Props) => (props.textAlign = e.target.value as 'left' | 'center' | 'right'))
         }
       >
         <option value="left">По левому краю</option>
@@ -296,7 +295,7 @@ const Link_001Settings = () => {
       <select
         value={props.textDecoration}
         onChange={(e) =>
-          setProp((props: Link_001Props) => (props.textDecoration = e.target.value as any))
+          setProp((props: Link_001Props) => (props.textDecoration = e.target.value as 'none' | 'underline'))
         }
       >
         <option value="none">Нет</option>

@@ -19,7 +19,7 @@ const AdminLayout: FC = observer(() => {
     if (id) {
       userLayoutsStore.getUserLayoutByIdAdmin(id as string);
     }
-  }, [id]);
+  }, [id, userLayoutsStore]);
 
   useEffect(() => {
     if (userLayoutsStore.userLayoutByIdAdmin) {

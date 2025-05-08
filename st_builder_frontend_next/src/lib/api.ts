@@ -1,7 +1,6 @@
-import { AuthResponse } from '@/types/response/AuthResponse';
 import axios from 'axios';
 
-import { getSession, signIn, signOut } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 
 export const API_URL = 'http://localhost:3000';
 
@@ -12,8 +11,7 @@ export const api = axios.create({
 api.interceptors.request.use(async (config) => {
   if (!localStorage.getItem('accessToken')) {
     const session = await getSession();
-    localStorage.setItem('accessToken', session?.accessToken!);
-    //config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+    localStorage.setItem('accessToken', session?.accessToken ?? '');
   }
   
   config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
@@ -36,13 +34,13 @@ api.interceptors.response.use((response) => response, async (error) => {
           callbackUrl: '/login',
         });
       } else {
-        localStorage.setItem('accessToken', session?.accessToken!);
+        localStorage.setItem('accessToken', session?.accessToken ?? '');
   
         console.log(session?.refreshToken);
   
         return api.request(originalRequest);
       }
-    } catch (e) {
+    } catch {
       signOut({
         redirect: false,
         callbackUrl: '/login',

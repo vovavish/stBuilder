@@ -38,7 +38,7 @@ const SiteEdit = observer(() => {
 
   useEffect(() => {
     userPagesStore.getPageById(Number(pageId!));
-  }, [])
+  }, [pageId, userPagesStore])
 
   if (userPagesStore.isLoading) {
     return <Preloader />;

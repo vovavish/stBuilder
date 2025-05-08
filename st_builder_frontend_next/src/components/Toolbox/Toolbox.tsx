@@ -10,7 +10,7 @@ import { DXF_002, DXF_002DefaultProps } from '../user-blocks/CAD/DXF/dxf-002/dxf
 import { DXF_003, DXF_003DefaultProps } from '../user-blocks/CAD/DXF/dxf-003/dxf-003';
 import { Gallery_001 } from '../user-blocks/Gallery/gallery-001/gallery-001';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import './toolbox.scss';
+import './Toolbox.scss';
 import { Link_001, Link_001DefaultProps } from '../user-blocks/Navigation/Link_001/link-001';
 import { Link_002, Link_002DefaultProps } from '../user-blocks/Navigation/Link_002/Link_002';
 import { Header_002, Header_002DefaultProps } from '../user-blocks/Headers/header-002/header-002';
@@ -21,7 +21,9 @@ type AccordionSection = {
   title: string;
   components: {
     name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: React.ComponentType<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     props: any;
   }[];
 };
@@ -36,6 +38,7 @@ export const Toolbox = () => {
     'CAD Модели': false,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = <T extends React.ComponentType<any>>(
     Component: T,
     props: ComponentProps<T>,

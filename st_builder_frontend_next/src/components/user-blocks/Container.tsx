@@ -30,7 +30,7 @@ export const Container: FC<ContainerProps> & {
 };
 
 export const ContainerSettings = () => {
-  const { background, paddingX, paddingY, actions: { setProp } } = useNode((node) => ({
+  const { paddingX, paddingY, actions: { setProp } } = useNode((node) => ({
     background: node.data.props.background,
     paddingX: node.data.props.paddingX,
     paddingY: node.data.props.paddingY,

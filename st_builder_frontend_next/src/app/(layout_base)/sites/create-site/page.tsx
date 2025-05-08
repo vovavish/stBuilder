@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@/hooks/useStore';
 import styles from './create-site.module.scss';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 const CreateSite = observer(() => {
   const router = useRouter();

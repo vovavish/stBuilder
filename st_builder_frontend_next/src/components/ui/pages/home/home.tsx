@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { FC } from 'react';
 import styles from './home.module.scss';
-import { Factory, Wrench, LineChart } from "lucide-react";
+import { Factory, Wrench, LineChart } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const HomeUI: FC = () => {
   return (
@@ -12,15 +13,20 @@ export const HomeUI: FC = () => {
           <h1 className={styles.heroTitle}>
             Создайте профессиональный сайт для вашего производства
           </h1>
-          <p className={styles.heroSubtitle}>
-            Конструктор сайтов с промышленной спецификой
-          </p>
+          <p className={styles.heroSubtitle}>Конструктор сайтов с промышленной спецификой</p>
           <div className={styles.heroButtons}>
-            <Link href="/sites" className={styles.primaryButton}>Начать создание</Link>
+            <Link href="/sites" className={styles.primaryButton}>
+              Начать создание
+            </Link>
           </div>
         </div>
         <div className={styles.heroImage}>
-          <img src="/assets/production-facility.jpg" alt="Производственное предприятие" />
+          <Image
+            src="/assets/production-facility.jpg"
+            alt="Производственное предприятие"
+            width={300}
+            height={300}
+          />
         </div>
       </section>
 

@@ -19,10 +19,11 @@ import { Gallery_001_public } from '@/components/user-blocks/Gallery/gallery-001
 import { Link_001_public } from '@/components/user-blocks/Navigation/Link_001/link-001_public';
 import { Link_002_public } from '@/components/user-blocks/Navigation/Link_002/Link_002_public';
 import { Header_002_public } from '@/components/user-blocks/Headers/header-002/header-002_public';
+import { NextPage } from 'next';
 
 interface CraftNode {
   type: { resolvedName: string };
-  props: Record<string, any>;
+  props: Record<string, Record<string, string>>;
   nodes?: string[];
 }
 
@@ -30,6 +31,7 @@ interface PublishedData {
   published_data: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   Text_001: Text_001_public,
   Container: Container_public,
@@ -57,16 +59,20 @@ function renderNode(nodeData: CraftNode, nodes: Record<string, CraftNode>): Reac
   const Component = componentMap[type.resolvedName];
   if (!Component) {
     console.log(`Component not found: ${type}`);
-    return <div>Component "{type.resolvedName}" not implemented</div>;
+    return <div>Component &quot;{type.resolvedName}&quot; not implemented</div>;
   }
 
   const children = childNodeIds?.map((childId) => renderNode(nodes[childId], nodes)) || [];
   return React.createElement(Component, props, ...children);
 }
 
-export default async function SubdomainPage({ params }: { params: { slug: string[] } }) {
+interface SubdomainPageProps {
+  params: Promise<{ slug: string[] }>;
+}
+
+const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
   const resolvedParams = await params;
-  
+
   const siteName = resolvedParams.slug[0];
   
   let pageSlug = '/';
@@ -99,5 +105,7 @@ export default async function SubdomainPage({ params }: { params: { slug: string
     return <div>Ошибка загрузки страницы</div>;
   }
 }
+
+export default SubdomainPage;
 
 export const dynamic = 'force-dynamic';

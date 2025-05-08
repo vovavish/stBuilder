@@ -16,7 +16,7 @@ const SitesList = observer(() => {
 
   useEffect(() => {
     userSitesStore.getUserSites();
-  }, []);
+  }, [userSitesStore]);
 
   const onEditSiteClick = (e: SyntheticEvent, siteId: string) => {
     e.preventDefault();

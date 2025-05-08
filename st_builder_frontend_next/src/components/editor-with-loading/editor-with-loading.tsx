@@ -12,7 +12,7 @@ import { Container } from '../user-blocks/Container';
 
 export const EditorForLoading: FC<{ jsonData: string }> = ({ jsonData }) => {
   const {
-    actions: { deserialize, selectNode },
+    actions: { deserialize },
   } = useEditor();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const EditorForLoading: FC<{ jsonData: string }> = ({ jsonData }) => {
     const json = lz.decompress(lz.decodeBase64(jsonData));
     console.log(JSON.parse(json).ROOT.nodes.length)
     deserialize(json);
-  }, []);
+  }, [deserialize, jsonData]);
 
   return (
     <div className="flex flex-col">

@@ -235,7 +235,7 @@ const Text_001Settings = () => {
       <select
         value={props.textAlign}
         onChange={(e) =>
-          setProp((props: Text_001Props) => (props.textAlign = e.target.value as any))
+          setProp((props: Text_001Props) => (props.textAlign = e.target.value as 'left' | 'center' | 'right' | 'justify' | 'inherit'))
         }
       >
         <option value="left">По левому краю</option>
@@ -288,7 +288,7 @@ const Text_001Settings = () => {
       <select
         value={props.textDecoration}
         onChange={(e) =>
-          setProp((props: Text_001Props) => (props.textDecoration = e.target.value as any))
+          setProp((props: Text_001Props) => (props.textDecoration = e.target.value as 'none' | 'underline' | 'overline' | 'line-through'))
         }
         className="w-full p-1 border rounded mb-3"
       >

@@ -1,12 +1,13 @@
 "use client";
 
-import { FC, FormEventHandler, useState } from "react";
+import { FC, FormEventHandler, useState, Suspense } from "react";
 import { useStore } from "@/hooks/useStore";
 import { RegisterUI } from "@/components/ui/pages/register";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Preloader } from "@/components/ui/preloader";
 
-const Register: FC = () => {
+const RegisterContent: FC = () => {
   const { authStore } = useStore();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,7 +34,7 @@ const Register: FC = () => {
       } else {
         setError('Ошибка при входе после регистрации');
       }
-    } catch (err) {
+    } catch {
       setError('Пользователь с такой почтой уже зарегистрирован');
     }
   };
@@ -43,6 +44,14 @@ const Register: FC = () => {
       handleSubmit={handleSubmit}
       error={error}
     />
+  );
+};
+
+const Register: FC = () => {
+  return (
+    <Suspense fallback={<Preloader />}>
+      <RegisterContent />
+    </Suspense>
   );
 };
 

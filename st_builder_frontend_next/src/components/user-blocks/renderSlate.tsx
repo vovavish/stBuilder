@@ -1,4 +1,4 @@
-import { Descendant, BaseElement, BaseText } from 'slate';
+import { Descendant } from 'slate';
 import { CSSProperties } from 'react';
 
 type CustomText = {

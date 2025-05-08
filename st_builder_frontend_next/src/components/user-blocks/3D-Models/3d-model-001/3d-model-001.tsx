@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect, FC } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useNode } from '@craftjs/core';
 import { STLLoader } from 'three/examples/jsm/Addons.js';
@@ -117,11 +117,9 @@ export const Model_3D_001: FC<Model_3D_001Props> & {
   cameraX,
   cameraY,
   cameraZ,
-  ...props
 }) => {
   const {
     connectors: { connect, drag },
-    selected,
   } = useNode((state) => ({
     selected: state.events.selected,
   }));

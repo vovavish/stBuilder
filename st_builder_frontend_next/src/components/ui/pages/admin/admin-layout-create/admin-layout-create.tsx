@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { UserLayoutByIdAdminResponse } from '@/types/response/UserLayoutResponse';
 import { api, API_URL } from '@/lib/api';
 import styles from '../admin-layout/admin-layout.module.scss';
+import Image from 'next/image';
 
 type AdminLayoutUICreateProps = {
   layoutFormData: Omit<UserLayoutByIdAdminResponse, 'id'>;
@@ -81,9 +82,11 @@ export const AdminLayoutUICreate: FC<AdminLayoutUICreateProps> = ({
             {layoutFormData.path_to_image && (
               <div className={styles.imagePreview}>
                 <span>Загруженное изображение:</span>
-                <img
+                <Image
                   src={`${API_URL}/${layoutFormData.path_to_image}`}
                   alt="Preview"
+                  width={200}
+                  height={200}
                   className={styles.previewImage}
                 />
               </div>

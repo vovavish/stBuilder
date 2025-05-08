@@ -94,7 +94,7 @@ export const Advantages_001: FC<Advantages_001Props> & {
 
   const editorTitle = useMemo(() => withReact(createEditor()), []);
   const editorDescription = useMemo(() => withReact(createEditor()), []);
-  const editorAdvantages = useMemo(() => advantages.map(() => withReact(createEditor())), [advantages.length]);
+  const editorAdvantages = useMemo(() => advantages.map(() => withReact(createEditor())), [advantages]);
 
   const initialTitleValue: Descendant[] = useMemo(() => {
     try {
@@ -448,7 +448,7 @@ const AdvantagesBlockSettings = () => {
       <select
         value={props.textAlign}
         onChange={(e) =>
-          setProp((props: Advantages_001Props) => (props.textAlign = e.target.value as any))
+          setProp((props: Advantages_001Props) => (props.textAlign = e.target.value as 'left' | 'center' | 'right' | 'justify' | 'inherit'))
         }
       >
         <option value="left">По левому краю</option>
@@ -485,7 +485,7 @@ const AdvantagesBlockSettings = () => {
       <select
         value={props.textDecoration}
         onChange={(e) =>
-          setProp((props: Advantages_001Props) => (props.textDecoration = e.target.value as any))
+          setProp((props: Advantages_001Props) => (props.textDecoration = e.target.value as 'none' | 'underline' | 'overline' | 'line-through'))
         }
       >
         <option value="none">Нет</option>
