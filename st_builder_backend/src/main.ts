@@ -19,7 +19,6 @@ async function bootstrap() {
         'http://demo.stbuilder.ru:3001',
         process.env.FRONTEND_URL,
       ];
-
       if (!origin) return callback(null, true);
 
       if (

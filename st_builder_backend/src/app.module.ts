@@ -8,9 +8,21 @@ import { UserLayoutsModule } from './userLayouts/userLayouts.module';
 import { RolesGuard } from './roles/roles.guard';
 import { UploadFileModule } from './upload-file/upload-file.module';
 import { UserPagesModule } from './userPages/userPages.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserSitesModule, UserLayoutsModule, UploadFileModule, UserPagesModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    AuthModule,
+    PrismaModule,
+    UserSitesModule,
+    UserLayoutsModule,
+    UploadFileModule,
+    UserPagesModule,
+  ],
   controllers: [],
   providers: [
     {
@@ -20,7 +32,7 @@ import { UserPagesModule } from './userPages/userPages.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
-    }
+    },
   ],
 })
 export class AppModule {}
