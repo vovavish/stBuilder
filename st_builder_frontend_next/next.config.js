@@ -16,6 +16,11 @@ const nextConfig = {
         hostname: 'api.stbuilder.ru',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.stbuilder.ru',
+        pathname: '/uploads/**',
+      },
       // Для локальной разработки
       {
         protocol: 'http',
