@@ -57,7 +57,7 @@ export class AuthStore {
       this._user = response.userDto;
       this._isAuth = true;
     } catch (e) {
-      console.log(e);
+      throw e;
     } finally {
       this._isUserLoading = false;
     }

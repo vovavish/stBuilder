@@ -23,6 +23,9 @@ import { DXF_002 } from '@/components/user-blocks/CAD/DXF/dxf-002/dxf-002';
 import { DXF_003 } from '@/components/user-blocks/CAD/DXF/dxf-003/dxf-003';
 import { Gallery_001 } from '@/components/user-blocks/Gallery/gallery-001/gallery-001';
 import axios from 'axios';
+import { Header_002 } from '@/components/user-blocks/Headers/header-002/header-002';
+import { Link_001 } from '@/components/user-blocks/Navigation/Link_001/link-001';
+import { Link_002 } from '@/components/user-blocks/Navigation/Link_002/Link_002';
 
 const CreatePage = observer(() => {
   const params = useParams();
@@ -134,8 +137,8 @@ const CreatePage = observer(() => {
           {selectedLayout ? (
             <div className={styles.editorWrapper}>
               <Editor resolver={{
-                Text_001, Header_001, Title_001, Advantages_001, 
-                Model_3D_001, Container, DXF_001, DXF_002, DXF_003, Gallery_001
+                Text_001, Header_001, Header_002, Title_001, Advantages_001, 
+                Model_3D_001, Container, DXF_001, DXF_002, DXF_003, Gallery_001, Link_001, Link_002,
               }}>
                 <EditorPreviewer jsonData={selectedLayout.layout_data} />
               </Editor>

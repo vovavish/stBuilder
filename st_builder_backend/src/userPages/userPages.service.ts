@@ -61,7 +61,7 @@ export class UserPagesService {
         page_data: true,
         createdAt: true,
         updatedAt: true,
-        publishedPages: true, // Включаем данные опубликованной версии
+        publishedPages: true,
       },
       orderBy: { id: 'asc' },
     });
@@ -73,7 +73,7 @@ export class UserPagesService {
       include: {
         userSite: { select: { user_id: true } },
         publishedPages: true,
-      }, // Включаем опубликованную версию
+      },
     });
 
     if (!page) {
@@ -166,7 +166,6 @@ export class UserPagesService {
       );
     }
 
-    // Проверяем, существует ли уже опубликованная версия
     const existingPublishedPage = await this.prisma.publishedPages.findUnique({
       where: { page_id },
     });
@@ -194,7 +193,6 @@ export class UserPagesService {
         },
       });
     } else {
-      // Если страницы нет, создаем новую опубликованную версию
       return this.prisma.publishedPages.create({
         data: {
           page_id,
@@ -218,7 +216,6 @@ export class UserPagesService {
   }
 
   async getPublishedPageBySlug(site_address: string, page_slug: string) {
-    // Нормализуем slug (убираем начальные/конечные слеши)
     const normalizedSlug = page_slug.replace(/^\/|\/$/g, '') || '';
 
     const site = await this.prisma.usersSites.findFirst({

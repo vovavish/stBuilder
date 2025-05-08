@@ -1,29 +1,25 @@
-import { Dispatch, FC, FormEventHandler, SetStateAction, SyntheticEvent } from "react";
+import { FC, FormEventHandler } from "react";
 import Link from "next/link";
-
 import styles from './login.module.scss';
 
 type LoginUIProps = {
-  // email: string;
-  // setEmail: Dispatch<SetStateAction<string>>;
-
-  // password: string;
-  // setPassword: Dispatch<SetStateAction<string>>;
-
   handleSubmit: FormEventHandler<HTMLFormElement>;
+  error?: string | null;
 };
 
 export const LoginUI: FC<LoginUIProps> = ({
-  // email,
-  // setEmail,
-  // password,
-  // setPassword,
   handleSubmit,
+  error,
 }) => {
   return (
     <div className={styles.container}>
       <div className={styles.formWrapper}>
         <h2 className={styles.title}>Вход</h2>
+        {error && (
+          <div className={styles.error}>
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className={styles.formField}>
             <label htmlFor="email" className={styles.label}>
@@ -61,7 +57,7 @@ export const LoginUI: FC<LoginUIProps> = ({
         <p className={styles.footerText}>
           Вы здесь впервые?{" "}
           <Link href="/register" className={styles.link}>
-            Зарегестрироваться
+            Зарегистрироваться
           </Link>
         </p>
       </div>

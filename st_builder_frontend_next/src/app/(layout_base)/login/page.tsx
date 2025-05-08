@@ -1,16 +1,15 @@
 'use client';
 
-import { FC, FormEventHandler } from 'react';
-
+import { FC, FormEventHandler, useState } from 'react';
 import { LoginUI } from '@/components/ui/pages/login';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 const Login: FC = () => {
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -23,16 +22,17 @@ const Login: FC = () => {
       callbackUrl: callbackUrl ?? "/",
     });
 
-    if (res) {
+    if (res?.ok) {
       router.push(callbackUrl);
     } else {
-      console.error('error', res);
+      setError('Неверная почта или пароль');
     }
   };
 
   return (
     <LoginUI
       handleSubmit={handleSubmit}
+      error={error}
     />
   );
 };

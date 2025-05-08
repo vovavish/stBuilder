@@ -1,7 +1,7 @@
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 2rem 1rem; /* Reduced padding on smaller screens */
 }
 
 .header {
@@ -9,10 +9,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allow header to wrap on small screens */
+  gap: 1rem;
 }
 
 .title {
-  font-size: 1.8rem;
+  font-size: clamp(1.5rem, 5vw, 1.8rem); /* Responsive font size */
   font-weight: 600;
   color: #333;
 }
@@ -31,9 +33,10 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 3fr 1fr;
+  gap: 1.5rem;
   margin-top: 2rem;
+  align-items: start; /* Prevent stretching of sections */
 }
 
 .previewSection, .formSection {
@@ -41,10 +44,11 @@
   border-radius: 0.5rem;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 400px; /* Ensure consistent minimum height */
 }
 
 .sectionTitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 4vw, 1.2rem);
   font-weight: 600;
   margin-bottom: 1rem;
   color: #333;
@@ -56,6 +60,8 @@
   padding: 1rem;
   min-height: 400px;
   background: #f9fafb;
+  overflow: auto; /* Handle overflow content */
+  transition: all 0.3s ease; /* Smooth transition for content changes */
 }
 
 .emptyPreview {
@@ -114,6 +120,7 @@
   background-color: #e5e7eb;
   color: #4b5563;
   font-size: 0.9rem;
+  white-space: nowrap; /* Prevent wrapping */
 }
 
 .slugInput {
@@ -134,7 +141,7 @@
 
 .templatesGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -145,6 +152,10 @@
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s;
+  height: 200px; /* Fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &:hover {
     border-color: #3b82f6;
@@ -161,12 +172,15 @@
   font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .templateImage {
   width: 100%;
-  height: 120px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
   border-radius: 0.25rem;
 }
 
@@ -188,5 +202,61 @@
   &:disabled {
     background-color: #93c5fd;
     cursor: not-allowed;
+  }
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr; /* Stack vertically */
+    grid-template-rows: auto auto; /* Templates first, then preview */
+    gap: 1rem;
+  }
+
+  .formSection {
+    order: -1; /* Move formSection (templates) to the top */
+  }
+
+  .previewSection {
+    min-height: 300px; /* Smaller height for mobile */
+  }
+
+  .editorWrapper {
+    min-height: 300px;
+  }
+
+  .emptyPreview {
+    min-height: 300px;
+  }
+
+  .templatesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Smaller cards on mobile */
+  }
+
+  .templateCard {
+    height: 180px; /* Slightly smaller cards */
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+  }
+
+  .input, .slugPrefix {
+    font-size: 0.875rem;
+  }
+
+  .submitButton {
+    padding: 0.5rem 1rem;
   }
 }

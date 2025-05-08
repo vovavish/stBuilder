@@ -7,7 +7,6 @@ export class UserSitesService {
   constructor(private prisma: PrismaService) {}
 
   async createUserSite(user_id: number, createSiteDto: CreateSiteDto) {
-    // Сначала проверяем существование сайта с таким адресом
     const existingSite = await this.prisma.usersSites.findFirst({
       where: {
         site_address: createSiteDto.site_address,
@@ -20,7 +19,6 @@ export class UserSitesService {
       );
     }
   
-    // Если сайта с таким адресом нет, создаем новый
     return this.prisma.usersSites.create({
       data: {
         user_id,

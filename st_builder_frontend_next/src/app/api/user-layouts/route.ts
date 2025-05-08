@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { api } from "@/lib/api";
 
-// Получить все layouts
 export async function GET() {
   try {
     const response = await api.get("/user-layouts/");
@@ -11,7 +10,6 @@ export async function GET() {
   }
 }
 
-// Создать новый layout
 export async function POST(req: Request) {
   const body = await req.json();
 

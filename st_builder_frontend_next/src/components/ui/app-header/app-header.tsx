@@ -11,7 +11,7 @@ import { useStore } from "@/hooks/useStore";
 export const AppHeaderUI: FC = () => {
   const session = useSession();
   const pathname = usePathname();
-  const { userPagesStore } = useStore();
+  const { userPagesStore, authStore } = useStore();
   
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -84,7 +84,10 @@ export const AppHeaderUI: FC = () => {
           {session.status === "authenticated" ? (
             <Link
               href="#"
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => {
+                  authStore.logout();
+                  signOut({ callbackUrl: "/" })}
+                }
               className={styles.link}
             >
               Выйти
@@ -110,9 +113,6 @@ export const AppHeaderUI: FC = () => {
             <Link href="/sites" className={styles.link} onClick={toggleMobileMenu}>
               Мои сайты
             </Link>
-            <Link href="/profile" className={styles.link} onClick={toggleMobileMenu}>
-              Профиль
-            </Link>
             {isEditSitePage && (
               <button
                 onClick={() => {
@@ -128,6 +128,7 @@ export const AppHeaderUI: FC = () => {
               <Link
                 href="#"
                 onClick={() => {
+                  authStore.logout();
                   signOut({ callbackUrl: "/" });
                   toggleMobileMenu();
                 }}

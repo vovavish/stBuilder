@@ -259,7 +259,7 @@ const Product3DBlockSettings = () => {
           },
         });
 
-        const uploadedFileUrl = response.data.filePath;
+        const uploadedFileUrl = `${API_URL}/${response.data.filePath}`;
 
         setProp((props: Model_3D_001Props) => (props.mtlUrl = uploadedFileUrl));
       } catch (error) {
@@ -281,7 +281,7 @@ const Product3DBlockSettings = () => {
           },
         });
 
-        const uploadedFileUrl = response.data.filePath;
+        const uploadedFileUrl = `${API_URL}/${response.data.filePath}`;
 
         setProp((props: Model_3D_001Props) => (props.textureUrl = uploadedFileUrl));
       } catch (error) {

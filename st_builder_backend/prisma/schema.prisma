@@ -47,7 +47,7 @@ model UsersSites {
   user         User    @relation(fields: [user_id], references: [id])
   user_id      Int
   site_name    String
-  site_address String? @unique // Общий адрес сайта (например, domen.com)
+  site_address String? @unique
   pages        Page[]  // Связь с множеством страниц
 }
 

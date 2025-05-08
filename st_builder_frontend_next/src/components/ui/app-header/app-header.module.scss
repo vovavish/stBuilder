@@ -157,8 +157,8 @@
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
-  color: #333; // Добавлено для текста в модалке
-  text-align: center; // Добавлено для центрирования контента
+  color: #333;
+  text-align: center;
 }
 
 .input {
@@ -171,7 +171,7 @@
 
 .modalActions {
   display: flex;
-  justify-content: center; // Изменено с flex-end на center
+  justify-content: center;
   gap: 10px;
   margin-top: 20px;
 }

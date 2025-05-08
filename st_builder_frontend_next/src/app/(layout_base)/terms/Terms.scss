@@ -1,0 +1,50 @@
+.terms-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 40px 0;
+  background-color: #f9f9f9;
+}
+
+.terms-content {
+  max-width: 1440px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+
+  h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #222;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 30px 0 15px;
+    color: #222;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin: 20px 0 10px;
+    color: #222;
+  }
+
+  p {
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin: 15px 0;
+    padding-left: 30px;
+
+    li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+  }
+}

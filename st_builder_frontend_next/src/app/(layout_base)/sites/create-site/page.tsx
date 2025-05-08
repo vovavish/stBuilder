@@ -31,20 +31,16 @@ const CreateSite = observer(() => {
         router.push('/sites');
       }, 1500);
     } catch (err) {
-      // Проверяем, является ли ошибка AxiosError
       if (axios.isAxiosError(err)) {
         // Типизируем data как объект с возможным полем message
         const errorData = err.response?.data as { message?: string };
         
-        // Если есть сообщение об ошибке от сервера, используем его
         if (errorData?.message) {
           setError(errorData.message);
         } else {
-          // Иначе используем стандартное сообщение
           setError('Ошибка при создании сайта. Пожалуйста, попробуйте снова.');
         }
       } else {
-        // Если это не AxiosError, используем стандартное сообщение
         setError('Ошибка при создании сайта. Пожалуйста, попробуйте снова.');
       }
       

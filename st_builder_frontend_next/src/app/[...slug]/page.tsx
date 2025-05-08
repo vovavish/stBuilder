@@ -67,19 +67,14 @@ function renderNode(nodeData: CraftNode, nodes: Record<string, CraftNode>): Reac
 export default async function SubdomainPage({ params }: { params: { slug: string[] } }) {
   const resolvedParams = await params;
   
-  // Первый элемент массива - siteName
   const siteName = resolvedParams.slug[0];
   
-  // Обрабатываем page_slug особым образом для главной страницы
   let pageSlug = '/';
   if (resolvedParams.slug.length > 1) {
-    // Если есть дополнительные части URL, объединяем их
     pageSlug = resolvedParams.slug.slice(1).join('/');
     
-    // Убираем возможные двойные слеши
     pageSlug = pageSlug.replace(/\/+/g, '/');
     
-    // Если после обработки получилась пустая строка, возвращаем '/'
     if (!pageSlug) pageSlug = '/';
   }
 

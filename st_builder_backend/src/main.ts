@@ -10,7 +10,26 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const cors = {
-    origin: ['http://localhost:5173', 'http://localhost:3001', 'http://stbuilder.ru:3001', 'http://vovavish.stbuilder.ru:3001', 'http://demo.stbuilder.ru:3001'],
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      const allowedOrigins = [
+        'http://localhost:5173',
+        'http://localhost:3001',
+        'http://stbuilder.ru:3001',
+        'http://vovavish.stbuilder.ru:3001',
+        'http://demo.stbuilder.ru:3001',
+      ];
+
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.includes(origin) ||
+        /^https?:\/\/([a-zA-Z0-9-]+\.)*stbuilder\.ru(:\d+)?$/.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   };

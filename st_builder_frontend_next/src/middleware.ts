@@ -15,14 +15,12 @@ export default function middleware(req: NextRequestWithAuth) {
   console.log('Middleware - Subdomain:', subdomain);
   console.log('Middleware - isRootDomain:', isRootDomain);
 
-  // Обработка поддоменов (без авторизации)
   if (!isRootDomain) {
     const url = req.nextUrl.clone();
     url.pathname = `/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
     return NextResponse.rewrite(url);
   }
 
-  // Применяем withAuth для корневого домена
   const authMiddleware = withAuth(
     function authMiddleware(req: NextRequestWithAuth, event: NextFetchEvent) {
       if (req.nextUrl.pathname.startsWith('/admin')) {
@@ -39,10 +37,9 @@ export default function middleware(req: NextRequestWithAuth) {
     }
   );
 
-  // Вызываем authMiddleware с текущим запросом и event
   return authMiddleware(req, {} as NextFetchEvent);
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|static|favicon.ico|register|login|$|assets).*)'],
+  matcher: ['/((?!api|_next|static|favicon.ico|register|login|terms|$|assets).*)'],
 };

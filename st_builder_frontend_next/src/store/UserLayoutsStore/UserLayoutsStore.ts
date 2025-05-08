@@ -103,7 +103,7 @@ export class UserLayoutsStore {
     this._isLoading = true;
     try {
       const createdLayout = await ApiUserLayoutsController.createUserLayout(layout_name, description, path_to_image, layout_data);
-      await this.getUserLayouts(); // Обновляем список после создания
+      await this.getUserLayouts();
       runInAction(() => {
         this._userLayoutById = createdLayout;
       })

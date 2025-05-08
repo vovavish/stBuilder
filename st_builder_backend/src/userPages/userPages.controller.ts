@@ -18,7 +18,6 @@ export class UserPagesController {
     return this.userPagesService.getPublishedPageBySlug(site_name, page_slug);
   }
 
-  // Создание новой страницы для сайта
   @UseGuards(AtGuard)
   @Post('create/:site_id')
   async createPage(
@@ -29,7 +28,6 @@ export class UserPagesController {
     return this.userPagesService.createPage(user_id, site_id, createPageDto);
   }
 
-  // Получение всех страниц сайта
   @UseGuards(AtGuard)
   @Get('getPages/:site_id')
   async getPages(
@@ -39,7 +37,6 @@ export class UserPagesController {
     return this.userPagesService.getPagesBySiteId(user_id, site_id);
   }
 
-  // Получение страницы по ID
   @UseGuards(AtGuard)
   @Get('getPage/:page_id')
   async getPageById(
@@ -49,7 +46,6 @@ export class UserPagesController {
     return this.userPagesService.getPageById(user_id, page_id);
   }
 
-  // Обновление страницы по ID
   @UseGuards(AtGuard)
   @Patch('updatePage/:page_id')
   async updatePage(
@@ -60,7 +56,6 @@ export class UserPagesController {
     return this.userPagesService.updatePage(user_id, page_id, updatePageDto);
   }
 
-  // Удаление страницы по ID
   @UseGuards(AtGuard)
   @Delete('deletePage/:page_id')
   async deletePage(
