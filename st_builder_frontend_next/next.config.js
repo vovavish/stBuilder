@@ -10,9 +10,16 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
+      // Для продакшена
       {
         protocol: 'http',
-        hostname: `${process.env.NEXT_PUBLIC_API_URL || 'localhost'}`,
+        hostname: 'api.stbuilder.ru',
+        pathname: '/uploads/**',
+      },
+      // Для локальной разработки
+      {
+        protocol: 'http',
+        hostname: 'localhost',
         port: '3000',
         pathname: '/uploads/**',
       },
