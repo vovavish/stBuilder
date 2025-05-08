@@ -15,7 +15,7 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials) => {
         try {
           console.log(credentials);
-          const response = await axios.post<AuthResponse>(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/local/signin`, {
+          const response = await axios.post<AuthResponse>(`${process.env.BACKEND_URL || 'http://localhost:3000'}/auth/local/signin`, {
             email: credentials?.email,
             password: credentials?.password,
           });
@@ -64,7 +64,7 @@ export const authOptions: AuthOptions = {
       if (Date.now() / 1000 > token.accessTokenExpires!) {
         console.log("Access token expired, refreshing...");
         try {
-          const response = await axios.post<AuthResponse>(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/refresh`, null, {
+          const response = await axios.post<AuthResponse>(`${process.env.BACKEND_URL || 'http://localhost:3000'}/auth/refresh`, null, {
             headers: {
               'Authorization': `Bearer ${token.refreshToken}`
             }
