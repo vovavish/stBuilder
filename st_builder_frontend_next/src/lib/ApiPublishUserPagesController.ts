@@ -43,7 +43,7 @@ export default class ApiPublishedUserPagesController {
 
   static async getPublishedPage(siteName: string, pageSlug: string): Promise<PublishPageResponse> {
     return axios
-      .get<PublishPageResponse>(`http://localhost:3000/pages/getPublishedPage/${siteName}/${pageSlug}`)
+      .get<PublishPageResponse>(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/pages/getPublishedPage/${siteName}/${pageSlug}`)
       .then((res) => res.data);
   }
 

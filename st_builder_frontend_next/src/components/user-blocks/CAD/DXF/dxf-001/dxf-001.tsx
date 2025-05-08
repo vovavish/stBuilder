@@ -81,7 +81,7 @@ export const DXFRenderer: FC<{ url: string; isMobile: boolean }> = ({ url, isMob
         viewerRef.current = new DxfViewer(containerRef.current!, options);
         await viewerRef.current.Load({
           url,
-          fonts: ['http://localhost:3000/uploads/T-FLEX Type A.TTF'],
+          fonts: [`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/uploads/T-FLEX Type A.TTF`],
           progressCbk: () => {},
           workerFactory: () => new Worker(new URL('../DxfViewerWorker', import.meta.url)),
         });

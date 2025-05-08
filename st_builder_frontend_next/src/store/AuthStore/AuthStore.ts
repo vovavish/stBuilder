@@ -79,7 +79,7 @@ export class AuthStore {
   async checkAuth() {
     try {
       this._isUserLoading = true;
-      const response = await axios.post<AuthResponse>(`http://localhost:3000/auth/refresh`, null, {
+      const response = await axios.post<AuthResponse>(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/refresh`, null, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
         }
