@@ -34,7 +34,7 @@ export const AppHeaderUI: FC = () => {
       
       const publishedPage = await ApiPublishedUserSitesController.publishPage(Number(pageId));
       await userPagesStore.getPageById(Number(pageId));
-      
+      console.log(publishedPage);
       if (!publishedPage || !publishedPage.page.userSite.site_address) {
         throw new Error("Не удалось получить данные сайта");
       }

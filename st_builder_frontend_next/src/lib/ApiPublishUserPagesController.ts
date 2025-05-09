@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { api } from './api';
-import { PublishPageResponse, PublishPagesBySiteIdResponse } from '@/types/response/PublishPageResponse';
+import { PostPublishPageResponse, PublishPageResponse, PublishPagesBySiteIdResponse } from '@/types/response/PublishPageResponse';
 import { PageResponse } from '@/types/response/PageResponse';
 import { CreatePageDto } from '@/types/dto/CreatePageDto';
 
@@ -35,9 +35,9 @@ export default class ApiPublishedUserPagesController {
       .then((res) => res.data);
   }
 
-  static async publishPage(pageId: number): Promise<PublishPageResponse> {
+  static async publishPage(pageId: number): Promise<PostPublishPageResponse> {
     return api
-      .post<PublishPageResponse>(`/pages/publish/${pageId}`)
+      .post<PostPublishPageResponse>(`/pages/publish/${pageId}`)
       .then((res) => res.data);
   }
 

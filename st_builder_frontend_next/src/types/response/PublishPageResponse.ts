@@ -1,12 +1,7 @@
 export interface PublishPageResponse {
-  page: {
-    page_slug: string;
-    page_name: string;
-    userSite: {
-      site_address: string;
-    }
-  }
   site_name: string;
+  page_name: string;
+  page_slug: string;
   published_data: string;
   publishedAt?: string;
 }
@@ -14,4 +9,14 @@ export interface PublishPageResponse {
 export interface PublishPagesBySiteIdResponse {
   id: number;
   publishedAt: string;
+}
+
+export interface PostPublishPageResponse {
+  page: {
+    page_name: string,
+    page_slug: string,
+    userSite: {
+      site_address: string,
+    },
+  }
 }

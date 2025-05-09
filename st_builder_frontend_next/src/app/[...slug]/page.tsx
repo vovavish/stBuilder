@@ -20,15 +20,12 @@ import { Link_001_public } from '@/components/user-blocks/Navigation/Link_001/li
 import { Link_002_public } from '@/components/user-blocks/Navigation/Link_002/Link_002_public';
 import { Header_002_public } from '@/components/user-blocks/Headers/header-002/header-002_public';
 import { Metadata, NextPage } from 'next';
+import { PublishPageResponse } from '@/types/response/PublishPageResponse';
 
 interface CraftNode {
   type: { resolvedName: string };
   props: Record<string, Record<string, string>>;
   nodes?: string[];
-}
-
-interface PublishedData {
-  published_data: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,10 +45,10 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   Gallery_001: Gallery_001_public,
 };
 
-async function getSiteData(siteName: string, pageSlug: string): Promise<PublishedData | null> {
+async function getSiteData(siteName: string, pageSlug: string): Promise<PublishPageResponse | null> {
   const site_data = await ApiPublishedUserSitesController.getPublishedPage(siteName, pageSlug);
   console.log(site_data);
-  return { published_data: site_data.published_data };
+  return site_data;
 }
 
 function renderNode(nodeData: CraftNode, nodes: Record<string, CraftNode>): React.ReactNode {
@@ -107,13 +104,37 @@ const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
 }
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  { params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const siteName = resolvedParams.slug[0];
 
-  return {
-    title: siteName,
-  };
+  let pageSlug = '/';
+  if (resolvedParams.slug.length > 1) {
+    pageSlug = resolvedParams.slug.slice(1).join('/');
+    pageSlug = pageSlug.replace(/\/+/g, '/');
+    if (!pageSlug) pageSlug = '/';
+  }
+
+  try {
+    const site = await getSiteData(siteName, pageSlug);
+    if (!site || !site.published_data) {
+      return {
+        title: siteName,
+        description: siteName,
+      };
+    }
+
+    return {
+      title: site.site_name || siteName, // Use site_name from API or fallback to siteName
+      description: site.page_name || siteName, // Use page_name from API or fallback to siteName
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: siteName,
+      description: siteName,
+    };
+  }
 }
 
 export default SubdomainPage;
