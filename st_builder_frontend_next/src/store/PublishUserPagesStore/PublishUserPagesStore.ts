@@ -157,22 +157,6 @@ export class UserPagesStore {
     this._isLoading = true;
     try {
       const publishedPage = await ApiPublishedUserPagesController.publishPage(pageId);
-      runInAction(() => {
-        // Обновляем publishedPages у соответствующей страницы
-        const index = this._userPages.findIndex((page) => page.id === pageId);
-        if (index !== -1) {
-          this._userPages[index].publishedPages = {
-            published_data: publishedPage.published_data,
-            publishedAt: publishedPage.publishedAt || new Date().toISOString(),
-          };
-        }
-        if (this._userPageById?.id === pageId) {
-          this._userPageById.publishedPages = {
-            published_data: publishedPage.published_data,
-            publishedAt: publishedPage.publishedAt || new Date().toISOString(),
-          };
-        }
-      });
       return publishedPage;
     } catch (error) {
       console.error('Ошибка при публикации страницы:', error);
