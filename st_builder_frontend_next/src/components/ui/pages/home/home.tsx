@@ -36,17 +36,17 @@ export const HomeUI: FC = () => {
         <div className={styles.benefitsGrid}>
           <div className={styles.benefitCard}>
             <Factory className={styles.benefitIcon} />
-            <h3>Специализированные шаблоны</h3>
+            <h3 className={styles.benefitCardTitle}>Специализированные шаблоны</h3>
             <p>Готовые решения для машиностроения, металлообработки и промышленного оборудования</p>
           </div>
           <div className={styles.benefitCard}>
             <Wrench className={styles.benefitIcon} />
-            <h3>Технический функционал</h3>
+            <h3 className={styles.benefitCardTitle}>Технический функционал</h3>
             <p>Чертежи, 3D-модели и калькуляторы расчета стоимости</p>
           </div>
           <div className={styles.benefitCard}>
             <LineChart className={styles.benefitIcon} />
-            <h3>Интеграции с ERP/CRM</h3>
+            <h3 className={styles.benefitCardTitle}>Интеграции с ERP/CRM</h3>
             <p>Подключение к 1С, SAP, ERP-системам и CRM для автоматизации продаж</p>
           </div>
         </div>
