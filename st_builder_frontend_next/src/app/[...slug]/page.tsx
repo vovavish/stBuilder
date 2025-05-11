@@ -94,6 +94,7 @@ const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
 
     return <>{renderedContent}</>;
   } catch (error) {
+    console.error('Error fetching site data:', error);
     return <div>Ошибка загрузки страницы</div>;
   }
 }
@@ -124,6 +125,7 @@ export async function generateMetadata(
       description: site.page_name || siteName,
     };
   } catch (error) {
+    console.error('Error fetching site data:', error);
     return {
       title: siteName,
       description: siteName,

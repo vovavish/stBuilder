@@ -36,6 +36,7 @@ export const authOptions: AuthOptions = {
           }
           return null;
         } catch (error) {
+          console.error(error);
           return null;
         }
       },
@@ -72,6 +73,7 @@ export const authOptions: AuthOptions = {
             accessTokenExpires: decoded.exp,
           };
         } catch (error) {
+          console.error(error);
           return { ...token, error: "RefreshAccessTokenError" };
         }
       }
