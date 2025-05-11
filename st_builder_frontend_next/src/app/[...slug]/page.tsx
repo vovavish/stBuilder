@@ -47,7 +47,6 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
 
 async function getSiteData(siteName: string, pageSlug: string): Promise<PublishPageResponse | null> {
   const site_data = await ApiPublishedUserSitesController.getPublishedPage(siteName, pageSlug);
-  console.log(site_data);
   return site_data;
 }
 
@@ -55,7 +54,6 @@ function renderNode(nodeData: CraftNode, nodes: Record<string, CraftNode>): Reac
   const { type, props, nodes: childNodeIds } = nodeData;
   const Component = componentMap[type.resolvedName];
   if (!Component) {
-    console.log(`Component not found: ${type}`);
     return <div>Component &quot;{type.resolvedName}&quot; not implemented</div>;
   }
 
@@ -81,8 +79,6 @@ const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
     if (!pageSlug) pageSlug = '/';
   }
 
-  console.log('SubdomainPage - siteName:', siteName, 'pageSlug:', pageSlug);
-
   try {
     const site = await getSiteData(siteName, pageSlug);
     if (!site || !site.published_data) {
@@ -98,7 +94,6 @@ const SubdomainPage: NextPage<SubdomainPageProps> = async ({ params }) => {
 
     return <>{renderedContent}</>;
   } catch (error) {
-    console.error('Error loading page:', error);
     return <div>Ошибка загрузки страницы</div>;
   }
 }
@@ -125,11 +120,10 @@ export async function generateMetadata(
     }
 
     return {
-      title: site.site_name || siteName, // Use site_name from API or fallback to siteName
-      description: site.page_name || siteName, // Use page_name from API or fallback to siteName
+      title: site.site_name || siteName,
+      description: site.page_name || siteName,
     };
   } catch (error) {
-    console.error('Error generating metadata:', error);
     return {
       title: siteName,
       description: siteName,

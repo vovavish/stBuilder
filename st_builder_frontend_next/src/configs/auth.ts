@@ -14,7 +14,6 @@ export const authOptions: AuthOptions = {
       },
       authorize: async (credentials) => {
         try {
-          console.log(credentials);
           const response = await axios.post<AuthResponse>(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/local/signin`, {
             email: credentials?.email,
             password: credentials?.password,
@@ -37,7 +36,6 @@ export const authOptions: AuthOptions = {
           }
           return null;
         } catch (error) {
-          console.error("Authorization error:", error);
           return null;
         }
       },
@@ -55,14 +53,7 @@ export const authOptions: AuthOptions = {
         token.roles = user.roles;
       }
 
-      console.log('JWT METHOD');
-      console.log('user', user);
-      console.log('Date.now()', Date.now() / 1000);
-      console.log('token.accessTokenExpires!', token.accessTokenExpires!);
-      console.log('Date.now() > token.accessTokenExpires!', Date.now() / 1000 > token.accessTokenExpires!);
-
       if (Date.now() / 1000 > token.accessTokenExpires!) {
-        console.log("Access token expired, refreshing...");
         try {
           const response = await axios.post<AuthResponse>(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/refresh`, null, {
             headers: {
@@ -81,7 +72,6 @@ export const authOptions: AuthOptions = {
             accessTokenExpires: decoded.exp,
           };
         } catch (error) {
-          console.error("Error refreshing access token:", error);
           return { ...token, error: "RefreshAccessTokenError" };
         }
       }
@@ -99,8 +89,6 @@ export const authOptions: AuthOptions = {
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.roles = token.roles;
-
-      //console.log('SESSION METHOD', new Date(session.expires).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }));
 
       return session;
     },

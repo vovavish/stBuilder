@@ -115,7 +115,6 @@ export class UserPagesStore {
       };
       const updatedPage = await ApiPublishedUserPagesController.updatePage(pageId, updatePageDto);
       runInAction(() => {
-        this._userPageById = updatedPage;
         const index = this._userPages.findIndex((page) => page.id === pageId);
         if (index !== -1) {
           this._userPages[index] = updatedPage;
